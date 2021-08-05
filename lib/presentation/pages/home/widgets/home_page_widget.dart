@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:podcast_app/presentation/pages/signin/signin_page.dart';
 
 class HomeWidget extends StatelessWidget {
   const HomeWidget({Key? key}) : super(key: key);
@@ -36,21 +37,24 @@ class HomeWidget extends StatelessWidget {
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [HexColor("#579EB5"), HexColor("#8EB9C7")]),
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [HexColor("#579EB5"), HexColor("#8EB9C7")]),
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                   child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.transparent),
                       shape: MaterialStateProperty.all(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0),
                         ),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      
+                    },
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Container(
@@ -61,7 +65,7 @@ class HomeWidget extends StatelessWidget {
                               padding: const EdgeInsets.only(left: 50.0),
                               child: Text("GET STARTED"),
                             ),
-                            Icon(Icons.arrow_forward_sharp)
+                            Icon(Icons.arrow_forward_sharp),
                           ],
                         ),
                       ),

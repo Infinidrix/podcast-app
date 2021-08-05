@@ -158,8 +158,8 @@ class SignupWidget extends StatelessWidget {
         body: Padding(
           padding: const EdgeInsets.fromLTRB(43.0, 185.0, 43.0, 0.0),
           child: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: ListView(
+              // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "Getting started",

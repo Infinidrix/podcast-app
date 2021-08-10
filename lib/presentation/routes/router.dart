@@ -1,12 +1,16 @@
 import 'package:podcast_app/presentation/pages/home/home_page.dart';
 import 'package:auto_route/annotations.dart';
-import 'package:podcast_app/presentation/pages/home/home_page.dart';
 import 'package:podcast_app/presentation/pages/signin/signin_page.dart';
+import 'package:podcast_app/presentation/pages/channel_detail/channel_detail_page.dart';
+
+// Whenever you change this file, run the command below to generate the routes
+// flutter packages pub run build_runner build
+// NOTE: Make sure your Page Widget has the word 'Page' in it 
 @MaterialAutoRouter(  
   replaceInRouteName: 'Page,Route',  
   routes: <AutoRoute>[  
     AutoRoute(page: MyHomePage, path:'/', initial: true),
-    AutoRoute(page: Signin, path:'/signin'),  
+    AutoRoute(page: SigninPage, path:'/signin'), 
     ],  
 )  
 class $RootRouter {

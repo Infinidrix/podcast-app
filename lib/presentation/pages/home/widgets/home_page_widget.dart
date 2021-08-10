@@ -1,3 +1,5 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:podcast_app/presentation/routes/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:podcast_app/presentation/pages/signin/signin_page.dart';
@@ -53,7 +55,7 @@ class HomeWidget extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      
+                      context.router.push(SigninRoute());
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),

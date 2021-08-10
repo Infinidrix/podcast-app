@@ -1,3 +1,5 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:podcast_app/presentation/routes/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -77,47 +79,49 @@ class SigninWidget extends StatelessWidget {
     ),
   );
 
-  Widget signinButton = Padding(
-    padding: const EdgeInsets.only(top: 50.0),
-    child: DecoratedBox(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [HexColor("#579EB5"), HexColor("#8EB9C7")]),
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      child: ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.transparent),
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-          ),
-        ),
-        onPressed: () {},
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 50.0),
-                  child: Text("Sign In"),
-                ),
-                Icon(Icons.arrow_forward_sharp),
-              ],
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
-
   @override
   Widget build(BuildContext context) {
+    Widget signinButton = Padding(
+      padding: const EdgeInsets.only(top: 50.0),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [HexColor("#579EB5"), HexColor("#8EB9C7")]),
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.transparent),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+            ),
+          ),
+          onPressed: () {
+            context.router.push(ChannelDetailRoute());
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 50.0),
+                    child: Text("Sign In"),
+                  ),
+                  Icon(Icons.arrow_forward_sharp),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
     return Scaffold(
         backgroundColor: Colors.black,
         body: Padding(

@@ -8,6 +8,7 @@ import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
 
 import '../pages/channel_detail/channel_detail_page.dart' as _i5;
+import '../pages/create_channel/create_channel_page.dart' as _i6;
 import '../pages/home/home_page.dart' as _i3;
 import '../pages/signin/signin_page.dart' as _i4;
 
@@ -35,20 +36,28 @@ class RootRouter extends _i1.RootStackRouter {
           final args = data.argsAs<ChannelDetailRouteArgs>(
               orElse: () => const ChannelDetailRouteArgs());
           return _i5.ChannelDetailPage(key: args.key);
+        }),
+    CreateChannelRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
+        routeData: routeData,
+        builder: (data) {
+          final args = data.argsAs<CreateChannelRouteArgs>(
+              orElse: () => const CreateChannelRouteArgs());
+          return _i6.CreateChannelPage(key: args.key);
         })
   };
 
   @override
   List<_i1.RouteConfig> get routes => [
-        _i1.RouteConfig(MyHomeRoute.name, path: '/h'),
+        _i1.RouteConfig(MyHomeRoute.name, path: '/'),
         _i1.RouteConfig(SigninRoute.name, path: '/signin'),
-        _i1.RouteConfig(ChannelDetailRoute.name, path: '/')
+        _i1.RouteConfig(ChannelDetailRoute.name, path: '/channel'),
+        _i1.RouteConfig(CreateChannelRoute.name, path: '/create')
       ];
 }
 
 class MyHomeRoute extends _i1.PageRouteInfo<MyHomeRouteArgs> {
   MyHomeRoute({_i2.Key? key})
-      : super(name, path: '/h', args: MyHomeRouteArgs(key: key));
+      : super(name, path: '/', args: MyHomeRouteArgs(key: key));
 
   static const String name = 'MyHomeRoute';
 }
@@ -67,13 +76,26 @@ class SigninRoute extends _i1.PageRouteInfo {
 
 class ChannelDetailRoute extends _i1.PageRouteInfo<ChannelDetailRouteArgs> {
   ChannelDetailRoute({_i2.Key? key})
-      : super(name, path: '/', args: ChannelDetailRouteArgs(key: key));
+      : super(name, path: '/channel', args: ChannelDetailRouteArgs(key: key));
 
   static const String name = 'ChannelDetailRoute';
 }
 
 class ChannelDetailRouteArgs {
   const ChannelDetailRouteArgs({this.key});
+
+  final _i2.Key? key;
+}
+
+class CreateChannelRoute extends _i1.PageRouteInfo<CreateChannelRouteArgs> {
+  CreateChannelRoute({_i2.Key? key})
+      : super(name, path: '/create', args: CreateChannelRouteArgs(key: key));
+
+  static const String name = 'CreateChannelRoute';
+}
+
+class CreateChannelRouteArgs {
+  const CreateChannelRouteArgs({this.key});
 
   final _i2.Key? key;
 }

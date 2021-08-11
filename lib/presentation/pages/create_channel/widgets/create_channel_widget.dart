@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class CreateChannelWidget extends StatelessWidget {
-
   Widget emailInput = Padding(
     padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 15.0),
     child: TextFormField(
@@ -67,7 +66,8 @@ class CreateChannelWidget extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Container(
-              child: Center(child: Text("Save"),
+              child: Center(
+                child: Text("Save"),
               ),
             ),
           ),
@@ -76,48 +76,52 @@ class CreateChannelWidget extends StatelessWidget {
     );
 
     return Scaffold(
-        backgroundColor: Colors.black,
-        appBar: AppBar(
-          leading: IconButton(onPressed: (){context.router.pop();}, icon: Icon(Icons.arrow_back_ios)),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.fromLTRB(25.0, 15.0, 25.0, 0.0),
-          child: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(child: Text(
-                  "Create Channel",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                )),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 105.0),
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              context.router.pop();
+            },
+            icon: Icon(Icons.arrow_back_ios)),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(25.0, 15.0, 25.0, 0.0),
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                  child: Text(
+                "Create Channel",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 28.0,
+                  fontWeight: FontWeight.bold,
                 ),
-                Text(
-                  "Channel Name",
-                  style: TextStyle(color: Colors.grey),
-                ),
-                emailInput,
-                Text(
-                  "Channel Name",
-                  style: TextStyle(color: Colors.grey),
-                ),
-                emailInput,
-                Text(
-                  "Channel Name",
-                  style: TextStyle(color: Colors.grey),
-                ),
-                emailInput,
-                
-                signinButton,
-              ],
-            ),
+              )),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 105.0),
+              ),
+              Text(
+                "Channel Name",
+                style: TextStyle(color: Colors.grey),
+              ),
+              emailInput,
+              Text(
+                "Channel Name",
+                style: TextStyle(color: Colors.grey),
+              ),
+              emailInput,
+              Text(
+                "Channel Name",
+                style: TextStyle(color: Colors.grey),
+              ),
+              emailInput,
+              signinButton,
+            ],
           ),
         ),
+      ),
     );
   }
 }

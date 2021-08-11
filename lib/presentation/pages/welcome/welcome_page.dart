@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:podcast_app/presentation/pages/home/widgets/home_page_widget.dart';
+import 'package:podcast_app/presentation/pages/welcome/widgets/welcome_page_widget.dart';
 
 // import 'package:podcast_app/assets';
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key}) : super(key: key);
+class WelcomePage extends StatefulWidget {
+  WelcomePage({Key? key}) : super(key: key);
 
   final String title = "Podcast App";
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _WelcomePageState createState() => _WelcomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +22,7 @@ class _MyHomePageState extends State<MyHomePage> {
             "assets/images/welcome.png",
             height: 343,
           ),
-          HomeWidget(),
+          WelcomeWidget(),
         ],
       ),
     );

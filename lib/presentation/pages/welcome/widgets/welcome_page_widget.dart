@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:podcast_app/presentation/pages/signin/signin_page.dart';
 
-class HomeWidget extends StatelessWidget {
-  const HomeWidget({Key? key}) : super(key: key);
+class WelcomeWidget extends StatelessWidget {
+  const WelcomeWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(

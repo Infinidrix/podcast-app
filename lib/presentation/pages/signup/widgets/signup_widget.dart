@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
+import 'package:podcast_app/presentation/Core/constants.dart';
 
 
 class SignupWidget extends StatelessWidget {
@@ -10,35 +11,7 @@ class SignupWidget extends StatelessWidget {
   Widget build(BuildContext context) {
   final _formKey = GlobalKey<FormState>();
 
-  final textfieldDecoration = InputDecoration(
-    border: UnderlineInputBorder(
-      borderSide: BorderSide(
-        color: Colors.grey,
-      ),
-    ),
-    // labelText: "Email",
-    // labelStyle: TextStyle(color: Colors.white),
-    helperStyle: TextStyle(color: Colors.white),
-    hintText: 'email',
-    hintStyle: TextStyle(color: Colors.white),
-    // filled: true,
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(
-        color: Colors.grey,
-      ),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(
-        color: Colors.grey,
-      ),
-    ),
-    fillColor: Colors.white,
-    prefixIcon: Icon(
-      Icons.email_outlined,
-      color: Colors.white,
-    ),
-  );
-
+  
   Widget emailInput = Padding(
     padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 45.0),
     child: TextFormField(

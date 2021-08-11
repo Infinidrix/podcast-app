@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:podcast_app/presentation/Core/constants.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -8,34 +9,7 @@ class SigninWidget extends StatelessWidget {
     padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 45.0),
     child: TextFormField(
       style: TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        border: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.grey,
-          ),
-        ),
-        // labelText: "Email",
-        // labelStyle: TextStyle(color: Colors.white),
-        helperStyle: TextStyle(color: Colors.white),
-        hintText: 'email',
-        hintStyle: TextStyle(color: Colors.white),
-        // filled: true,
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.grey,
-          ),
-        ),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.grey,
-          ),
-        ),
-        fillColor: Colors.white,
-        prefixIcon: Icon(
-          Icons.email_outlined,
-          color: Colors.white,
-        ),
-      ),
+      decoration: textfieldDecoration
     ),
   );
 
@@ -44,29 +18,7 @@ class SigninWidget extends StatelessWidget {
     child: TextFormField(
       obscureText: true,
       style: TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.grey,
-            ),
-          ),
-          // labelText: "Email",
-          // labelStyle: TextStyle(color: Colors.white),
-          helperStyle: TextStyle(color: Colors.white),
-          hintText: '.........',
-          hintStyle: TextStyle(color: Colors.white, fontSize: 20.0),
-          // filled: true,
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.grey,
-            ),
-          ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.grey,
-            ),
-          ),
-          fillColor: Colors.white,
+      decoration: textfieldDecoration.copyWith(
           prefixIcon: Icon(
             Icons.lock_outline,
             color: Colors.white,

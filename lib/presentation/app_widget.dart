@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:podcast_app/presentation/pages/player/player.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 
@@ -7,16 +8,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        brightness: Brightness.dark,
-      ),
-      routerDelegate: AutoRouterDelegate(
-        _rootRouter,
-        navigatorObservers: () => [AutoRouteObserver()],
-      ),
-      routeInformationParser: _rootRouter.defaultRouteParser(),
-    );
+    return Player();
   }
 }

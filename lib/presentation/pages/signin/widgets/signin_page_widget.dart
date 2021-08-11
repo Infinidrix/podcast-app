@@ -1,24 +1,35 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:podcast_app/presentation/Core/constants.dart';
+import 'package:podcast_app/presentation/core/constants.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class SigninWidget extends StatelessWidget {
-  Widget emailInput = Padding(
-    padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 45.0),
-    child: TextFormField(
-      style: TextStyle(color: Colors.white),
-      decoration: textfieldDecoration
-    ),
-  );
+  @override
+  Widget build(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
 
-  Widget passwordInput = Padding(
-    padding: const EdgeInsets.only(top: 8.0),
-    child: TextFormField(
-      obscureText: true,
-      style: TextStyle(color: Colors.white),
-      decoration: textfieldDecoration.copyWith(
+    Widget emailInput = Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 45.0),
+      child: TextFormField(
+        style: TextStyle(color: Colors.white),
+        decoration: textfieldDecoration,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return "This field can't be empty";
+          }
+          return null;
+        },
+      ),
+    );
+
+    Widget passwordInput = Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: TextFormField(
+        obscureText: true,
+        style: TextStyle(color: Colors.white),
+        decoration: textfieldDecoration.copyWith(
+          hintText: "............",
           prefixIcon: Icon(
             Icons.lock_outline,
             color: Colors.white,
@@ -26,12 +37,17 @@ class SigninWidget extends StatelessWidget {
           suffixIcon: Icon(
             Icons.remove_red_eye_outlined,
             color: Colors.white,
-          )),
-    ),
-  );
+          ),
+        ),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return "This field can't be empty";
+          }
+          return null;
+        },
+      ),
+    );
 
-  @override
-  Widget build(BuildContext context) {
     Widget signinButton = Padding(
       padding: const EdgeInsets.only(top: 50.0),
       child: DecoratedBox(
@@ -52,7 +68,11 @@ class SigninWidget extends StatelessWidget {
             ),
           ),
           onPressed: () {
-            context.router.push(ChannelDetailRoute());
+            if (_formKey.currentState!.validate()) {
+              print("Successfully signed in!");
+              context.router.push(ChannelDetailRoute());
+            }
+            
           },
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -78,59 +98,62 @@ class SigninWidget extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.fromLTRB(55.0, 218.0, 55.0, 0.0),
         child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Let's Sign You In",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold,
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Let's Sign You In",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 22.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 45.0),
-                child: Text(
-                  "Welcome back,you've been missed!",
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 45.0),
+                  child: Text(
+                    "Welcome back,you've been missed!",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ),
+                Text(
+                  "Email",
                   style: TextStyle(color: Colors.grey),
                 ),
-              ),
-              Text(
-                "Email",
-                style: TextStyle(color: Colors.grey),
-              ),
-              emailInput,
-              Text(
-                "Password",
-                style: TextStyle(color: Colors.grey),
-              ),
-              passwordInput,
-              signinButton,
-              Padding(
-                padding: const EdgeInsets.only(top: 40.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Don't have an account?",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        context.router.push(SignupRoute());
-                      },
-                      child: Text(
-                        "Signup",
-                        style: TextStyle(
-                          color: HexColor("#579EB5"),
+                emailInput,
+                Text(
+                  "Password",
+                  style: TextStyle(color: Colors.grey),
+                ),
+                passwordInput,
+                signinButton,
+                Padding(
+                  padding: const EdgeInsets.only(top: 40.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Don't have an account?",
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          context.router.push(SignupRoute());
+                        },
+                        child: Text(
+                          "Signup",
+                          style: TextStyle(
+                            color: HexColor("#579EB5"),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              )
-            ],
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

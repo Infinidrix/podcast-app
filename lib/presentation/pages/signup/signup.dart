@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:podcast_app/presentation/pages/signup/widgets/signup_widget.dart';
 
-class Signup extends StatefulWidget {
-  const Signup({Key? key}) : super(key: key);
+class SignupPage extends StatefulWidget {
+  const SignupPage({Key? key}) : super(key: key);
 
   @override
-  _SignupState createState() => _SignupState();
+  _SignupPageState createState() => _SignupPageState();
 }
 
-class _SignupState extends State<Signup> {
+class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return SignupWidget();

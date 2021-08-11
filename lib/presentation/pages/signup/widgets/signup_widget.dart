@@ -1,39 +1,57 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:podcast_app/presentation/routes/router.gr.dart';
+
 
 class SignupWidget extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+  final _formKey = GlobalKey<FormState>();
+
+  final textfieldDecoration = InputDecoration(
+    border: UnderlineInputBorder(
+      borderSide: BorderSide(
+        color: Colors.grey,
+      ),
+    ),
+    // labelText: "Email",
+    // labelStyle: TextStyle(color: Colors.white),
+    helperStyle: TextStyle(color: Colors.white),
+    hintText: 'email',
+    hintStyle: TextStyle(color: Colors.white),
+    // filled: true,
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(
+        color: Colors.grey,
+      ),
+    ),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(
+        color: Colors.grey,
+      ),
+    ),
+    fillColor: Colors.white,
+    prefixIcon: Icon(
+      Icons.email_outlined,
+      color: Colors.white,
+    ),
+  );
+
   Widget emailInput = Padding(
     padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 45.0),
     child: TextFormField(
       style: TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        border: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.grey,
-          ),
-        ),
-        // labelText: "Email",
-        // labelStyle: TextStyle(color: Colors.white),
-        helperStyle: TextStyle(color: Colors.white),
-        hintText: 'email',
-        hintStyle: TextStyle(color: Colors.white),
-        // filled: true,
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.grey,
-          ),
-        ),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.grey,
-          ),
-        ),
-        fillColor: Colors.white,
-        prefixIcon: Icon(
-          Icons.email_outlined,
-          color: Colors.white,
-        ),
-      ),
+      decoration: textfieldDecoration,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "This field can't be empty";
+        } else if (!value.contains("@") || !value.contains(".com")) {
+          return "Invalid email";
+        }
+        return null;
+      },
     ),
   );
 
@@ -42,37 +60,25 @@ class SignupWidget extends StatelessWidget {
     child: TextFormField(
       obscureText: true,
       style: TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.grey,
-            ),
-          ),
-          // labelText: "Email",
-          // labelStyle: TextStyle(color: Colors.white),
-          helperStyle: TextStyle(color: Colors.white),
-          hintText: '.........',
-          hintStyle: TextStyle(color: Colors.white, fontSize: 20.0),
-          // filled: true,
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.grey,
-            ),
-          ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.grey,
-            ),
-          ),
-          fillColor: Colors.white,
-          prefixIcon: Icon(
-            Icons.lock_outline,
-            color: Colors.white,
-          ),
-          suffixIcon: Icon(
-            Icons.remove_red_eye_outlined,
-            color: Colors.white,
-          )),
+      decoration: textfieldDecoration.copyWith(
+        hintText: ".........",
+        prefixIcon: Icon(
+          Icons.lock_outline,
+          color: Colors.white,
+        ),
+        suffixIcon: Icon(
+          Icons.remove_red_eye_outlined,
+          color: Colors.white,
+        ),
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "This field can't be empty";
+        } else if (value.length < 8) {
+          return "Password must have aleast 8 characters!";
+        }
+        return null;
+      },
     ),
   );
 
@@ -80,38 +86,23 @@ class SignupWidget extends StatelessWidget {
     padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 45.0),
     child: TextFormField(
       style: TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        border: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.grey,
-          ),
-        ),
-        // labelText: "Email",
-        // labelStyle: TextStyle(color: Colors.white),
-        helperStyle: TextStyle(color: Colors.white),
-        hintText: 'john',
-        hintStyle: TextStyle(color: Colors.white),
-        // filled: true,
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.grey,
-          ),
-        ),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.grey,
-          ),
-        ),
-        fillColor: Colors.white,
+      decoration: textfieldDecoration.copyWith(
+        hintText: "John",
         prefixIcon: Icon(
           Icons.person_outline,
           color: Colors.white,
         ),
       ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "This field can't be empty";
+        }
+        return null;
+      },
     ),
   );
 
-  Widget signinButton = Padding(
+  Widget signupButton = Padding(
     padding: const EdgeInsets.only(top: 50.0),
     child: DecoratedBox(
       decoration: BoxDecoration(
@@ -130,7 +121,11 @@ class SignupWidget extends StatelessWidget {
             ),
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          if (_formKey.currentState!.validate()) {
+            print("Successfully signed in!");
+          }
+        },
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Container(
@@ -150,14 +145,13 @@ class SignupWidget extends StatelessWidget {
     ),
   );
 
-  
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
-        body: Padding(
-          padding: const EdgeInsets.fromLTRB(43.0, 185.0, 43.0, 0.0),
-          child: Container(
+      backgroundColor: Colors.black,
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(43.0, 185.0, 43.0, 0.0),
+        child: Container(
+          child: Form(
+            key: _formKey,
             child: ListView(
               // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -191,7 +185,7 @@ class SignupWidget extends StatelessWidget {
                   style: TextStyle(color: Colors.grey),
                 ),
                 passwordInput,
-                signinButton,
+                signupButton,
                 Padding(
                   padding: const EdgeInsets.only(top: 40.0),
                   child: Row(
@@ -202,8 +196,11 @@ class SignupWidget extends StatelessWidget {
                         style: TextStyle(color: Colors.grey),
                       ),
                       TextButton(
-                        onPressed: () {},
-                        child: Text("Signin",style: TextStyle(color: HexColor("#579EB5"))),
+                        onPressed: () {
+                          context.router.push(SigninRoute());
+                        },
+                        child: Text("Signin",
+                            style: TextStyle(color: HexColor("#579EB5"))),
                       ),
                     ],
                   ),
@@ -212,6 +209,7 @@ class SignupWidget extends StatelessWidget {
             ),
           ),
         ),
+      ),
     );
   }
 }

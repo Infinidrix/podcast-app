@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class SigninWidget extends StatelessWidget {
-
   Widget emailInput = Padding(
     padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 45.0),
     child: TextFormField(
@@ -123,59 +122,66 @@ class SigninWidget extends StatelessWidget {
     );
 
     return Scaffold(
-        backgroundColor: Colors.black,
-        body: Padding(
-          padding: const EdgeInsets.fromLTRB(55.0, 218.0, 55.0, 0.0),
-          child: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Let's Sign You In",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 22.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+      backgroundColor: Colors.black,
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(55.0, 218.0, 55.0, 0.0),
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Let's Sign You In",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 22.0,
+                  fontWeight: FontWeight.bold,
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 45.0),
-                  child: Text(
-                    "Welcome back,you've been missed!",
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                ),
-                Text(
-                  "Email",
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 45.0),
+                child: Text(
+                  "Welcome back,you've been missed!",
                   style: TextStyle(color: Colors.grey),
                 ),
-                emailInput,
-                Text(
-                  "Password",
-                  style: TextStyle(color: Colors.grey),
+              ),
+              Text(
+                "Email",
+                style: TextStyle(color: Colors.grey),
+              ),
+              emailInput,
+              Text(
+                "Password",
+                style: TextStyle(color: Colors.grey),
+              ),
+              passwordInput,
+              signinButton,
+              Padding(
+                padding: const EdgeInsets.only(top: 40.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Don't have an account?",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        context.router.push(SignupRoute());
+                      },
+                      child: Text(
+                        "Signup",
+                        style: TextStyle(
+                          color: HexColor("#579EB5"),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                passwordInput,
-                signinButton,
-                Padding(
-                  padding: const EdgeInsets.only(top: 40.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Don't have an account?",
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text("Signin",style: TextStyle(color: HexColor("#579EB5"))),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
         ),
+      ),
     );
   }
 }

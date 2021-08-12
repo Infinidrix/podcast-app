@@ -11,11 +11,11 @@ import 'package:podcast_app/presentation/pages/create_channel/create_channel_pag
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
-    // AutoRoute(page: PlayerPage, path: '/player', initial: true),
-    AutoRoute(page: PlayerPage, path: '/'),
+    AutoRoute(page: MyHomePage, path: '/', initial: true),
     AutoRoute(page: SigninPage, path: '/signin'),
     AutoRoute(page: ChannelDetailPage, path: '/channel'),
     AutoRoute(page: CreateChannelPage, path: '/create'),
+    AutoRoute(page: PlayerPage, path: '/player'),
   ],
 )
 class $RootRouter {}

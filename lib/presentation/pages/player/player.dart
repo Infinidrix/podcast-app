@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:podcast_app/presentation/pages/player/widgets/bottom_navigation_widget.dart';
-import 'package:podcast_app/presentation/pages/player/widgets/controls_widget.dart';
-import 'package:podcast_app/presentation/pages/player/widgets/player_app_bar.dart';
-import 'package:podcast_app/presentation/pages/player/widgets/podcast_information.dart';
-import 'package:podcast_app/presentation/pages/player/widgets/time_slider_widget.dart';
+import 'package:podcast_app/presentation/pages/player/widgets/player_widgets.dart';
 
 class Player extends StatelessWidget {
   const Player({Key? key}) : super(key: key);

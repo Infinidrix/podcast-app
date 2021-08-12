@@ -15,7 +15,7 @@ import 'package:podcast_app/presentation/pages/create_channel/create_channel_pag
   routes: <AutoRoute>[
     AutoRoute(page: MyHomePage, path: '/', initial: true),
     AutoRoute(page: SigninPage, path: '/signin'),
-    AutoRoute(page: Signup, path: '/signup'),
+    AutoRoute(page: SignupPage, path: '/signup'),
     AutoRoute(page: ChannelDetailPage, path: '/channel'),
     AutoRoute(page: CreateChannelPage, path: '/create'),
     AutoRoute(page: PlayerPage, path: '/player'),

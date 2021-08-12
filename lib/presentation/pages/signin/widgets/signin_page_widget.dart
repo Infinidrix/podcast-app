@@ -100,7 +100,7 @@ class SigninWidget extends StatelessWidget {
             ),
           ),
           onPressed: () {
-            context.router.push(ChannelDetailRoute());
+            context.router.push(HomeRoute());
           },
           child: Padding(
             padding: const EdgeInsets.all(10.0),

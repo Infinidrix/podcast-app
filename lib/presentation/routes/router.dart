@@ -1,3 +1,4 @@
+import 'package:podcast_app/presentation/pages/home/home_page.dart';
 import 'package:podcast_app/presentation/pages/welcome/welcome_page.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:podcast_app/presentation/pages/signin/signin_page.dart';
@@ -14,6 +15,7 @@ import 'package:podcast_app/presentation/pages/create_channel/create_channel_pag
     AutoRoute(page: SigninPage, path: '/signin'),
     AutoRoute(page: ChannelDetailPage, path: '/channel'),
     AutoRoute(page: CreateChannelPage, path: '/create'),
+    AutoRoute(page: HomePage, path: '/home', initial: true),
   ],
 )
 class $RootRouter {}

@@ -10,6 +10,7 @@ import 'package:flutter/material.dart' as _i2;
 import '../pages/channel_detail/channel_detail_page.dart' as _i6;
 import '../pages/create_channel/create_channel_page.dart' as _i7;
 import '../pages/home/home_page.dart' as _i3;
+import '../pages/player/player_page.dart' as _i8;
 import '../pages/signin/signin_page.dart' as _i4;
 import '../pages/signup/signup.dart' as _i5;
 
@@ -31,10 +32,10 @@ class RootRouter extends _i1.RootStackRouter {
         builder: (_) {
           return const _i4.SigninPage();
         }),
-    SignupRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
+    Signup.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return const _i5.SignupPage();
+          return const _i5.Signup();
         }),
     ChannelDetailRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
@@ -49,6 +50,11 @@ class RootRouter extends _i1.RootStackRouter {
           final args = data.argsAs<CreateChannelRouteArgs>(
               orElse: () => const CreateChannelRouteArgs());
           return _i7.CreateChannelPage(key: args.key);
+        }),
+    PlayerRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return const _i8.PlayerPage();
         })
   };
 
@@ -56,9 +62,10 @@ class RootRouter extends _i1.RootStackRouter {
   List<_i1.RouteConfig> get routes => [
         _i1.RouteConfig(MyHomeRoute.name, path: '/'),
         _i1.RouteConfig(SigninRoute.name, path: '/signin'),
-        _i1.RouteConfig(SignupRoute.name, path: '/signup'),
+        _i1.RouteConfig(Signup.name, path: '/signup'),
         _i1.RouteConfig(ChannelDetailRoute.name, path: '/channel'),
-        _i1.RouteConfig(CreateChannelRoute.name, path: '/create')
+        _i1.RouteConfig(CreateChannelRoute.name, path: '/create'),
+        _i1.RouteConfig(PlayerRoute.name, path: '/player')
       ];
 }
 
@@ -81,10 +88,10 @@ class SigninRoute extends _i1.PageRouteInfo {
   static const String name = 'SigninRoute';
 }
 
-class SignupRoute extends _i1.PageRouteInfo {
-  const SignupRoute() : super(name, path: '/signup');
+class Signup extends _i1.PageRouteInfo {
+  const Signup() : super(name, path: '/signup');
 
-  static const String name = 'SignupRoute';
+  static const String name = 'Signup';
 }
 
 class ChannelDetailRoute extends _i1.PageRouteInfo<ChannelDetailRouteArgs> {
@@ -111,4 +118,10 @@ class CreateChannelRouteArgs {
   const CreateChannelRouteArgs({this.key});
 
   final _i2.Key? key;
+}
+
+class PlayerRoute extends _i1.PageRouteInfo {
+  const PlayerRoute() : super(name, path: '/player');
+
+  static const String name = 'PlayerRoute';
 }

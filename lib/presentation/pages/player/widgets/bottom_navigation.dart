@@ -15,22 +15,34 @@ class _ABottomNavaigationBarState extends State<ABottomNavaigationBar> {
       iconSize: 30,
       items: [
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
+          icon: Icon(
+            Icons.home,
+            color: Colors.white,
+          ),
           label: "Home",
           backgroundColor: HexColor("#1A1A1A"),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.search),
+          icon: Icon(
+            Icons.search,
+            color: Colors.white,
+          ),
           label: "Search",
           backgroundColor: HexColor("#1A1A1A"),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.bar_chart),
+          icon: Icon(
+            Icons.bar_chart,
+            color: Colors.white,
+          ),
           label: "Your Library",
           backgroundColor: HexColor("#1A1A1A"),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.dashboard),
+          icon: Icon(
+            Icons.dashboard,
+            color: Colors.white,
+          ),
           label: "Your Channel",
           backgroundColor: HexColor("#1A1A1A"),
         )

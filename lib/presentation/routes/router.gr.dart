@@ -9,7 +9,7 @@ import 'package:flutter/material.dart' as _i2;
 
 import '../pages/channel_detail/channel_detail_page.dart' as _i6;
 import '../pages/create_channel/create_channel_page.dart' as _i7;
-import '../pages/home/home_page.dart' as _i3;
+import '../pages/edit_channel/edit_channel_page.dart' as _i3;
 import '../pages/player/player_page.dart' as _i8;
 import '../pages/signin/signin_page.dart' as _i4;
 import '../pages/signup/signup.dart' as _i5;
@@ -21,12 +21,10 @@ class RootRouter extends _i1.RootStackRouter {
 
   @override
   final Map<String, _i1.PageFactory> pagesMap = {
-    MyHomeRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
+    EditChannel.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
-        builder: (data) {
-          final args = data.argsAs<MyHomeRouteArgs>(
-              orElse: () => const MyHomeRouteArgs());
-          return _i3.MyHomePage(key: args.key);
+        builder: (_) {
+          return const _i3.EditChannel();
         }),
     SigninRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
@@ -66,7 +64,7 @@ class RootRouter extends _i1.RootStackRouter {
 
   @override
   List<_i1.RouteConfig> get routes => [
-        _i1.RouteConfig(MyHomeRoute.name, path: '/'),
+        _i1.RouteConfig(EditChannel.name, path: '/'),
         _i1.RouteConfig(SigninRoute.name, path: '/signin'),
         _i1.RouteConfig(SignupRoute.name, path: '/signup'),
         _i1.RouteConfig(ChannelDetailRoute.name, path: '/channel'),
@@ -76,17 +74,10 @@ class RootRouter extends _i1.RootStackRouter {
       ];
 }
 
-class MyHomeRoute extends _i1.PageRouteInfo<MyHomeRouteArgs> {
-  MyHomeRoute({_i2.Key? key})
-      : super(name, path: '/', args: MyHomeRouteArgs(key: key));
+class EditChannel extends _i1.PageRouteInfo {
+  const EditChannel() : super(name, path: '/');
 
-  static const String name = 'MyHomeRoute';
-}
-
-class MyHomeRouteArgs {
-  const MyHomeRouteArgs({this.key});
-
-  final _i2.Key? key;
+  static const String name = 'EditChannel';
 }
 
 class SigninRoute extends _i1.PageRouteInfo {

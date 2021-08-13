@@ -9,6 +9,7 @@ import 'package:flutter/material.dart' as _i2;
 
 import '../pages/channel_detail/channel_detail_page.dart' as _i6;
 import '../pages/create_channel/create_channel_page.dart' as _i7;
+import '../pages/edit_channel/edit_channel_page.dart' as _i10;
 import '../pages/home/home_page.dart' as _i3;
 import '../pages/player/player_page.dart' as _i8;
 import '../pages/signin/signin_page.dart' as _i4;
@@ -61,6 +62,11 @@ class RootRouter extends _i1.RootStackRouter {
         routeData: routeData,
         builder: (_) {
           return const _i9.YourChannelsPage();
+        }),
+    EditChannelRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return const _i10.EditChannelPage();
         })
   };
 
@@ -72,7 +78,8 @@ class RootRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(ChannelDetailRoute.name, path: '/channel'),
         _i1.RouteConfig(CreateChannelRoute.name, path: '/create'),
         _i1.RouteConfig(PlayerRoute.name, path: '/player'),
-        _i1.RouteConfig(YourChannelsRoute.name, path: '/your_channels')
+        _i1.RouteConfig(YourChannelsRoute.name, path: '/your_channels'),
+        _i1.RouteConfig(EditChannelRoute.name, path: '/edit_channel')
       ];
 }
 
@@ -137,4 +144,10 @@ class YourChannelsRoute extends _i1.PageRouteInfo {
   const YourChannelsRoute() : super(name, path: '/your_channels');
 
   static const String name = 'YourChannelsRoute';
+}
+
+class EditChannelRoute extends _i1.PageRouteInfo {
+  const EditChannelRoute() : super(name, path: '/edit_channel');
+
+  static const String name = 'EditChannelRoute';
 }

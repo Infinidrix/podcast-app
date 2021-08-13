@@ -10,7 +10,7 @@ class PlayerPage extends StatelessWidget {
     return Scaffold(
       body: Container(
         color: HexColor("#1A1A1A"),
-        padding: EdgeInsets.all(30.0),
+        padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
         child: ListView(
           children: [
             PlayerAppBar(),

@@ -13,6 +13,7 @@ import '../pages/home/home_page.dart' as _i3;
 import '../pages/player/player_page.dart' as _i8;
 import '../pages/signin/signin_page.dart' as _i4;
 import '../pages/signup/signup.dart' as _i5;
+import '../pages/your_channels/your_channels_page.dart' as _i9;
 
 class RootRouter extends _i1.RootStackRouter {
   RootRouter([_i2.GlobalKey<_i2.NavigatorState>? navigatorKey])
@@ -55,6 +56,11 @@ class RootRouter extends _i1.RootStackRouter {
         routeData: routeData,
         builder: (_) {
           return const _i8.PlayerPage();
+        }),
+    YourChannelsRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return const _i9.YourChannelsPage();
         })
   };
 
@@ -65,7 +71,8 @@ class RootRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(SignupRoute.name, path: '/signup'),
         _i1.RouteConfig(ChannelDetailRoute.name, path: '/channel'),
         _i1.RouteConfig(CreateChannelRoute.name, path: '/create'),
-        _i1.RouteConfig(PlayerRoute.name, path: '/player')
+        _i1.RouteConfig(PlayerRoute.name, path: '/player'),
+        _i1.RouteConfig(YourChannelsRoute.name, path: '/your_channels')
       ];
 }
 
@@ -124,4 +131,10 @@ class PlayerRoute extends _i1.PageRouteInfo {
   const PlayerRoute() : super(name, path: '/player');
 
   static const String name = 'PlayerRoute';
+}
+
+class YourChannelsRoute extends _i1.PageRouteInfo {
+  const YourChannelsRoute() : super(name, path: '/your_channels');
+
+  static const String name = 'YourChannelsRoute';
 }

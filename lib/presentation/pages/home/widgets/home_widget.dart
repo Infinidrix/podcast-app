@@ -102,6 +102,13 @@ class HomeWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Icon(Icons.settings_outlined),
+              ),
+            ),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(

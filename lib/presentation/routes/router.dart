@@ -16,13 +16,17 @@ import 'package:podcast_app/presentation/routes/router.gr.dart';
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
-    AutoRoute(page: EditChannel, path: '/', initial: true),
+    AutoRoute(page: MyHomePage, path: '/', initial: true),
     AutoRoute(page: SigninPage, path: '/signin'),
     AutoRoute(page: SignupPage, path: '/signup'),
     AutoRoute(page: ChannelDetailPage, path: '/channel'),
     AutoRoute(page: CreateChannelPage, path: '/create'),
     AutoRoute(page: PlayerPage, path: '/player'),
     AutoRoute(page: YourChannelsPage, path: '/your_channels'),
+    AutoRoute(
+      page: EditChannelPage,
+      path: '/edit_channel',
+    ),
   ],
 )
 class $RootRouter {}

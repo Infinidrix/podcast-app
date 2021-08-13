@@ -9,6 +9,14 @@ class YourChannelsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: HexColor("#282828"),
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        onPressed: () => {},
+      ),
       backgroundColor: HexColor("#1A1A1A"),
       body: Container(
         padding: EdgeInsets.fromLTRB(30, 30, 30, 0),

@@ -78,6 +78,7 @@ class CreateChannelWidget extends StatelessWidget {
     return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
+          backgroundColor: Colors.black,
           leading: IconButton(onPressed: (){context.router.pop();}, icon: Icon(Icons.arrow_back_ios)),
         ),
         body: Padding(
@@ -103,12 +104,12 @@ class CreateChannelWidget extends StatelessWidget {
                 ),
                 emailInput,
                 Text(
-                  "Channel Name",
+                  "Description",
                   style: TextStyle(color: Colors.grey),
                 ),
                 emailInput,
                 Text(
-                  "Channel Name",
+                  "Description",
                   style: TextStyle(color: Colors.grey),
                 ),
                 emailInput,

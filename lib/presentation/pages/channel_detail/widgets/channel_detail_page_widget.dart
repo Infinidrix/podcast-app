@@ -6,7 +6,9 @@ class ChannelDetailWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
+      body: Container( 
+        color: Colors.black, 
+        child: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
             leading: IconButton(onPressed: (){context.router.pop();}, icon: Icon(Icons.arrow_back_ios)),
@@ -80,7 +82,7 @@ class ChannelDetailWidget extends StatelessWidget {
               ),
           ),
           SliverFixedExtentList(
-            
+              
               itemExtent: 90.0,
               
               delegate: SliverChildBuilderDelegate(
@@ -88,7 +90,7 @@ class ChannelDetailWidget extends StatelessWidget {
                   return InkWell(
                     onTap: () {context.router.push(CreateChannelRoute());},
                     child: Card(
-                      color: Theme.of(context).primaryColor,
+                      color: Colors.black,
                       child: Row(
                       
                         children: [
@@ -122,7 +124,7 @@ class ChannelDetailWidget extends StatelessWidget {
 
         ],
       )
-    );
+    ));
   }
   
 }

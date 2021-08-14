@@ -9,9 +9,12 @@ import 'package:flutter/material.dart' as _i2;
 
 import '../pages/channel_detail/channel_detail_page.dart' as _i6;
 import '../pages/create_channel/create_channel_page.dart' as _i7;
+import '../pages/edit_channel/edit_channel_page.dart' as _i10;
 import '../pages/home/home_page.dart' as _i3;
+import '../pages/player/player_page.dart' as _i8;
 import '../pages/signin/signin_page.dart' as _i4;
 import '../pages/signup/signup.dart' as _i5;
+import '../pages/your_channels/your_channels_page.dart' as _i9;
 
 class RootRouter extends _i1.RootStackRouter {
   RootRouter([_i2.GlobalKey<_i2.NavigatorState>? navigatorKey])
@@ -49,6 +52,21 @@ class RootRouter extends _i1.RootStackRouter {
           final args = data.argsAs<CreateChannelRouteArgs>(
               orElse: () => const CreateChannelRouteArgs());
           return _i7.CreateChannelPage(key: args.key);
+        }),
+    PlayerRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return const _i8.PlayerPage();
+        }),
+    YourChannelsRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return const _i9.YourChannelsPage();
+        }),
+    EditChannelRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return const _i10.EditChannelPage();
         })
   };
 
@@ -58,7 +76,10 @@ class RootRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(SigninRoute.name, path: '/signin'),
         _i1.RouteConfig(SignupRoute.name, path: '/signup'),
         _i1.RouteConfig(ChannelDetailRoute.name, path: '/channel'),
-        _i1.RouteConfig(CreateChannelRoute.name, path: '/create')
+        _i1.RouteConfig(CreateChannelRoute.name, path: '/create'),
+        _i1.RouteConfig(PlayerRoute.name, path: '/player'),
+        _i1.RouteConfig(YourChannelsRoute.name, path: '/your_channels'),
+        _i1.RouteConfig(EditChannelRoute.name, path: '/edit_channel')
       ];
 }
 
@@ -111,4 +132,22 @@ class CreateChannelRouteArgs {
   const CreateChannelRouteArgs({this.key});
 
   final _i2.Key? key;
+}
+
+class PlayerRoute extends _i1.PageRouteInfo {
+  const PlayerRoute() : super(name, path: '/player');
+
+  static const String name = 'PlayerRoute';
+}
+
+class YourChannelsRoute extends _i1.PageRouteInfo {
+  const YourChannelsRoute() : super(name, path: '/your_channels');
+
+  static const String name = 'YourChannelsRoute';
+}
+
+class EditChannelRoute extends _i1.PageRouteInfo {
+  const EditChannelRoute() : super(name, path: '/edit_channel');
+
+  static const String name = 'EditChannelRoute';
 }

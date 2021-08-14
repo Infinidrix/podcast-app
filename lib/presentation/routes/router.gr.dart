@@ -9,7 +9,8 @@ import 'package:flutter/material.dart' as _i2;
 
 import '../pages/channel_detail/channel_detail_page.dart' as _i6;
 import '../pages/create_channel/create_channel_page.dart' as _i7;
-import '../pages/edit_channel/edit_channel_page.dart' as _i10;
+import '../pages/create_podcast/create_podcast.dart' as _i10;
+import '../pages/edit_channel/edit_channel_page.dart' as _i11;
 import '../pages/home/home_page.dart' as _i3;
 import '../pages/player/player_page.dart' as _i8;
 import '../pages/signin/signin_page.dart' as _i4;
@@ -63,10 +64,17 @@ class RootRouter extends _i1.RootStackRouter {
         builder: (_) {
           return const _i9.YourChannelsPage();
         }),
+    CreatePodcastRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
+        routeData: routeData,
+        builder: (data) {
+          final args = data.argsAs<CreatePodcastRouteArgs>(
+              orElse: () => const CreatePodcastRouteArgs());
+          return _i10.CreatePodcastPage(key: args.key);
+        }),
     EditChannelRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return const _i10.EditChannelPage();
+          return const _i11.EditChannelPage();
         })
   };
 
@@ -79,6 +87,7 @@ class RootRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(CreateChannelRoute.name, path: '/create'),
         _i1.RouteConfig(PlayerRoute.name, path: '/player'),
         _i1.RouteConfig(YourChannelsRoute.name, path: '/your_channels'),
+        _i1.RouteConfig(CreatePodcastRoute.name, path: '/add_podcast'),
         _i1.RouteConfig(EditChannelRoute.name, path: '/edit_channel')
       ];
 }
@@ -144,6 +153,20 @@ class YourChannelsRoute extends _i1.PageRouteInfo {
   const YourChannelsRoute() : super(name, path: '/your_channels');
 
   static const String name = 'YourChannelsRoute';
+}
+
+class CreatePodcastRoute extends _i1.PageRouteInfo<CreatePodcastRouteArgs> {
+  CreatePodcastRoute({_i2.Key? key})
+      : super(name,
+            path: '/add_podcast', args: CreatePodcastRouteArgs(key: key));
+
+  static const String name = 'CreatePodcastRoute';
+}
+
+class CreatePodcastRouteArgs {
+  const CreatePodcastRouteArgs({this.key});
+
+  final _i2.Key? key;
 }
 
 class EditChannelRoute extends _i1.PageRouteInfo {

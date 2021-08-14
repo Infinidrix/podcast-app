@@ -7,8 +7,7 @@ import 'package:podcast_app/presentation/pages/signup/signup.dart';
 import 'package:podcast_app/presentation/pages/channel_detail/channel_detail_page.dart';
 import 'package:podcast_app/presentation/pages/create_channel/create_channel_page.dart';
 import 'package:podcast_app/presentation/pages/your_channels/your_channels_page.dart';
-import 'package:podcast_app/presentation/routes/router.gr.dart';
-
+import 'package:podcast_app/presentation/pages/create_podcast/create_podcast.dart';
 // Whenever you change this file, run the command below to generate the routes
 // flutter packages pub run build_runner build
 // NOTE: Make sure your Page Widget has the word 'Page' in it
@@ -23,6 +22,7 @@ import 'package:podcast_app/presentation/routes/router.gr.dart';
     AutoRoute(page: CreateChannelPage, path: '/create'),
     AutoRoute(page: PlayerPage, path: '/player'),
     AutoRoute(page: YourChannelsPage, path: '/your_channels'),
+    AutoRoute(page: CreatePodcastPage, path:'/add_podcast'),
     AutoRoute(
       page: EditChannelPage,
       path: '/edit_channel',

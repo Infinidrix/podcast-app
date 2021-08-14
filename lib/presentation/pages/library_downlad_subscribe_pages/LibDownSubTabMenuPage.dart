@@ -1,5 +1,6 @@
 
 
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'Download/Download.dart';
@@ -71,6 +72,22 @@ class _LibraryDownloadSub_TabMenuPageState extends State<LibraryDownloadSub_TabM
           ],
         ),
 
+        bottomNavigationBar: CurvedNavigationBar(
+          index: 0,
+          height: 60.0,
+          items: <Widget>[
+            Icon(Icons.home_outlined, size: 30,color:Colors.white,),
+            Icon(Icons.search_outlined, size: 30,color: Colors.white),
+            Icon(Icons.compare_arrows, size: 30,color: Colors.white),
+            Icon(Icons.call_split, size: 30,color: Colors.white),
+          ],
+          color: Color(0xff282828),
+          buttonBackgroundColor: Color(0xff282828),
+          backgroundColor: Color(0xff121212),
+          animationCurve: Curves.easeInOut,
+          animationDuration: Duration(milliseconds: 600),
+
+        ),
 
 
 

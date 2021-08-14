@@ -9,6 +9,7 @@ class SigninWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
 
+    // the input field widget
     Widget emailInput = Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 45.0),
       child: TextFormField(
@@ -23,6 +24,7 @@ class SigninWidget extends StatelessWidget {
       ),
     );
 
+    // the password field widget
     Widget passwordInput = Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: TextFormField(
@@ -48,6 +50,7 @@ class SigninWidget extends StatelessWidget {
       ),
     );
 
+    // the signin in button
     Widget signinButton = Padding(
       padding: const EdgeInsets.only(top: 50.0),
       child: DecoratedBox(
@@ -68,6 +71,7 @@ class SigninWidget extends StatelessWidget {
             ),
           ),
           onPressed: () {
+            // checking if the form submitted is valid
             if (_formKey.currentState!.validate()) {
               print("Successfully signed in!");
               context.router.push(ChannelDetailRoute());
@@ -101,7 +105,6 @@ class SigninWidget extends StatelessWidget {
           child: Form(
             key: _formKey,
             child: ListView(
-              // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "Let's Sign You In",

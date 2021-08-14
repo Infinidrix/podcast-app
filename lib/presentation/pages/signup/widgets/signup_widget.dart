@@ -9,6 +9,7 @@ class SignupWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
 
+    // the email field widget
     Widget emailInput = Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 45.0),
       child: TextFormField(
@@ -25,6 +26,7 @@ class SignupWidget extends StatelessWidget {
       ),
     );
 
+    // the password field widget
     Widget passwordInput = Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: TextFormField(
@@ -52,6 +54,7 @@ class SignupWidget extends StatelessWidget {
       ),
     );
 
+    // the username field widget
     Widget usernameInput = Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 45.0),
       child: TextFormField(
@@ -72,6 +75,7 @@ class SignupWidget extends StatelessWidget {
       ),
     );
 
+    // the signup button
     Widget signupButton = Padding(
       padding: const EdgeInsets.only(top: 50.0),
       child: DecoratedBox(

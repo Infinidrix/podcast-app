@@ -45,7 +45,7 @@ class LibraryCard extends StatelessWidget {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               image: DecorationImage(
-                                  image: AssetImage('asset/placeholder.jpg'),
+                                  image: AssetImage('assets/images/placeholder.jpg'),
                                   fit: BoxFit.cover)),
                         )),
                     Expanded(

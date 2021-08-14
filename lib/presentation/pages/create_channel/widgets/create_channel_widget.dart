@@ -5,44 +5,42 @@ import 'package:hexcolor/hexcolor.dart';
 
 class CreateChannelWidget extends StatelessWidget {
 
-  Widget emailInput = Padding(
-    padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 15.0),
-    child: TextFormField(
-      style: TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        border: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.grey,
+  Widget getFormField(Icon icon, int lineCount, String hint){
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 15.0),
+      child: TextFormField(
+        minLines: lineCount,
+        maxLines: lineCount,
+        style: TextStyle(color: Colors.white),
+        decoration: InputDecoration(
+          border: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.grey,
+            ),
           ),
-        ),
-        // labelText: "Email",
-        // labelStyle: TextStyle(color: Colors.white),
-        helperStyle: TextStyle(color: Colors.white),
-        hintText: 'email',
-        hintStyle: TextStyle(color: Colors.white),
-        // filled: true,
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.grey,
+          helperStyle: TextStyle(color: Colors.white),
+          hintText: hint,
+          hintStyle: TextStyle(color: Colors.white),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.grey,
+            ),
           ),
-        ),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.grey,
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.grey,
+            ),
           ),
-        ),
-        fillColor: Colors.white,
-        prefixIcon: Icon(
-          Icons.email_outlined,
-          color: Colors.white,
+          fillColor: Colors.white,
+          prefixIcon: icon,
         ),
       ),
-    ),
-  );
+    ); 
+  }
 
   @override
   Widget build(BuildContext context) {
-    Widget signinButton = Padding(
+    Widget saveButton = Padding(
       padding: const EdgeInsets.only(top: 50.0),
       child: DecoratedBox(
         decoration: BoxDecoration(
@@ -102,19 +100,19 @@ class CreateChannelWidget extends StatelessWidget {
                   "Channel Name",
                   style: TextStyle(color: Colors.grey),
                 ),
-                emailInput,
+                getFormField(Icon(Icons.mic_none), 1, "The name of the channel"),
                 Text(
                   "Description",
                   style: TextStyle(color: Colors.grey),
                 ),
-                emailInput,
+                getFormField(Icon(Icons.description_outlined), 3, "Description of the channel"),
                 Text(
                   "Description",
                   style: TextStyle(color: Colors.grey),
                 ),
-                emailInput,
+                getFormField(Icon(Icons.insert_photo_outlined), 1, "Attach photo"),
                 
-                signinButton,
+                saveButton,
               ],
             ),
           ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:podcast_app/presentation/pages/edit_profile/edit_profile_widget.dart';
+import 'package:podcast_app/presentation/pages/edit_profile/widgets/edit_profile_widget.dart';
 import 'package:podcast_app/presentation/pages/player/widgets/player_widgets.dart';
 
 class EditProfilePage extends StatelessWidget {

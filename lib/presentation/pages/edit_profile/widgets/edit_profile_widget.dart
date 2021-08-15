@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:podcast_app/presentation/pages/edit_profile/widgets/profile_picture.dart';
 
 class EditProfileWidget extends StatefulWidget {
   const EditProfileWidget({Key? key}) : super(key: key);
@@ -12,12 +14,9 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 73.0),
-            child: Text("Profile"),
-          ),
-        ),
+        ChangeProfilePricture(),
+        Text("User Name"),
+        
       ],
     );
   }

@@ -91,6 +91,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
       padding: const EdgeInsets.symmetric(horizontal: 47.5),
       child: Container(
         child: Form(
+          key: _formKey,
             child: ListView(
           children: [
             ChangeProfilePricture(),

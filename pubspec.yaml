@@ -25,6 +25,10 @@ dependencies:
     sdk: flutter
   hexcolor: ^2.0.4
 
+  curved_navigation_bar: ^1.0.1
+  lite_rolling_switch: ^0.1.1
+
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -54,6 +58,7 @@ flutter:
   assets:
     - assets/images/welcome.png
     - assets/images/1by1.png
+    - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

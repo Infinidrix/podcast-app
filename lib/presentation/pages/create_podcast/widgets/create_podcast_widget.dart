@@ -3,7 +3,7 @@ import 'package:podcast_app/presentation/routes/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class CreateChannelWidget extends StatelessWidget {
+class CreatePodcastWidget extends StatelessWidget {
 
   Widget getFormField(Icon icon, int lineCount, String hint){
     return Padding(
@@ -60,7 +60,7 @@ class CreateChannelWidget extends StatelessWidget {
             ),
           ),
           onPressed: () {
-            context.router.popAndPush(CreatePodcastRoute());
+            context.router.pop();
           },
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -86,7 +86,7 @@ class CreateChannelWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(child: Text(
-                  "Create Channel",
+                  "Create Podcast",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 28.0,
@@ -97,21 +97,49 @@ class CreateChannelWidget extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 105.0),
                 ),
                 Text(
-                  "Channel Name",
+                  "Episode Name",
                   style: TextStyle(color: Colors.grey),
                 ),
-                getFormField(Icon(Icons.mic_none), 1, "The name of the channel"),
+                getFormField(Icon(Icons.mic_none), 1, "The name of the episode"),
                 Text(
                   "Description",
                   style: TextStyle(color: Colors.grey),
                 ),
-                getFormField(Icon(Icons.description_outlined), 3, "Description of the channel"),
+                getFormField(Icon(Icons.description_outlined), 3, "Description of the episode"),
                 Text(
-                  "Cover Photo",
+                  "File",
                   style: TextStyle(color: Colors.grey),
                 ),
-                getFormField(Icon(Icons.insert_photo_outlined), 1, "Attach photo"),
-                
+                Row(children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 30.0), 
+                    child: Column(children: [
+                      Icon(
+                          Icons.mic_none,
+                          size: 60.0
+                        ),
+                      Text("Record",
+                      style: TextStyle(fontSize: 16),)
+                    ]),
+                  ),
+                  Expanded(child: 
+                    Align(
+                      alignment: Alignment.centerLeft, 
+                    )
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 30.0), 
+                    child: Column(children: [
+                      Icon(
+                          Icons.file_upload_outlined,
+                          size: 60.0
+                        ),
+                      Text("Upload",
+                      style: TextStyle(fontSize: 16),)
+                    ]),
+                  ),
+                ],),
+
                 saveButton,
               ],
             ),

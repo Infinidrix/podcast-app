@@ -12,10 +12,10 @@ import '../pages/create_channel/create_channel_page.dart' as _i7;
 import '../pages/create_podcast/create_podcast.dart' as _i11;
 import '../pages/edit_channel/edit_channel_page.dart' as _i12;
 import '../pages/edit_profile/profile_page.dart' as _i10;
-import '../pages/home/home_page.dart' as _i3;
 import '../pages/player/player_page.dart' as _i8;
 import '../pages/signin/signin_page.dart' as _i4;
 import '../pages/signup/signup.dart' as _i5;
+import '../pages/welcome/welcome_page.dart' as _i3;
 import '../pages/your_channels/your_channels_page.dart' as _i9;
 
 class RootRouter extends _i1.RootStackRouter {
@@ -24,12 +24,12 @@ class RootRouter extends _i1.RootStackRouter {
 
   @override
   final Map<String, _i1.PageFactory> pagesMap = {
-    MyHomeRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
+    WelcomeRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (data) {
-          final args = data.argsAs<MyHomeRouteArgs>(
-              orElse: () => const MyHomeRouteArgs());
-          return _i3.MyHomePage(key: args.key);
+          final args = data.argsAs<WelcomeRouteArgs>(
+              orElse: () => const WelcomeRouteArgs());
+          return _i3.WelcomePage(key: args.key);
         }),
     SigninRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
@@ -86,7 +86,7 @@ class RootRouter extends _i1.RootStackRouter {
 
   @override
   List<_i1.RouteConfig> get routes => [
-        _i1.RouteConfig(MyHomeRoute.name, path: '/'),
+        _i1.RouteConfig(WelcomeRoute.name, path: '/'),
         _i1.RouteConfig(SigninRoute.name, path: '/signin'),
         _i1.RouteConfig(SignupRoute.name, path: '/signup'),
         _i1.RouteConfig(ChannelDetailRoute.name, path: '/channel'),
@@ -99,15 +99,15 @@ class RootRouter extends _i1.RootStackRouter {
       ];
 }
 
-class MyHomeRoute extends _i1.PageRouteInfo<MyHomeRouteArgs> {
-  MyHomeRoute({_i2.Key? key})
-      : super(name, path: '/', args: MyHomeRouteArgs(key: key));
+class WelcomeRoute extends _i1.PageRouteInfo<WelcomeRouteArgs> {
+  WelcomeRoute({_i2.Key? key})
+      : super(name, path: '/', args: WelcomeRouteArgs(key: key));
 
-  static const String name = 'MyHomeRoute';
+  static const String name = 'WelcomeRoute';
 }
 
-class MyHomeRouteArgs {
-  const MyHomeRouteArgs({this.key});
+class WelcomeRouteArgs {
+  const WelcomeRouteArgs({this.key});
 
   final _i2.Key? key;
 }

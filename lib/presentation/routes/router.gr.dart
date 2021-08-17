@@ -13,6 +13,7 @@ import '../pages/create_podcast/create_podcast.dart' as _i11;
 import '../pages/edit_channel/edit_channel_page.dart' as _i12;
 import '../pages/edit_profile/profile_page.dart' as _i10;
 import '../pages/player/player_page.dart' as _i8;
+import '../pages/search/search_page.dart' as _i13;
 import '../pages/signin/signin_page.dart' as _i4;
 import '../pages/signup/signup.dart' as _i5;
 import '../pages/welcome/welcome_page.dart' as _i3;
@@ -81,6 +82,11 @@ class RootRouter extends _i1.RootStackRouter {
         routeData: routeData,
         builder: (_) {
           return const _i12.EditChannelPage();
+        }),
+    SearchRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return _i13.SearchPage();
         })
   };
 
@@ -95,7 +101,8 @@ class RootRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(YourChannelsRoute.name, path: '/your_channels'),
         _i1.RouteConfig(EditProfileRoute.name, path: '/edit_profile'),
         _i1.RouteConfig(CreatePodcastRoute.name, path: '/add_podcast'),
-        _i1.RouteConfig(EditChannelRoute.name, path: '/edit_channel')
+        _i1.RouteConfig(EditChannelRoute.name, path: '/edit_channel'),
+        _i1.RouteConfig(SearchRoute.name, path: '/search')
       ];
 }
 
@@ -186,4 +193,10 @@ class EditChannelRoute extends _i1.PageRouteInfo {
   const EditChannelRoute() : super(name, path: '/edit_channel');
 
   static const String name = 'EditChannelRoute';
+}
+
+class SearchRoute extends _i1.PageRouteInfo {
+  const SearchRoute() : super(name, path: '/search');
+
+  static const String name = 'SearchRoute';
 }

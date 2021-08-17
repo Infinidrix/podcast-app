@@ -1,5 +1,6 @@
 import 'package:podcast_app/presentation/pages/edit_channel/edit_channel_page.dart';
 import 'package:podcast_app/presentation/pages/edit_profile/profile_page.dart';
+import 'package:podcast_app/presentation/pages/search/search_page.dart';
 import 'package:podcast_app/presentation/pages/welcome/welcome_page.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:podcast_app/presentation/pages/player/player_page.dart';
@@ -29,6 +30,7 @@ import 'package:podcast_app/presentation/pages/create_podcast/create_podcast.dar
       page: EditChannelPage,
       path: '/edit_channel',
     ),
+    AutoRoute(page: SearchPage, path: '/search')
   ],
 )
 class $RootRouter {}

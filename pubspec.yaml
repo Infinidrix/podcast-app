@@ -26,6 +26,7 @@ dependencies:
   hexcolor: ^2.0.4
   curved_navigation_bar: ^1.0.1
   lite_rolling_switch: ^0.1.1
+  flutter_bloc:
 
 
   # The following adds the Cupertino Icons font to your application.

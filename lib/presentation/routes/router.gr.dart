@@ -7,17 +7,19 @@
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
 
-import '../pages/channel_detail/channel_detail_page.dart' as _i6;
-import '../pages/create_channel/create_channel_page.dart' as _i7;
-import '../pages/create_podcast/create_podcast.dart' as _i11;
-import '../pages/edit_channel/edit_channel_page.dart' as _i12;
-import '../pages/edit_profile/profile_page.dart' as _i10;
-import '../pages/player/player_page.dart' as _i8;
-import '../pages/search/search_page.dart' as _i13;
+import '../pages/channel_detail/channel_detail_page.dart' as _i7;
+import '../pages/create_channel/create_channel_page.dart' as _i8;
+import '../pages/create_podcast/create_podcast.dart' as _i12;
+import '../pages/edit_channel/edit_channel_page.dart' as _i14;
+import '../pages/edit_profile/profile_page.dart' as _i11;
+import '../pages/home/home_page.dart' as _i6;
+import '../pages/player/player_page.dart' as _i9;
+import '../pages/recorder/recorder_page.dart' as _i13;
+import '../pages/search/search_page.dart' as _i15;
 import '../pages/signin/signin_page.dart' as _i4;
 import '../pages/signup/signup.dart' as _i5;
 import '../pages/welcome/welcome_page.dart' as _i3;
-import '../pages/your_channels/your_channels_page.dart' as _i9;
+import '../pages/your_channels/your_channels_page.dart' as _i10;
 
 class RootRouter extends _i1.RootStackRouter {
   RootRouter([_i2.GlobalKey<_i2.NavigatorState>? navigatorKey])
@@ -42,65 +44,77 @@ class RootRouter extends _i1.RootStackRouter {
         builder: (_) {
           return const _i5.SignupPage();
         }),
+    HomeRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return const _i6.HomePage();
+        }),
     ChannelDetailRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (data) {
           final args = data.argsAs<ChannelDetailRouteArgs>(
               orElse: () => const ChannelDetailRouteArgs());
-          return _i6.ChannelDetailPage(key: args.key);
+          return _i7.ChannelDetailPage(key: args.key);
         }),
     CreateChannelRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (data) {
           final args = data.argsAs<CreateChannelRouteArgs>(
               orElse: () => const CreateChannelRouteArgs());
-          return _i7.CreateChannelPage(key: args.key);
+          return _i8.CreateChannelPage(key: args.key);
         }),
     PlayerRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return const _i8.PlayerPage();
+          return const _i9.PlayerPage();
         }),
     YourChannelsRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return const _i9.YourChannelsPage();
+          return const _i10.YourChannelsPage();
         }),
     EditProfileRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return const _i10.EditProfilePage();
+          return const _i11.EditProfilePage();
         }),
     CreatePodcastRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (data) {
           final args = data.argsAs<CreatePodcastRouteArgs>(
               orElse: () => const CreatePodcastRouteArgs());
-          return _i11.CreatePodcastPage(key: args.key);
+          return _i12.CreatePodcastPage(key: args.key);
+        }),
+    RecorderRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return const _i13.RecorderPage();
         }),
     EditChannelRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return const _i12.EditChannelPage();
+          return const _i14.EditChannelPage();
         }),
     SearchRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return _i13.SearchPage();
+          return _i15.SearchPage();
         })
   };
 
   @override
   List<_i1.RouteConfig> get routes => [
-        _i1.RouteConfig(WelcomeRoute.name, path: '/'),
+        _i1.RouteConfig(WelcomeRoute.name, path: '/welcome'),
         _i1.RouteConfig(SigninRoute.name, path: '/signin'),
         _i1.RouteConfig(SignupRoute.name, path: '/signup'),
+        _i1.RouteConfig(HomeRoute.name, path: '/'),
         _i1.RouteConfig(ChannelDetailRoute.name, path: '/channel'),
         _i1.RouteConfig(CreateChannelRoute.name, path: '/create'),
         _i1.RouteConfig(PlayerRoute.name, path: '/player'),
         _i1.RouteConfig(YourChannelsRoute.name, path: '/your_channels'),
         _i1.RouteConfig(EditProfileRoute.name, path: '/edit_profile'),
         _i1.RouteConfig(CreatePodcastRoute.name, path: '/add_podcast'),
+        _i1.RouteConfig(RecorderRoute.name, path: 'record'),
         _i1.RouteConfig(EditChannelRoute.name, path: '/edit_channel'),
         _i1.RouteConfig(SearchRoute.name, path: '/search')
       ];
@@ -108,7 +122,7 @@ class RootRouter extends _i1.RootStackRouter {
 
 class WelcomeRoute extends _i1.PageRouteInfo<WelcomeRouteArgs> {
   WelcomeRoute({_i2.Key? key})
-      : super(name, path: '/', args: WelcomeRouteArgs(key: key));
+      : super(name, path: '/welcome', args: WelcomeRouteArgs(key: key));
 
   static const String name = 'WelcomeRoute';
 }
@@ -129,6 +143,12 @@ class SignupRoute extends _i1.PageRouteInfo {
   const SignupRoute() : super(name, path: '/signup');
 
   static const String name = 'SignupRoute';
+}
+
+class HomeRoute extends _i1.PageRouteInfo {
+  const HomeRoute() : super(name, path: '/');
+
+  static const String name = 'HomeRoute';
 }
 
 class ChannelDetailRoute extends _i1.PageRouteInfo<ChannelDetailRouteArgs> {
@@ -187,6 +207,12 @@ class CreatePodcastRouteArgs {
   const CreatePodcastRouteArgs({this.key});
 
   final _i2.Key? key;
+}
+
+class RecorderRoute extends _i1.PageRouteInfo {
+  const RecorderRoute() : super(name, path: 'record');
+
+  static const String name = 'RecorderRoute';
 }
 
 class EditChannelRoute extends _i1.PageRouteInfo {

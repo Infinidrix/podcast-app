@@ -1,5 +1,7 @@
 import 'package:podcast_app/presentation/pages/edit_channel/edit_channel_page.dart';
 import 'package:podcast_app/presentation/pages/edit_profile/profile_page.dart';
+import 'package:podcast_app/presentation/pages/home/home_page.dart';
+import 'package:podcast_app/presentation/pages/recorder/recorder_page.dart';
 import 'package:podcast_app/presentation/pages/search/search_page.dart';
 import 'package:podcast_app/presentation/pages/welcome/welcome_page.dart';
 import 'package:auto_route/annotations.dart';
@@ -17,15 +19,17 @@ import 'package:podcast_app/presentation/pages/create_podcast/create_podcast.dar
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
-    AutoRoute(page: WelcomePage, path: '/', initial: true),
+    AutoRoute(page: WelcomePage, path: '/welcome'),
     AutoRoute(page: SigninPage, path: '/signin'),
     AutoRoute(page: SignupPage, path: '/signup'),
+    AutoRoute(page: HomePage, path: '/', initial: true),
     AutoRoute(page: ChannelDetailPage, path: '/channel'),
     AutoRoute(page: CreateChannelPage, path: '/create'),
     AutoRoute(page: PlayerPage, path: '/player'),
     AutoRoute(page: YourChannelsPage, path: '/your_channels'),
     AutoRoute(page: EditProfilePage, path: '/edit_profile'),
     AutoRoute(page: CreatePodcastPage, path: '/add_podcast'),
+    AutoRoute(page: RecorderPage, path: 'record'),
     AutoRoute(
       page: EditChannelPage,
       path: '/edit_channel',

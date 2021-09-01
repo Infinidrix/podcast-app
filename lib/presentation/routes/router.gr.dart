@@ -104,10 +104,10 @@ class RootRouter extends _i1.RootStackRouter {
 
   @override
   List<_i1.RouteConfig> get routes => [
-        _i1.RouteConfig(WelcomeRoute.name, path: '/welcome'),
+        _i1.RouteConfig(WelcomeRoute.name, path: '/'),
         _i1.RouteConfig(SigninRoute.name, path: '/signin'),
         _i1.RouteConfig(SignupRoute.name, path: '/signup'),
-        _i1.RouteConfig(HomeRoute.name, path: '/'),
+        _i1.RouteConfig(HomeRoute.name, path: '/home'),
         _i1.RouteConfig(ChannelDetailRoute.name, path: '/channel'),
         _i1.RouteConfig(CreateChannelRoute.name, path: '/create'),
         _i1.RouteConfig(PlayerRoute.name, path: '/player'),
@@ -122,7 +122,7 @@ class RootRouter extends _i1.RootStackRouter {
 
 class WelcomeRoute extends _i1.PageRouteInfo<WelcomeRouteArgs> {
   WelcomeRoute({_i2.Key? key})
-      : super(name, path: '/welcome', args: WelcomeRouteArgs(key: key));
+      : super(name, path: '/', args: WelcomeRouteArgs(key: key));
 
   static const String name = 'WelcomeRoute';
 }
@@ -146,7 +146,7 @@ class SignupRoute extends _i1.PageRouteInfo {
 }
 
 class HomeRoute extends _i1.PageRouteInfo {
-  const HomeRoute() : super(name, path: '/');
+  const HomeRoute() : super(name, path: '/home');
 
   static const String name = 'HomeRoute';
 }

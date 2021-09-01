@@ -35,6 +35,7 @@ dependencies:
   auto_route: ^2.2.0
   dartz: ^0.10.0
   freezed_annotation: ^0.14.2
+  audioplayers: ^0.19.1
 
 dev_dependencies:
   flutter_test:

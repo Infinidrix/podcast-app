@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:podcast_app/application/audio_player/audio_player_bloc.dart';
+import 'package:podcast_app/application/audio_player/audio_player_events.dart';
+import 'package:podcast_app/application/audio_player/audio_player_states.dart';
+import 'package:podcast_app/models/Channel.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 
 class AudioWithThumbnail extends StatelessWidget {
@@ -12,10 +17,15 @@ class AudioWithThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final audioPlayerBloc = BlocProvider.of<AudioPlayerBloc>(context);
+
     return InkWell(
       highlightColor: Colors.white54,
       onTap: () {
-        context.router.push(ChannelDetailRoute());
+        print("Getting to the add event to bloc");
+        // TODO: Change this from hardcoded to state
+        audioPlayerBloc.add(InitializePlayerEvent(podcast: PodcastInfo("https://luan.xyz/files/audio/ambient_c_motion.mp3", false)));
+        context.router.push(PlayerRoute());
       },
       child: SizedBox(
         height: 175,

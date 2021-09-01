@@ -1,4 +1,8 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:podcast_app/application/sign_in/sign_in_bloc.dart';
+import 'package:podcast_app/application/sign_in/sign_in_events.dart';
+import 'package:podcast_app/application/sign_in/sign_in_states.dart';
 import 'package:podcast_app/presentation/core/constants.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 import 'package:flutter/material.dart';
@@ -7,12 +11,16 @@ import 'package:hexcolor/hexcolor.dart';
 class SigninWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final signinBloc = BlocProvider.of<SignInBloc>(context);
     final _formKey = GlobalKey<FormState>();
 
+    var emailController = TextEditingController();
+    var passwordController = TextEditingController();
     // the input field widget
     Widget emailInput = Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 45.0),
       child: TextFormField(
+        controller: emailController,
         style: TextStyle(color: Colors.white),
         decoration: textfieldDecoration,
         validator: (value) {
@@ -28,6 +36,7 @@ class SigninWidget extends StatelessWidget {
     Widget passwordInput = Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: TextFormField(
+        controller: passwordController,
         obscureText: true,
         style: TextStyle(color: Colors.white),
         decoration: textfieldDecoration.copyWith(
@@ -61,39 +70,29 @@ class SigninWidget extends StatelessWidget {
               colors: [HexColor("#579EB5"), HexColor("#8EB9C7")]),
           borderRadius: BorderRadius.circular(20.0),
         ),
-        child: ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.transparent),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-            ),
-          ),
-          onPressed: () {
-            // checking if the form submitted is valid
-            if (_formKey.currentState!.validate()) {
-              print("Successfully signed in!");
-              context.router.push(ChannelDetailRoute());
-            }
-            
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 50.0),
-                    child: Text("Sign In"),
-                  ),
-                  Icon(Icons.arrow_forward_sharp),
-                ],
-              ),
-            ),
-          ),
-        ),
+        child: BlocConsumer<SignInBloc, LoginState>(
+                builder: (_, state) {
+                  if (state is LoginLoading){
+                    return getElevatedButton(
+                      Row(
+                        children: [
+                          CircularProgressIndicator(),
+                          Text("Logging in"),
+                        ],
+                      ), null);
+                  } else if (state is LoginFailed) {
+                    return getElevatedButton(Text(state.errorMessage), null );
+                  }
+                  return getElevatedButton(Text("Sign in"), () { signinBloc.add(LoginEvent(emailController.text, passwordController.text)); });
+                }, 
+                listener: (ctx, state) => {
+                  if (state is LoginSuccess){
+                    ctx.router.push(HomeRoute())
+                  }
+                },
+                
+                )
+
       ),
     );
 
@@ -161,5 +160,20 @@ class SigninWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget getElevatedButton(Widget widget, void Function()? param1) {
+   return ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.transparent),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+            ),
+          ),
+          onPressed: param1,
+          child: widget,
+    ); 
   }
 }

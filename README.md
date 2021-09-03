@@ -1,16 +1,15 @@
 # podcast_app
 
-A new Flutter project.
+## Brief Description
+This is a podcast app where content creators can create channels and upload their podcasts and other users can download or listen to the podcast online.
+## Feature List
+- Podcast CRUD for podcasters
+- Subscription CRUD for podcast listeners
+- Download and/or play podcasts
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Group Members
+- Abdulfeta Dedgeba           ATR/5102/11
+- Amanuel Debebe              ATR/2825/11
+- Biruk Solomon               ATR/5471/11
+- Hanan Miftah                ATR/0720/11
+- Natneam Mesele              ATR/9672/11

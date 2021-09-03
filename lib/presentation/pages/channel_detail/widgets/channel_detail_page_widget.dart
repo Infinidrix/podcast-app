@@ -143,59 +143,66 @@ class ChannelDetailWidget extends StatelessWidget {
                       delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
                           return InkWell(
-                              onTap: () {
-                                context.router.push(CreateChannelRoute());
-                              },
-                              child: Card(
-                                  color: Colors.black,
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.all(10.0),
-                                        child: Text("$index"),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(right: 17.0),
-                                        child: FlutterLogo(
-                                          size: 35.0,
+                            onTap: () {
+                              context.router.push(CreateChannelRoute());
+                            },
+                            child: Card(
+                              color: Colors.black,
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Text("$index"),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(right: 17.0),
+                                    child: FlutterLogo(
+                                      size: 35.0,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "${listOfPodcasts?[index]}",
+                                          style: TextStyle(fontSize: 19.0),
                                         ),
-                                      ),
-                                      Expanded(
-                                          child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            "${listOfPodcasts?[index]}",
-                                            style: TextStyle(fontSize: 19.0),
-                                          ),
-                                          Padding(
-                                              padding:
-                                                  EdgeInsets.only(bottom: 4.0)),
-                                          Text(
-                                            "23,342,322",
-                                            style: TextStyle(
-                                                fontSize: 10.0,
-                                                color: Colors.grey),
-                                          ),
-                                        ],
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                      )),
-                                      PopupMenuButton(
-                                        itemBuilder: (c) =>
-                                            <PopupMenuEntry<Object?>>[],
-                                      )
-                                    ],
-                                  )));
+                                        Padding(
+                                            padding:
+                                                EdgeInsets.only(bottom: 4.0)),
+                                        Text(
+                                          "23,342,322",
+                                          style: TextStyle(
+                                              fontSize: 10.0,
+                                              color: Colors.grey),
+                                        ),
+                                      ],
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                    ),
+                                  ),
+                                  PopupMenuButton(
+                                    itemBuilder: (c) =>
+                                        <PopupMenuEntry<Object?>>[],
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
                         },
                         childCount: listOfPodcasts?.length,
                       ),
                     );
                   }
                   return SliverToBoxAdapter(
-                      child: Center(
-                          child: SizedBox(child: CircularProgressIndicator())));
+                    child: Center(
+                      child: SizedBox(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                  );
                 })
               ],
             ));

@@ -22,7 +22,7 @@ import 'package:podcast_app/presentation/pages/create_podcast/create_podcast.dar
     AutoRoute(page: WelcomePage, path: '/welcome'),
     AutoRoute(page: SigninPage, path: '/signin'),
     AutoRoute(page: SignupPage, path: '/signup'),
-    AutoRoute(page: HomePage, path: '/', initial: true),
+    AutoRoute(page: HomePage, path: '/home'),
     AutoRoute(page: ChannelDetailPage, path: '/channel'),
     AutoRoute(page: CreateChannelPage, path: '/create'),
     AutoRoute(page: PlayerPage, path: '/player'),
@@ -34,7 +34,7 @@ import 'package:podcast_app/presentation/pages/create_podcast/create_podcast.dar
       page: EditChannelPage,
       path: '/edit_channel',
     ),
-    AutoRoute(page: SearchPage, path: '/search')
+    AutoRoute(page: SearchPage, path: '/', initial: true)
   ],
 )
 class $RootRouter {}

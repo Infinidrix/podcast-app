@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'recently_searched_item.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:podcast_app/presentation/pages/search/widgets/custom_text.dart';
 
 class Recently extends StatelessWidget {
   final String title;
@@ -15,8 +16,29 @@ class Recently extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: RecentlySearchedItem(img: img, title: title, subtitle: subtitle),
+    // return Container(
+    //   child: RecentlySearchedItem(img: img, title: title, subtitle: subtitle),
+    // );
+
+    return Card(
+      elevation: 20,
+      color: HexColor("#282828"),
+      child: ListTile(
+        dense: true,
+        leading: CircleAvatar(
+          backgroundImage: AssetImage(img),
+          radius: 25,
+        ),
+        title: CustomText(text: "$title"),
+        subtitle: CustomText(text: "$subtitle"),
+        trailing: IconButton(
+          onPressed: () {},
+          icon: Icon(
+            Icons.clear,
+            color: Colors.white,
+          ),
+        ),
+      ),
     );
   }
 }

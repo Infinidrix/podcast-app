@@ -25,13 +25,13 @@ class AudioWithThumbnail extends StatelessWidget {
           child: Column(
             children: [
               Stack(
-                clipBehavior: Clip.antiAlias,
+                clipBehavior: Clip.none,
                 alignment: Alignment.bottomCenter,
                 children: [
                   Image.asset(
                     imgStr,
-                    height: 175,
-                    width: 175,
+                    height: 150,
+                    width: 150,
                   ),
                   Text("$audioName",
                       style: TextStyle(

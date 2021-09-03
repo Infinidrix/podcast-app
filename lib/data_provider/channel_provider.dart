@@ -9,6 +9,7 @@ class ChannelPorvider implements IChannelProvider {
       ImageUrl: "ImageUrl",
       Subscribers: 12335245,
       Id: "1",
+      Description: "This is some description about the channel",
       Podcasts: List.generate(10, (index) => Podcast("Name #$index", index)));
   bool isSubscribedValue = true;
   @override

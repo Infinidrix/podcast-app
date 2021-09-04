@@ -9,6 +9,7 @@ import 'package:podcast_app/application/audio_player/audio_player_events.dart';
 import 'package:podcast_app/application/channel_description/channel_description_bloc.dart';
 import 'package:podcast_app/presentation/pages/library_download_subscribe_pages/LibDownSubTabMenuPage.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
+import 'package:skeleton_text/skeleton_text.dart';
 
 class ChannelDetailWidget extends StatelessWidget {
   Widget _getSubscribeButton(
@@ -60,12 +61,26 @@ class ChannelDetailWidget extends StatelessWidget {
                   expandedHeight: 300.0,
                   flexibleSpace: FlexibleSpaceBar(
                       title: (channelState is LoadingChannelDescriptionState)
-                          ? SizedBox(child: CircularProgressIndicator())
+                          ? SizedBox(
+                              child: SkeletonAnimation(
+                                borderRadius: BorderRadius.circular(10.0),
+                                shimmerColor:
+                                    2 % 2 != 0 ? Colors.grey : Colors.white54,
+                                child: Container(
+                                  height: 15,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.15,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      color: Colors.grey[300]),
+                                ),
+                              ),
+                            )
                           : (channelState is InitialChannelDescriptionState)
                               ? Text(
                                   "${channelState.channel.Name}",
                                 )
-                              : Text("impossibel"),
+                              : Text("impossible"),
                       background: FlutterLogo(),
                       stretchModes: [
                         StretchMode.zoomBackground,
@@ -91,8 +106,27 @@ class ChannelDetailWidget extends StatelessWidget {
                                       child: (channelState
                                               is LoadingChannelDescriptionState)
                                           ? SizedBox(
-                                              child:
-                                                  CircularProgressIndicator())
+                                              child: SizedBox(
+                                              child: SkeletonAnimation(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                                shimmerColor: 2 % 2 != 0
+                                                    ? Colors.grey
+                                                    : Colors.white54,
+                                                child: Container(
+                                                  height: 15,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.15,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                      color: Colors.grey[300]),
+                                                ),
+                                              ),
+                                            ))
                                           : (channelState
                                                   is InitialChannelDescriptionState)
                                               ? Text(
@@ -111,8 +145,11 @@ class ChannelDetailWidget extends StatelessWidget {
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                if (channelState is InitialChannelDescriptionState) {
-                                  audioBloc.add(InitializePlayerEvent(podcasts: ListQueue.from(channelState.channel.Podcasts)));
+                                if (channelState
+                                    is InitialChannelDescriptionState) {
+                                  audioBloc.add(InitializePlayerEvent(
+                                      podcasts: ListQueue.from(
+                                          channelState.channel.Podcasts)));
                                   context.router.push(PlayerRoute());
                                 }
                               },
@@ -154,7 +191,8 @@ class ChannelDetailWidget extends StatelessWidget {
                         (BuildContext context, int index) {
                           return InkWell(
                               onTap: () {
-                                context.router.push(LibraryDownloadSubTabMenuRoute());
+                                context.router
+                                    .push(LibraryDownloadSubTabMenuRoute());
                               },
                               child: Card(
                                   color: Colors.black,
@@ -204,12 +242,91 @@ class ChannelDetailWidget extends StatelessWidget {
                     );
                   }
                   return SliverToBoxAdapter(
-                      child: Center(
-                          child: SizedBox(child: CircularProgressIndicator())));
+                      child: Flexible(child: LoadingList()));
                 })
               ],
             ));
       },
     );
+  }
+}
+
+class LoadingList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: ListView.builder(
+      shrinkWrap: true,
+      scrollDirection: Axis.vertical,
+      physics: BouncingScrollPhysics(),
+      itemCount: 5,
+      itemBuilder: (BuildContext context, int index) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                color: Colors.white70),
+            child: Container(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+
+                // SkeletonAnimation method
+                children: <Widget>[
+                  SkeletonAnimation(
+                    child: Container(
+                      width: 70.0,
+                      height: 70.0,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 15.0, bottom: 5.0),
+                          child: SkeletonAnimation(
+                            child: Container(
+                              height: 15,
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  color: Colors.grey[300]),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15.0),
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 5.0),
+                            child: SkeletonAnimation(
+                              child: Container(
+                                width: 60,
+                                height: 13,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    color: Colors.grey[300]),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    ));
   }
 }

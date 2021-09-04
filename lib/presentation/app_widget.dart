@@ -56,8 +56,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (_) =>
-              ChannelDescriptionBloc(channelRepository: channelRepository)
-                ..add(LoadInitialEvent()),
+              ChannelDescriptionBloc(channelRepository: channelRepository),
         ),
         BlocProvider(
             create: (_) => HomePageBloc(repository: homePageRepository)

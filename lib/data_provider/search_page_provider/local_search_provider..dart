@@ -9,7 +9,7 @@ class LocalSearchProvider extends ISearchProvider {
             Name: "Podcast $index",
             NumberOfLitsners: 0,
             url: "",
-            imageUrl: "",
+            imageUrl: "assets/images/placeholder.jpg",
             id: "$index",
           ));
 
@@ -26,7 +26,7 @@ class LocalSearchProvider extends ISearchProvider {
                     Name: "Podcast $index",
                     NumberOfLitsners: 0,
                     url: "",
-                    imageUrl: "",
+                    imageUrl: "assets/images/placeholder.jpg",
                     id: "$index",
                   ))));
 

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:podcast_app/application/create_podcast/create_podcast_bloc.dart';
+import 'package:podcast_app/application/create_podcast/create_podcast_state.dart';
 import 'package:podcast_app/presentation/pages/create_podcast/widgets/create_podcast_widget.dart';
+
 class CreatePodcastPage extends StatefulWidget {
   CreatePodcastPage({Key? key}) : super(key: key);
 
@@ -10,6 +14,15 @@ class CreatePodcastPage extends StatefulWidget {
 class _CreatePodcastPageState extends State<CreatePodcastPage> {
   @override
   Widget build(BuildContext context) {
-    return CreatePodcastWidget();
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => CreatePodcastBloc(
+            InitialState(),
+          ),
+        )
+      ],
+      child: CreatePodcastWidget(),
+    );
   }
 }

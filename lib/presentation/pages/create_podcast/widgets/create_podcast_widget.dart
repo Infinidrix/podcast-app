@@ -285,9 +285,29 @@ class FileEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: TextEditingController(text: filename),
-    );
+    return GestureDetector(
+        onTap: () {
+          BlocProvider.of<CreatePodcastBloc>(context)..add(FilePickEvent());
+        },
+        child: Column(
+          children: [
+            SizedBox(
+              height: 15,
+            ),
+            Row(
+              children: [
+                SizedBox(
+                  width: 15,
+                ),
+                Icon(Icons.file_present),
+                SizedBox(
+                  width: 15,
+                ),
+                Text(filename)
+              ],
+            ),
+          ],
+        ));
   }
 }
 

@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:podcast_app/application/audio_player/audio_player_bloc.dart';
 import 'package:podcast_app/application/audio_player/audio_player_events.dart';
 import 'package:podcast_app/application/channel_description/channel_description_bloc.dart';
+import 'package:podcast_app/presentation/pages/library_download_subscribe_pages/LibDownSubTabMenuPage.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 
 class ChannelDetailWidget extends StatelessWidget {
@@ -41,8 +42,7 @@ class ChannelDetailWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final channelBloc = BlocProvider.of<ChannelDescriptionBloc>(context);
     final audioBloc = BlocProvider.of<AudioPlayerBloc>(context);
-    return Scaffold(
-        body: BlocBuilder<ChannelDescriptionBloc, ChannelDescriptionState>(
+    return BlocBuilder<ChannelDescriptionBloc, ChannelDescriptionState>(
       builder: (_, channelState) {
         return Container(
             color: Colors.black,
@@ -154,7 +154,7 @@ class ChannelDetailWidget extends StatelessWidget {
                         (BuildContext context, int index) {
                           return InkWell(
                               onTap: () {
-                                context.router.push(CreateChannelRoute());
+                                context.router.push(LibraryDownloadSubTabMenuRoute());
                               },
                               child: Card(
                                   color: Colors.black,
@@ -210,6 +210,6 @@ class ChannelDetailWidget extends StatelessWidget {
               ],
             ));
       },
-    ));
+    );
   }
 }

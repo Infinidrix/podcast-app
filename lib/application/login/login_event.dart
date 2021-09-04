@@ -10,6 +10,8 @@ class LoginButtonPressedEvent extends LoginEvent {
   LoginButtonPressedEvent({required this.userName, required this.password});
 }
 
+class CheckUserCredPersistedLoginEvent extends LoginEvent {}
+
 class ShowOrHiddenPasswordButtonPressedLoginEvent extends LoginEvent {
   final bool isShown;
 

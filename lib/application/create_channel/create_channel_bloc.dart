@@ -26,7 +26,7 @@ class CreateChannelBloc extends Bloc<CreateChannelEvent, CreateChannelState> {
         print('success in creating channel');
               yield CreateChannelSuccessState();
       } else {
-        yield CreateChannelFailedState(ErrorMessage: "ErrorMessage");
+        yield CreateChannelFailedState(ErrorMessage: "Failed to create a channel!");
       }
     }
   }

@@ -7,26 +7,17 @@ class Recorder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: HexColor("#282828"),
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: HexColor("#282828"),
-        title: Center(
-          child: Text(
-            "Recorder",
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
-          ),
-        ),
+        backgroundColor: Colors.black,
       ),
       body: Container(
         child: Center(
           child: Column(
             children: [
+              PageTitle(),
               SizedBox(
-                height: 100,
+                height: 50,
               ),
               Container(
                   decoration: BoxDecoration(
@@ -43,7 +34,7 @@ class Recorder extends StatelessWidget {
                 height: 45,
               ),
               Text(
-                "00: 04: 33",
+                "00 : 04 : 33",
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -51,13 +42,14 @@ class Recorder extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 15),
-              IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.pause,
-                    color: Colors.white,
-                    size: 55,
-                  )),
+              GestureDetector(
+                onTap: () {},
+                child: Icon(
+                  Icons.pause,
+                  color: Colors.white,
+                  size: 50.0,
+                ),
+              ),
               SizedBox(
                 height: 20,
               ),
@@ -85,6 +77,26 @@ class Recorder extends StatelessWidget {
               )
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class PageTitle extends StatelessWidget {
+  const PageTitle({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        "Recorder",
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 28.0,
         ),
       ),
     );

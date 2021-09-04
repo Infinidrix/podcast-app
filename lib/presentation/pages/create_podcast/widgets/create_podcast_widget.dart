@@ -12,8 +12,8 @@ class CreatePodcastWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
-    final episodeName = TextEditingController();
-    final episodeDescription = TextEditingController();
+    final podcastTitle = TextEditingController();
+    final podcastDescription = TextEditingController();
     File? file;
 
     return Scaffold(
@@ -43,12 +43,11 @@ class CreatePodcastWidget extends StatelessWidget {
 
                 if (createPodcastSate is FilePicked) {
                   file = createPodcastSate.file;
-                  // TODO: chnage the UI to refelct the file is uploaded
                   fileUploadingChoices =
                       FileEntry(filename: file!.path.split('/').last);
                 }
                 if (createPodcastSate is FilePickingError) {
-                  Widget fileUploadingChoices = FileUploadingChoices(
+                  fileUploadingChoices = FileUploadingChoices(
                       "File Picking Error, Please Try agin");
                 }
 
@@ -76,7 +75,7 @@ class CreatePodcastWidget extends StatelessWidget {
                       icon: Icon(Icons.mic_none),
                       lineCount: 1,
                       hint: "The name of the episode",
-                      controller: episodeName,
+                      controller: podcastTitle,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter episode name';
@@ -92,7 +91,7 @@ class CreatePodcastWidget extends StatelessWidget {
                       icon: Icon(Icons.description_outlined),
                       lineCount: 3,
                       hint: "Description of the episode",
-                      controller: episodeDescription,
+                      controller: podcastDescription,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please Enter a description text';
@@ -108,6 +107,8 @@ class CreatePodcastWidget extends StatelessWidget {
                     SaveButton(
                         formKey: formKey,
                         file: file,
+                        podcastTitle: podcastTitle.text,
+                        podcastDescription: podcastDescription.text,
                         buttonContent: buttonContent)
                   ],
                 );
@@ -134,11 +135,15 @@ class SaveButton extends StatelessWidget {
     required this.formKey,
     required this.file,
     required this.buttonContent,
+    required this.podcastTitle,
+    required this.podcastDescription,
   }) : super(key: key);
 
   final GlobalKey<FormState> formKey;
   final File? file;
   final Widget buttonContent;
+  final String podcastTitle;
+  final String podcastDescription;
 
   @override
   Widget build(BuildContext context) {
@@ -165,13 +170,16 @@ class SaveButton extends StatelessWidget {
             final createPodcastBloc =
                 BlocProvider.of<CreatePodcastBloc>(context);
             final isValid = formKey.currentState?.validate();
-            if (file == null) {
+            if (file == null || !isValid!) {
               return;
             }
-            if (!isValid!) {
-              return;
-            }
-            createPodcastBloc.add(SaveEvent());
+            createPodcastBloc.add(
+              SaveEvent(
+                file: file,
+                podcastDescription: podcastDescription,
+                podcastTitle: podcastTitle,
+              ),
+            );
           },
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -241,7 +249,7 @@ class FileUploadingChoices extends StatelessWidget {
             onTap: () {
               final createPodcastBloc =
                   BlocProvider.of<CreatePodcastBloc>(context);
-              createPodcastBloc.add(UploadEvent());
+              createPodcastBloc.add(FilePickEvent());
             },
             child: Padding(
               padding: EdgeInsets.only(right: 30.0),

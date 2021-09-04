@@ -13,14 +13,14 @@ class Recorded extends CreatePodcastState {
   Recorded({required this.file});
 }
 
-class Uploading extends CreatePodcastState {}
+class FilePicking extends CreatePodcastState {}
 
-class Uploaded extends CreatePodcastState {
+class FilePickingError extends CreatePodcastState {}
+
+class FilePicked extends CreatePodcastState {
   final File file;
-  Uploaded({required this.file});
+  FilePicked({required this.file});
 }
-
-class UploadingError extends CreatePodcastState {}
 
 class Saving extends CreatePodcastState {}
 

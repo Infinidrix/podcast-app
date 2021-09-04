@@ -18,20 +18,22 @@ class CreatePodcastBloc extends Bloc<CreatePodcastEvent, CreatePodcastState> {
     }
 
     if (event is UploadEvent) {
-      yield Uploading();
+      yield FilePicking();
       FilePickerResult? result = await FilePicker.platform.pickFiles();
       if (result != null) {
         File file = File(result.files.single.path);
-        yield Uploaded(file: file);
+        yield FilePicked(file: file);
       } else {
-        yield UploadingError();
+        yield FilePickingError();
       }
     }
 
     if (event is SaveEvent) {
       yield Saving();
+      print("saving");
       // ignore: todo
       //TODO : IMPLEMENT SAVING LOGIC
+      await Future.delayed(Duration(seconds: 3));
       print("saved");
       yield Saved();
     }

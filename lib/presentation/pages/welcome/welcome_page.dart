@@ -15,16 +15,19 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: Column(
-        children: [
-          Image.asset(
-            "assets/images/welcome.png",
-            height: 343,
-          ),
-          WelcomeWidget(),
-        ],
-      ),
-    );
+        backgroundColor: Colors.black,
+        body: ListView(
+          children: [
+            Column(
+              children: [
+                Image.asset(
+                  "assets/images/welcome.png",
+                  height: 343,
+                ),
+                WelcomeWidget(),
+              ],
+            ),
+          ],
+        ));
   }
 }

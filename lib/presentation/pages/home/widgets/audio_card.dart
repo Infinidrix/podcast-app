@@ -29,7 +29,15 @@ class AudioWithThumbnail extends StatelessWidget {
         // TODO: Change this from hardcoded to state
         String path = await getDocumentDir();
         audioPlayerBloc.add(InitializePlayerEvent(
-          podcasts: ListQueue.from([Podcast("NASA Probe Mission", 24000, "$path/test_podcast.mp3", "ayyyyyyD")])
+          podcasts: ListQueue.from([
+            Podcast(
+              "NASA Probe Mission", 
+              "There are objects in space and only a few of them are our fault.", 
+              24000, 
+              "$path/test_podcast.mp3", 
+              "NASA Podcast", 
+              "Unique ID"
+              )])
           )
           );
         context.router.push(PlayerRoute());

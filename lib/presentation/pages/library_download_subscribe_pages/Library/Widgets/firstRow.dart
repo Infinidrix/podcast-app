@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-class firstRowLibrary extends StatelessWidget {
-  final String when;
+class FirstRowLibrary extends StatelessWidget {
 
-   firstRowLibrary({required this.when});
+  FirstRowLibrary();
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +10,8 @@ class firstRowLibrary extends StatelessWidget {
       flex: 1,
       child: Container(
         child: Text(
-          '${when}',
+          // TODO: When
+          'Yesterday',
           style: TextStyle(fontWeight: FontWeight.bold,
             fontSize: 11,
             color: Color(0xffB3B3B3),

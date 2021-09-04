@@ -2,6 +2,7 @@
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:podcast_app/presentation/pages/core/bottom_nav.dart';
 
 import 'Download/Download.dart';
@@ -57,14 +58,10 @@ class _LibraryDownloadSubTabMenuPageState extends State<LibraryDownloadSubTabMen
           ),
           body: TabBarView(
             children: [
-              LibraryPage(
-                when: "Yesterday",
-                title: '#250- Joe Kisses Danny',
-                description: 'On this episode, we dive into Danny dream where Joe Kissed her at a party ... we also dive into the dark underworld of the Karens.',
-                subtitle:'The Basement Yard ',
-                duration:  "1HR 10MIN",
-
-              ),
+              // BlocProvider(create: (context) => )
+              // (child: 
+              LibraryPage(),
+              // ),
 
               DownloadPage(),
               Subscribed(title: '#250- Joe Kisses Danny',

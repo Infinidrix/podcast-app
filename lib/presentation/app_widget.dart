@@ -2,12 +2,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:podcast_app/application/channel_description/channel_description_bloc.dart';
-import 'package:podcast_app/application/create_podcast/create_podcast_bloc.dart';
-import 'package:podcast_app/application/create_podcast/create_podcast_state.dart';
 import 'package:podcast_app/data_provider/channel_provider.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 import 'package:podcast_app/repository/ChannelRepository.dart';
 import 'package:podcast_app/repository/CreatePodcastRepository.dart';
+import 'package:podcast_app/application/create_podcast/create_podcast_application.dart';
 
 class MyApp extends StatelessWidget {
   final _rootRouter = RootRouter();

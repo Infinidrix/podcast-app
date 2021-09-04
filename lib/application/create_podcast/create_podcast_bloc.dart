@@ -19,7 +19,14 @@ class CreatePodcastBloc extends Bloc<CreatePodcastEvent, CreatePodcastState> {
 
     if (event is FilePickEvent) {
       yield FilePicking();
-      FilePickerResult? result = await FilePicker.platform.pickFiles();
+      FilePickerResult? result;
+
+      try {
+        result = await FilePicker.platform.pickFiles();
+      } catch (e) {
+        yield FilePickingError();
+      }
+
       if (result != null) {
         File file = File(result.files.single.path);
         yield FilePicked(file: file);

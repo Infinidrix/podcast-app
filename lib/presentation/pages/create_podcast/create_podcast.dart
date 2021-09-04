@@ -15,14 +15,6 @@ class CreatePodcastPage extends StatefulWidget {
 class _CreatePodcastPageState extends State<CreatePodcastPage> {
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) =>
-              CreatePodcastBloc(InitialState(), CreatePodcastRepository()),
-        )
-      ],
-      child: CreatePodcastWidget(),
-    );
+    return CreatePodcastWidget();
   }
 }

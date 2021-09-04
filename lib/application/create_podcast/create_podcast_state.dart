@@ -2,7 +2,7 @@ import 'dart:io';
 
 abstract class CreatePodcastState {}
 
-class InitialState extends CreatePodcastState {}
+class CreatePodcastInitialState extends CreatePodcastState {}
 
 class Recording extends CreatePodcastState {}
 

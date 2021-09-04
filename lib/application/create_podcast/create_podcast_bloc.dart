@@ -16,9 +16,6 @@ class CreatePodcastBloc extends Bloc<CreatePodcastEvent, CreatePodcastState> {
   Stream<CreatePodcastState> mapEventToState(CreatePodcastEvent event) async* {
     if (event is RecordEvent) {
       yield Recording();
-      //TODO: IMPLEMENT RECORDING LOGIC
-      print("recording");
-      // yield Recorded();
     }
 
     if (event is FilePickEvent) {

@@ -7,6 +7,7 @@ import 'package:podcast_app/application/create_podcast/create_podcast_event.dart
 import 'package:podcast_app/application/create_podcast/create_podcast_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:podcast_app/presentation/routes/router.gr.dart';
 
 class CreatePodcastWidget extends StatelessWidget {
   @override
@@ -115,7 +116,7 @@ class CreatePodcastWidget extends StatelessWidget {
               },
               listener: (context, createPodcastState) {
                 if (createPodcastState is Recording) {
-                  //Navigate to recorder page
+                  context.router.push(RecorderRoute());
                 }
                 if (createPodcastState is Saved) {
                   context.router.pop();
@@ -228,7 +229,6 @@ class FileUploadingChoices extends StatelessWidget {
               final createPodcastBloc =
                   BlocProvider.of<CreatePodcastBloc>(context);
               createPodcastBloc.add(RecordEvent());
-              //TODO : go to podcast page
             },
             child: Padding(
               padding: EdgeInsets.only(left: 30.0),

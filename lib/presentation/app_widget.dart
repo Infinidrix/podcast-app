@@ -7,6 +7,8 @@ import 'package:podcast_app/application/channel_description/channel_description_
 import 'package:podcast_app/application/login/login_bloc.dart';
 import 'package:podcast_app/application/signup/signup_bloc.dart';
 import 'package:podcast_app/application/wellcome/wellcome_bloc.dart';
+import 'package:podcast_app/application/download/download_bloc.dart';
+import 'package:podcast_app/application/download/download_events.dart';
 import 'package:podcast_app/data_provider/audio_provider/audio_provider.dart';
 import 'package:podcast_app/data_provider/channel_provider.dart';
 import 'package:podcast_app/data_provider/login/login_provider.dart';
@@ -52,6 +54,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => AudioPlayerBloc(audioRepository),
         ),
+        BlocProvider(
+          create: (_) => DownloadBloc()..add(LoadInitialDownloadEvent()),
+        )
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

@@ -9,7 +9,7 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState>{
       "NASA Probe Mission", 
       "There are objects in space and only a few of them are our fault.", 
       24000, 
-      "test_podcast.mp3", 
+      "https://luan.xyz/files/audio/nasa_on_a_mission.mp3", 
       "NASA Podcast", 
       "Unique ID"
     ),
@@ -17,7 +17,7 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState>{
       "Probe Mission", 
       "There are objects are our fault.", 
       2400, 
-      "test_podcast.mp3", 
+      "https://luan.xyz/files/audio/nasa_on_a_mission.mp3", 
       "NASA Podcast", 
       "Unique ID"
     ),
@@ -25,7 +25,7 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState>{
       "NASA Mission", 
       "There are a few of them are our fault.", 
       24000, 
-      "test_podcast.mp3", 
+      "https://luan.xyz/files/audio/nasa_on_a_mission.mp3", 
       "NASA Podcast", 
       "Unique ID"
     )

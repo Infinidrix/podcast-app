@@ -1,4 +1,6 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:podcast_app/presentation/pages/core/bottom_nav.dart';
 import 'package:podcast_app/presentation/pages/home/widgets/home_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,6 +17,7 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: HomeWidget(),
       ),
+      bottomNavigationBar: getBottomNavBar(context),
     );
   }
 }

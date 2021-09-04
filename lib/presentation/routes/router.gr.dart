@@ -13,6 +13,8 @@ import '../pages/create_podcast/create_podcast.dart' as _i12;
 import '../pages/edit_channel/edit_channel_page.dart' as _i14;
 import '../pages/edit_profile/profile_page.dart' as _i11;
 import '../pages/home/home_page.dart' as _i6;
+import '../pages/library_download_subscribe_pages/LibDownSubTabMenuPage.dart'
+    as _i16;
 import '../pages/player/player_page.dart' as _i9;
 import '../pages/recorder/recorder_page.dart' as _i13;
 import '../pages/search/search_page.dart' as _i15;
@@ -99,12 +101,20 @@ class RootRouter extends _i1.RootStackRouter {
         routeData: routeData,
         builder: (_) {
           return _i15.SearchPage();
-        })
+        }),
+    LibraryDownloadSubTabMenuRoute.name: (routeData) =>
+        _i1.MaterialPageX<dynamic>(
+            routeData: routeData,
+            builder: (_) {
+              return const _i16.LibraryDownloadSubTabMenuPage();
+            })
   };
 
   @override
   List<_i1.RouteConfig> get routes => [
-        _i1.RouteConfig(WelcomeRoute.name, path: '/'),
+        _i1.RouteConfig('/#redirect',
+            path: '/', redirectTo: '/welcome', fullMatch: true),
+        _i1.RouteConfig(WelcomeRoute.name, path: '/welcome'),
         _i1.RouteConfig(SigninRoute.name, path: '/signin'),
         _i1.RouteConfig(SignupRoute.name, path: '/signup'),
         _i1.RouteConfig(HomeRoute.name, path: '/home'),
@@ -116,13 +126,14 @@ class RootRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(CreatePodcastRoute.name, path: '/add_podcast'),
         _i1.RouteConfig(RecorderRoute.name, path: 'record'),
         _i1.RouteConfig(EditChannelRoute.name, path: '/edit_channel'),
-        _i1.RouteConfig(SearchRoute.name, path: '/search')
+        _i1.RouteConfig(SearchRoute.name, path: '/search'),
+        _i1.RouteConfig(LibraryDownloadSubTabMenuRoute.name, path: '/library')
       ];
 }
 
 class WelcomeRoute extends _i1.PageRouteInfo<WelcomeRouteArgs> {
   WelcomeRoute({_i2.Key? key})
-      : super(name, path: '/', args: WelcomeRouteArgs(key: key));
+      : super(name, path: '/welcome', args: WelcomeRouteArgs(key: key));
 
   static const String name = 'WelcomeRoute';
 }
@@ -225,4 +236,10 @@ class SearchRoute extends _i1.PageRouteInfo {
   const SearchRoute() : super(name, path: '/search');
 
   static const String name = 'SearchRoute';
+}
+
+class LibraryDownloadSubTabMenuRoute extends _i1.PageRouteInfo {
+  const LibraryDownloadSubTabMenuRoute() : super(name, path: '/library');
+
+  static const String name = 'LibraryDownloadSubTabMenuRoute';
 }

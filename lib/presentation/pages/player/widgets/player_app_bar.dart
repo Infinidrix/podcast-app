@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:auto_route/auto_route.dart';
 
 class PlayerAppBar extends StatelessWidget {
   const PlayerAppBar({
@@ -13,10 +14,15 @@ class PlayerAppBar extends StatelessWidget {
         textDirection: TextDirection.ltr,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Icon(
-            Icons.keyboard_arrow_down,
-            textDirection: TextDirection.ltr,
-            color: Colors.white,
+          GestureDetector(
+            child: Icon(
+              Icons.keyboard_arrow_down,
+              textDirection: TextDirection.ltr,
+              color: Colors.white,
+            ),
+            onTap: (){
+              context.router.pop();
+            },
           ),
           Text(
             "Player",

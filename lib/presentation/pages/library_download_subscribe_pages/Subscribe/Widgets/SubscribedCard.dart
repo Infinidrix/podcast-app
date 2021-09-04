@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:podcast_app/models/Channel.dart';
 
 import '../../Constants.dart';
 
 class SubscribedCard extends StatelessWidget {
-  final String title;
-  final String description;
-  final String subtitle;
+  final Channel channel;
 
-  SubscribedCard({ required this.subtitle,required this.title, required this.description}) ;
+  SubscribedCard({ required this.channel }) ;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -45,13 +44,13 @@ class SubscribedCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                          Container(child:  Text(
-                           '${title}',
+                           '${channel.Name}',
                            style: titleTextStyle,
                          ),),
                           Container(
                             margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
                             child: Text(
-                              '${subtitle}',
+                              '${channel.Subscribers}',
                               style: descriptioin_SubtitleTextStyle,
                             ),
                           )
@@ -61,14 +60,6 @@ class SubscribedCard extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 12, 0, 0),
-                child: Text(
-                  '${description}',
-                  style:descriptioin_SubtitleTextStyle,
-                ),
-              ),
-
             ],
           ),
         ),

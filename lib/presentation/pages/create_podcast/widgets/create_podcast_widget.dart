@@ -303,9 +303,23 @@ class FileEntry extends StatelessWidget {
                 SizedBox(
                   width: 15,
                 ),
-                Text(filename)
+                Text(filename),
+                Expanded(child: Container()),
+                IconButton(
+                  icon: Icon(Icons.keyboard_voice),
+                  onPressed: () {
+                    BlocProvider.of<CreatePodcastBloc>(context)
+                      ..add(RecordEvent());
+                  },
+                )
               ],
             ),
+            DecoratedBox(
+              decoration: BoxDecoration(color: Colors.grey),
+              child: Container(
+                height: 1,
+              ),
+            )
           ],
         ));
   }

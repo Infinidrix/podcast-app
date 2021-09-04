@@ -17,8 +17,22 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState>{
   AudioPlayerBloc(this.audioRepository): super(
       InitialAudioPlayerState(
         audioPlayer, 
-        ListQueue.from([Podcast("NASA Probe Mission", 24000, "https://luan.xyz/files/audio/nasa_on_a_mission.mp3", "ayyyyyyD")]),
-        AudioPlayerStatus(false, 0, Podcast("NASA Probe Mission", 24000, "https://luan.xyz/files/audio/nasa_on_a_mission.mp3", "ayyyyyyD")))){
+        ListQueue.from([Podcast(
+                              "NASA Probe Mission", 
+                              "There are objects in space and only a few of them are our fault.", 
+                              24000, 
+                              "test_podcast.mp3", 
+                              "NASA Podcast", 
+                              "Unique ID"
+                              )]),
+        AudioPlayerStatus(false, 0, Podcast(
+                              "NASA Probe Mission", 
+                              "There are objects in space and only a few of them are our fault.", 
+                              24000, 
+                              "test_podcast.mp3", 
+                              "NASA Podcast", 
+                              "Unique ID"
+                              )))){
     
     AudioPlayer.logEnabled = false;
     audioPlayer.onPlayerError.listen((event) { 

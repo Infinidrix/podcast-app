@@ -22,7 +22,7 @@ class PodcastInformation extends StatelessWidget {
             child: Column(
                 children: [
                   Text(
-                    "${state.status.currentPodcast.Name}",
+                    "${state.status.currentPodcast.name}",
                     textDirection: TextDirection.ltr,
                     style: TextStyle(
                         color: Colors.white,

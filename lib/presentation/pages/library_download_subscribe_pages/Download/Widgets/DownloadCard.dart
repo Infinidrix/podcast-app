@@ -25,7 +25,7 @@ class _DownloadCardState extends State<DownloadCard> {
             ),
             title: Text('The thing Im getting over',style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.bold),),
             subtitle: Text('This American life',style: TextStyle(color:Color(0xffb3b3b3),fontSize:11,fontWeight: FontWeight.bold ),),
-            trailing: Icon(Icons.download_rounded,color: Color(0xffb3b3b3),),
+            trailing: CircularProgressIndicator(),
           ),
         ),
       ),],

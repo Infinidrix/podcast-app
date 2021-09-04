@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:podcast_app/application/library/library_bloc.dart';
+import 'package:podcast_app/application/library/library_events.dart';
+import 'package:podcast_app/application/library/library_states.dart';
+import 'package:podcast_app/models/Podcast.dart';
 
 import 'Widgets/LibraryCard.dart';
 import 'Widgets/firstRow.dart';
@@ -7,13 +12,8 @@ import 'Widgets/firstRow.dart';
 const Color mainBackGroundColor = Color(0xff121212);
 
 class LibraryPage extends StatelessWidget {
-  final String when;
-  final String title;
-  final String description;
-  final String duration;
-  final String subtitle;
 
-   LibraryPage({ required this.subtitle,required this.when,required this.title, required this.description,required this.duration}) ;
+  LibraryPage() ;
 
   @override
   Widget build(BuildContext context) {
@@ -28,33 +28,27 @@ class LibraryPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    firstRowLibrary(when: when)
+                    FirstRowLibrary()
                     ,
-                    Expanded(
-                        flex: 15,
-                        child: ListView(
-                          children: [
-                            LibraryCard(
-                              title: this.title,
-                              subtitle: this.subtitle,
-                              description: this.description,
-                              duration: this.duration,
-                              when:when,
-                            ), LibraryCard(
-                              title: this.title,
-                              subtitle: this.subtitle,
-                              description: this.description,
-                              duration: this.duration,
-                              when:when,
-                            ), LibraryCard(
-                              title: this.title,
-                              subtitle: this.subtitle,
-                              description: this.description,
-                              duration: this.duration,
-                              when:when,
-                            )
-                          ],
-                        ))
+                    BlocProvider(
+                      create: (context) => LibraryBloc()..add(LoadLibraryEvent()),
+                      child: Expanded(
+                          flex: 15,
+                          child: BlocBuilder<LibraryBloc, LibraryState>(
+                            builder: (_, state) {
+                              if (state is InitialLibraryState){
+                                return ListView.builder(
+                                  itemBuilder: (_, i) => LibraryCard(podcast: state.podcasts[i]),
+                                  itemCount: state.podcasts.length,
+                                );
+                              } else{
+                                return Center(child: CircularProgressIndicator());
+                              }
+                              
+                            }
+                          )
+                      ),
+                    )
                   ],
                 ),
               )),

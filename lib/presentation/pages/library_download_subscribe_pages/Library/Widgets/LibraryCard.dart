@@ -1,24 +1,25 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:podcast_app/application/audio_player/audio_player_bloc.dart';
+import 'package:podcast_app/application/audio_player/audio_player_events.dart';
+import 'package:podcast_app/models/Podcast.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:podcast_app/presentation/routes/router.gr.dart';
 
 import '../../Constants.dart';
 
 
 class LibraryCard extends StatelessWidget {
-  final String when;
-  final String title;
-  final String description;
-  final String duration;
-  final String subtitle;
+  final Podcast podcast;
 
-  LibraryCard(
-      {required this.subtitle,
-      required this.when,
-      required this.title,
-      required this.description,
-      required this.duration});
+  LibraryCard({required this.podcast});
 
   @override
   Widget build(BuildContext context) {
+    final audioBloc = BlocProvider.of<AudioPlayerBloc>(context);
+
     return Card(
       margin: EdgeInsets.fromLTRB(0, 0, 0, 24),
 
@@ -54,11 +55,11 @@ class LibraryCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            '${title}',
+                            '${podcast.name}',
                             style: titleTextStyle,
                           ),
                           Text(
-                            '${subtitle}',
+                            '${podcast.channelName}',
                             style: descriptioin_SubtitleTextStyle,
                           )
                         ],
@@ -70,7 +71,7 @@ class LibraryCard extends StatelessWidget {
               Container(
                 margin: EdgeInsets.fromLTRB(0, 12, 0, 0),
                 child: Text(
-                  '${description}',
+                  '${podcast.description}',
                   style:descriptioin_SubtitleTextStyle,
                 ),
               ),
@@ -83,11 +84,12 @@ class LibraryCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            '${when} . ',
+                            // TODO: Replace with time upload
+                            'Some Time ago . ',
                             style: whenTextStyle,
                           ),
                           Text(
-                            '${duration}',
+                            'Takes a hile',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xffb3b3b3),
@@ -102,10 +104,16 @@ class LibraryCard extends StatelessWidget {
                         children: <Widget>[
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 0),
-                            child: Icon(
-                              Icons.play_arrow_rounded,
-                              color: Colors.white,
-                              size: 18,
+                            child: GestureDetector(
+                              child: Icon(
+                                Icons.play_arrow_rounded,
+                                color: Colors.white,
+                                size: 18,
+                              ),
+                              onTap: () {
+                                audioBloc.add(InitializePlayerEvent(podcasts: ListQueue.from([podcast])));
+                                context.router.push(PlayerRoute());
+                              },
                             ),
                           ),
                           Container(

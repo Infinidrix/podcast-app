@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:podcast_app/application/audio_player/audio_player_bloc.dart';
 import 'package:podcast_app/application/channel_description/channel_description_bloc.dart';
+import 'package:podcast_app/application/download/download_bloc.dart';
+import 'package:podcast_app/application/download/download_events.dart';
 import 'package:podcast_app/data_provider/audio_provider/audio_provider.dart';
 import 'package:podcast_app/data_provider/channel_provider.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
@@ -21,13 +23,16 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (_) =>
-          ChannelDescriptionBloc(channelRepository: channelRepository)
-            ..add(LoadInitialEvent()),
+              ChannelDescriptionBloc(channelRepository: channelRepository)
+                ..add(LoadInitialEvent()),
         ),
         BlocProvider(
           create: (_) => AudioPlayerBloc(audioRepository),
-          ),
-      ], 
+        ),
+        BlocProvider(
+          create: (_) => DownloadBloc()..add(LoadInitialDownloadEvent()),
+        )
+      ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -39,7 +44,6 @@ class MyApp extends StatelessWidget {
         ),
         routeInformationParser: _rootRouter.defaultRouteParser(),
       ),
-      
     );
   }
 }

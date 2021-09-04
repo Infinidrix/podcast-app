@@ -1,13 +1,18 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:podcast_app/application/audio_player/audio_player_bloc.dart';
+import 'package:http/http.dart' as http;
 import 'package:podcast_app/application/channel_description/channel_description_bloc.dart';
-import 'package:podcast_app/data_provider/audio_provider/audio_provider.dart';
+import 'package:podcast_app/application/login/login_bloc.dart';
+import 'package:podcast_app/application/signup/signup_bloc.dart';
+import 'package:podcast_app/application/wellcome/wellcome_bloc.dart';
 import 'package:podcast_app/data_provider/channel_provider.dart';
+import 'package:podcast_app/data_provider/login/login_provider.dart';
+import 'package:podcast_app/data_provider/sugnup/signup_provider.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 import 'package:podcast_app/repository/ChannelRepository.dart';
-import 'package:podcast_app/repository/audio_repository/AudioRepository.dart';
+import 'package:podcast_app/repository/login_repository.dart';
+import 'package:podcast_app/repository/signup%20repository/SignupRepository.dart';
 
 class MyApp extends StatelessWidget {
   final _rootRouter = RootRouter();
@@ -16,18 +21,30 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final channelRepository =
         ChannelRepository(channelProvider: ChannelPorvider());
-    final audioRepository = AudioRepository(AudioProvider());
+    final loginRepository = LoginRepository(
+      loginDataProvider: LoginProvider(
+        httpClient: http.Client(),
+      ),
+    );
+    final signupRepository = SignupRepository(
+      signupProvider: SignupProvider(
+        httpClient: http.Client(),
+      ),
+    );
     return MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (_) =>
-          ChannelDescriptionBloc(channelRepository: channelRepository)
-            ..add(LoadInitialEvent()),
+              ChannelDescriptionBloc(channelRepository: channelRepository)
+                ..add(LoadInitialEvent()),
         ),
         BlocProvider(
-          create: (_) => AudioPlayerBloc(audioRepository),
-          ),
-      ], 
+            create: (_) => LoginBloc(loginRepository: loginRepository)),
+        BlocProvider(
+            create: (_) => SignupBloc(signupRepository: signupRepository)),
+        BlocProvider(
+            create: (_) => WellcomeBloc(loginRepository: loginRepository)),
+      ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -39,7 +56,6 @@ class MyApp extends StatelessWidget {
         ),
         routeInformationParser: _rootRouter.defaultRouteParser(),
       ),
-      
     );
   }
 }

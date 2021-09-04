@@ -1,7 +1,13 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:podcast_app/application/audio_player/audio_player_bloc.dart';
+import 'package:podcast_app/application/audio_player/audio_player_events.dart';
 import 'package:podcast_app/application/download/download_bloc.dart';
 import 'package:podcast_app/application/download/download_states.dart';
+import 'package:podcast_app/presentation/routes/router.gr.dart';
+import 'package:auto_route/auto_route.dart';
 
 import '../../Constants.dart';
 
@@ -20,6 +26,7 @@ class _DownloadCardState extends State<DownloadCard> {
   @override
   Widget build(BuildContext context) {
     final downloadBloc = BlocProvider.of<DownloadBloc>(context);
+    final audioPlayerBloc = BlocProvider.of<AudioPlayerBloc>(context);
 
     return BlocBuilder<DownloadBloc, DownloadState>(
       builder: (context, state) => (state is LoadedDownloadState) ? Column(
@@ -39,7 +46,10 @@ class _DownloadCardState extends State<DownloadCard> {
                           CircularProgressIndicator() :
                           (state.index < index) ? 
                             Icon(Icons.hourglass_empty) :
-                            Icon(Icons.play_circle_filled_rounded),
+                            GestureDetector(child: Icon(Icons.play_circle_filled_rounded), onTap: (){
+                              audioPlayerBloc.add(InitializePlayerEvent(podcasts: ListQueue.from([state.podcasts.elementAt(index)])));
+                              context.router.push(PlayerRoute());
+                            },),
             ),
           ),
         ),],

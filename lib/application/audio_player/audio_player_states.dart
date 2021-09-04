@@ -1,27 +1,32 @@
 
+import 'dart:collection';
+
 import 'package:audioplayers/audioplayers.dart';
+import 'package:podcast_app/models/Podcast.dart';
 
 abstract class AudioPlayerState {
   AudioPlayer player;
-  PodcastInfo podcast;
+  ListQueue<Podcast> podcasts;
+  AudioPlayerStatus status;
 
-  AudioPlayerState({ required this.player, required this.podcast});
+  AudioPlayerState({ required this.player, required this.podcasts, required this.status});
 }
 class LoadingAudioPlayerState extends AudioPlayerState {
-  LoadingAudioPlayerState(AudioPlayer player, PodcastInfo podcast) : super(player: player, podcast: podcast);
+  LoadingAudioPlayerState(AudioPlayer player, ListQueue<Podcast> podcasts, AudioPlayerStatus status) : super(player: player, podcasts: podcasts, status: status);
 }
 class InitialAudioPlayerState extends AudioPlayerState {
-  InitialAudioPlayerState(AudioPlayer player, PodcastInfo podcast) : super(player: player, podcast: podcast);
+  InitialAudioPlayerState(AudioPlayer player, ListQueue<Podcast> podcasts, AudioPlayerStatus status) : super(player: player, podcasts: podcasts, status: status);
 }
 
 class AudioPlayerFailedState extends AudioPlayerState {
   final String errorMessage;
-  AudioPlayerFailedState(AudioPlayer player, PodcastInfo podcast, this.errorMessage) : super(player: player, podcast: podcast);
+  AudioPlayerFailedState(AudioPlayer player, ListQueue<Podcast> podcasts, this.errorMessage, AudioPlayerStatus status) : super(player: player, podcasts: podcasts, status: status);
 }
 
-class PodcastInfo {
-  final String url;
+class AudioPlayerStatus {
   bool isPlaying;
+  Podcast currentPodcast;
+  int currentIndex;
 
-  PodcastInfo(this.url, this.isPlaying);
+  AudioPlayerStatus(this.isPlaying, this.currentIndex, this.currentPodcast);
 }

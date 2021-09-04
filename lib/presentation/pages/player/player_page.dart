@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:podcast_app/application/audio_player/audio_player_bloc.dart';
+import 'package:podcast_app/application/audio_player/audio_player_states.dart';
 import 'package:podcast_app/presentation/pages/player/widgets/player_widgets.dart';
 
 class PlayerPage extends StatelessWidget {
@@ -17,12 +18,15 @@ class PlayerPage extends StatelessWidget {
         child: ListView(
           children: [
             PlayerAppBar(),
-            Container(
-              child: Image.asset("assets/images/1by1.png"),
+            BlocBuilder<AudioPlayerBloc, AudioPlayerState>(
+              builder: (_, state) =>
+                Container(
+                child: state.status.currentPodcast.imageUrl != null ? Image.network(state.status.currentPodcast.imageUrl!) : Image.asset("assets/images/1by1.png"),
+              ),
             ),
             PodcastInformation(),
             TimeSlider(),
-            Controls()
+            Controls(),
           ],
         ),
       ),

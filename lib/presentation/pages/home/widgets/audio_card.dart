@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +7,7 @@ import 'package:podcast_app/application/audio_player/audio_player_bloc.dart';
 import 'package:podcast_app/application/audio_player/audio_player_events.dart';
 import 'package:podcast_app/application/audio_player/audio_player_states.dart';
 import 'package:podcast_app/models/Channel.dart';
+import 'package:podcast_app/models/Podcast.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 
 class AudioWithThumbnail extends StatelessWidget {
@@ -21,10 +24,14 @@ class AudioWithThumbnail extends StatelessWidget {
 
     return InkWell(
       highlightColor: Colors.white54,
-      onTap: () {
+      onTap: () async {
         print("Getting to the add event to bloc");
         // TODO: Change this from hardcoded to state
-        audioPlayerBloc.add(InitializePlayerEvent(podcast: PodcastInfo("https://luan.xyz/files/audio/ambient_c_motion.mp3", false)));
+        String path = await getDocumentDir();
+        audioPlayerBloc.add(InitializePlayerEvent(
+          podcasts: ListQueue.from([Podcast("NASA Probe Mission", 24000, "$path/test_podcast.mp3", "ayyyyyyD")])
+          )
+          );
         context.router.push(PlayerRoute());
       },
       child: SizedBox(

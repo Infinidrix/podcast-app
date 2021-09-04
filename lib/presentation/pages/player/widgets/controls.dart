@@ -11,42 +11,56 @@ class Controls extends StatelessWidget {
   Widget build(BuildContext context) {
     final audioPlayerBloc = BlocProvider.of<AudioPlayerBloc>(context);
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Icon(
-          Icons.skip_previous_outlined,
-          color: Colors.white,
-          size: 40,
-        ),
-        BlocConsumer<AudioPlayerBloc, AudioPlayerState>(
-          builder: (_, state) {
-              return GestureDetector(
-                child: Icon(
-                (state.podcast.isPlaying) ? Icons.pause_circle: Icons.play_circle,
-                color: Colors.white,
-                size: 60,
-                ),
-                onTap: () {
-                  if (state.podcast.isPlaying) {
-                    audioPlayerBloc.add(PauseAudioEvent());
-                  } else {
-                    audioPlayerBloc.add(PlayAudioEvent());
-                  }},
-              );
-           },
-          listener: (_, state) {
-            print("This is the new state: " + state.toString());
-          },
-          
+    return BlocConsumer<AudioPlayerBloc, AudioPlayerState>(
+      builder: (_, state) => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          GestureDetector(
+            child: Icon(
+              Icons.skip_previous_outlined,
+              color:
+                  (state.status.currentIndex == 0) ? Colors.grey : Colors.white,
+              size: 40,
+            ),
+            onTap: () {
+              audioPlayerBloc.add(PlayPreviousEvent());
+            },
           ),
-          
-        Icon(
-          Icons.skip_next_outlined,
-          color: Colors.white,
-          size: 40,
-        ),
-      ],
+          GestureDetector(
+            child: Icon(
+              (state.status.isPlaying) ? Icons.pause_circle : Icons.play_circle,
+              color: Colors.white,
+              size: 60,
+            ),
+            onTap: () {
+              if (state.status.isPlaying) {
+                audioPlayerBloc.add(PauseAudioEvent());
+              } else {
+                audioPlayerBloc.add(ResumeAudioEvent());
+              }
+            },
+          ),
+          GestureDetector(
+            child: Icon(
+              Icons.skip_next_outlined,
+              color: (state.status.currentIndex == state.podcasts.length - 1)
+                  ? Colors.grey
+                  : Colors.white,
+              size: 40,
+            ),
+            onTap: () {
+              audioPlayerBloc.add(PlayNextEvent());
+            },
+          ),
+        ],
+      ),
+      listener: (context, state) {
+        if (state is AudioPlayerFailedState)
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("${state.errorMessage}"),
+            duration: Duration(seconds: 2),
+          ));
+      },
     );
   }
 }

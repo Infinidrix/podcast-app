@@ -1,31 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:podcast_app/application/channel_description/channel_description_bloc.dart';
 import 'package:podcast_app/application/home_page/home_page_bloc.dart';
 import 'package:podcast_app/application/home_page/home_page_event.dart';
+import 'package:podcast_app/models/Channel.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 
 class TopPicks extends StatelessWidget {
-  final String name;
-  final String img;
-  final String channelId;
-  const TopPicks({
-    Key? key,
-    required this.name,
-    required this.img,
-    required this.channelId,
-  }) : super(key: key);
+  final Channel channel;
+  TopPicks({Key? key, required this.channel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final channelDetailBloc = BlocProvider.of<ChannelDescriptionBloc>(context);
     return InkWell(
       onTap: () {
+        channelDetailBloc.add(LoadInitialEvent(channel: channel));
         context.router.push(ChannelDetailRoute());
       },
       child: FittedBox(
-        fit: BoxFit.contain,
         child: Container(
-          width: 190,
+          width: (MediaQuery.of(context).size.width - 40) / 2,
           decoration: BoxDecoration(
             color: HexColor("#262626"),
             borderRadius: BorderRadius.circular(7.0),
@@ -33,10 +30,21 @@ class TopPicks extends StatelessWidget {
           padding: EdgeInsets.all(5.0),
           child: Row(
             children: [
-              FlutterLogo(
-                size: 45,
+              SizedBox(
+                height: 60,
+                width: 60,
+                child: Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Image(
+                      image: AssetImage(
+                    channel.ImageUrl,
+                  )),
+                ),
               ),
-              Text(name)
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(channel.Name),
+              )
             ],
           ),
         ),

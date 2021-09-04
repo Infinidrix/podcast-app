@@ -9,14 +9,14 @@ class HomeProvider implements IHomeProvider {
             Name: "Podcast $index",
             NumberOfLitsners: 0,
             url: "",
-            imageUrl: "",
+            imageUrl: "assets/images/placeholder.jpg",
             id: "$index",
           ));
   List<Channel> channels = List.generate(
       5,
       (index) => Channel(
           Name: "Name",
-          ImageUrl: "ImageUrl",
+          ImageUrl: "assets/images/placeholder.jpg",
           Subscribers: 12335245,
           Id: "$index",
           Podcasts: List.generate(
@@ -25,7 +25,7 @@ class HomeProvider implements IHomeProvider {
                     Name: "Podcast $index",
                     NumberOfLitsners: 0,
                     url: "",
-                    imageUrl: "",
+                    imageUrl: "assets/images/placeholder.jpg",
                     id: "$index",
                   ))));
 

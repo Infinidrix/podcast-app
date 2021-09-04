@@ -17,7 +17,7 @@ class CreatePodcastBloc extends Bloc<CreatePodcastEvent, CreatePodcastState> {
       // yield Recorded();
     }
 
-    if (event is UploadEvent) {
+    if (event is FilePickEvent) {
       yield FilePicking();
       FilePickerResult? result = await FilePicker.platform.pickFiles();
       if (result != null) {

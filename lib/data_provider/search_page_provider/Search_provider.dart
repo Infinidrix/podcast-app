@@ -1,9 +1,17 @@
 import 'package:podcast_app/data_provider/search_page_provider/ISearch_provider.dart';
 import 'package:podcast_app/models/Channel.dart';
+import 'package:podcast_app/models/Podcast.dart';
 
 class SearchProvider extends ISearchProvider {
-  List<Podcast> podcasts =
-      List.generate(5, (index) => Podcast("Name #$index", index));
+  List<Podcast> podcasts = List.generate(
+      5,
+      (index) => Podcast(
+            Name: "Podcast $index",
+            NumberOfLitsners: 0,
+            url: "",
+            imageUrl: "",
+            id: "$index",
+          ));
 
   List<Channel> channels = List.generate(
       5,
@@ -12,7 +20,15 @@ class SearchProvider extends ISearchProvider {
           ImageUrl: "ImageUrl",
           Subscribers: 12335245,
           Id: "$index",
-          Podcasts: List.generate(10, (pod) => Podcast("Name #$pod", pod))));
+          Podcasts: List.generate(
+              5,
+              (index) => Podcast(
+                    Name: "Podcast $index",
+                    NumberOfLitsners: 0,
+                    url: "",
+                    imageUrl: "",
+                    id: "$index",
+                  ))));
   Future<List<Channel>> searchChannel(String search) async {
     Future.delayed(Duration(seconds: 2));
     return channels;

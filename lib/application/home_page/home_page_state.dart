@@ -1,4 +1,5 @@
 import 'package:podcast_app/models/Channel.dart';
+import 'package:podcast_app/models/Podcast.dart';
 
 abstract class HomePageState {}
 

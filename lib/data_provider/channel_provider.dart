@@ -3,14 +3,32 @@ import 'package:podcast_app/models/Channel.dart';
 import 'package:podcast_app/models/Podcast.dart';
 
 class ChannelPorvider implements IChannelProvider {
-  List<Podcast> podcasts =
-      List.generate(10, (index) => Podcast("Name #$index", index, "https://luan.xyz/files/audio/nasa_on_a_mission.mp3", "ayyyyyyD"));
-  Channel channel = Channel(
-      Name: "Name",
-      ImageUrl: "ImageUrl",
-      Subscribers: 12335245,
-      Id: "1",
-      Podcasts: List.generate(10, (index) => Podcast("NASA Probe Mission $index", 24000, "https://luan.xyz/files/audio/nasa_on_a_mission.mp3", "ayyyyyyD")));
+  List<Podcast> podcasts = List.generate(
+      5,
+      (index) => Podcast(
+            Name: "Podcast $index",
+            NumberOfLitsners: 0,
+            url: "",
+            imageUrl: "",
+            id: "$index",
+          ));
+  List<Channel> channels = List.generate(
+      5,
+      (index) => Channel(
+          Name: "Name",
+          ImageUrl: "ImageUrl",
+          Subscribers: 12335245,
+          Id: "$index",
+          Podcasts: List.generate(
+              5,
+              (index) => Podcast(
+                    Name: "Podcast $index",
+                    NumberOfLitsners: 0,
+                    url: "",
+                    imageUrl: "",
+                    id: "$index",
+                  ))));
+
   bool isSubscribedValue = true;
   @override
   Future<bool> isSubscribed(String userId, String channelId) async {
@@ -20,15 +38,13 @@ class ChannelPorvider implements IChannelProvider {
 
   @override
   Future<Channel> getChannel(String id) async {
-    // TODO: implement getChannel
     Future.delayed(Duration(seconds: 2));
-    return channel;
+    return channels[0];
   }
 
   @override
   Future<bool> setSubscription(
       String userId, String channelId, bool subscriptionStatus) async {
-    // TODO: implement setSubscription
     isSubscribedValue = subscriptionStatus;
     return isSubscribedValue;
   }

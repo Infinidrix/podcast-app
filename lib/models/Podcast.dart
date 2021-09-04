@@ -1,5 +1,3 @@
-
-
 class Podcast {
   final String Name;
   final String url;
@@ -7,5 +5,10 @@ class Podcast {
   final String id;
   final int? NumberOfLitsners;
 
-  Podcast(this.Name, this.NumberOfLitsners, this.url, this.id, {this.imageUrl});
+  Podcast(
+      {required this.Name,
+      required this.NumberOfLitsners,
+      required this.url,
+      required this.id,
+      this.imageUrl});
 }

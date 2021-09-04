@@ -1,18 +1,33 @@
 import 'package:podcast_app/data_provider/home_page_provider/IHome_provider.dart';
 import 'package:podcast_app/models/Channel.dart';
+import 'package:podcast_app/models/Podcast.dart';
 
 class HomeProvider implements IHomeProvider {
-  List<Podcast> podcasts =
-      List.generate(5, (index) => Podcast("Name #$index", index));
-
+  List<Podcast> podcasts = List.generate(
+      5,
+      (index) => Podcast(
+            Name: "Podcast $index",
+            NumberOfLitsners: 0,
+            url: "",
+            imageUrl: "",
+            id: "$index",
+          ));
   List<Channel> channels = List.generate(
-      4,
+      5,
       (index) => Channel(
           Name: "Name",
           ImageUrl: "ImageUrl",
           Subscribers: 12335245,
           Id: "$index",
-          Podcasts: List.generate(10, (pod) => Podcast("Name #$pod", pod))));
+          Podcasts: List.generate(
+              5,
+              (index) => Podcast(
+                    Name: "Podcast $index",
+                    NumberOfLitsners: 0,
+                    url: "",
+                    imageUrl: "",
+                    id: "$index",
+                  ))));
 
   @override
   Future<List<Podcast>> getRecentlyPlayed() async {

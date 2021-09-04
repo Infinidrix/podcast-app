@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
@@ -42,8 +43,8 @@ class SignupProvider implements ISignupProvider {
         return left("Can not connect to internet");
       }
       return left("Some Error Happened");
-    } catch (e) {
-      print(e.runtimeType);
+    } on SocketException catch (e) {
+      print(e.message);
       return left("Can not connect to internet ${e.runtimeType}");
     }
   }

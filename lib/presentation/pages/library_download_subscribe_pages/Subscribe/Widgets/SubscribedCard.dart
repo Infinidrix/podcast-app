@@ -6,12 +6,11 @@ import '../../Constants.dart';
 class SubscribedCard extends StatelessWidget {
   final Channel channel;
 
-  SubscribedCard({ required this.channel }) ;
+  SubscribedCard({required this.channel});
   @override
   Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.fromLTRB(0, 0, 0, 24),
-
       child: Container(
         color: mainBackGroundColor,
         child: Container(
@@ -35,7 +34,8 @@ class SubscribedCard extends StatelessWidget {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               image: DecorationImage(
-                                  image: AssetImage('assets/images/placeholder.jpg'),
+                                  image: AssetImage(
+                                      'assets/images/placeholder.jpg'),
                                   fit: BoxFit.cover)),
                         )),
                     Expanded(
@@ -43,10 +43,12 @@ class SubscribedCard extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                         Container(child:  Text(
-                           '${channel.Name}',
-                           style: titleTextStyle,
-                         ),),
+                          Container(
+                            child: Text(
+                              '${channel.Name}',
+                              style: titleTextStyle,
+                            ),
+                          ),
                           Container(
                             margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
                             child: Text(

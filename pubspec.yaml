@@ -46,6 +46,12 @@ dependencies:
   localstorage: ^4.0.0+1
 
 
+  audioplayers: ^0.19.1
+  flowder: ^0.2.0
+  path_provider: ^2.0.3
+  moor: ^4.5.0
+  sqlite3_flutter_libs: ^0.5.0
+  path: ^1.8.0
 
 dev_dependencies:
   flutter_test:
@@ -55,6 +61,7 @@ dev_dependencies:
   build_runner:
   json_serializable:
 
+  moor_generator: ^4.4.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

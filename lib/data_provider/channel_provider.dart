@@ -32,4 +32,16 @@ class ChannelPorvider implements IChannelProvider {
     isSubscribedValue = subscriptionStatus;
     return isSubscribedValue;
   }
+
+  Future<void>? createChannel(Channel channell) {
+    Channel channel = Channel(
+        Name: channell.Name,
+        ImageUrl: channell.ImageUrl,
+        Subscribers: channell.Subscribers,
+        Id: channell.Id,
+        Description: channell.Description);
+
+    print("Channel created");
+    // return true;
+  }
 }

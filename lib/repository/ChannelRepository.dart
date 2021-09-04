@@ -27,4 +27,9 @@ class ChannelRepository implements IChannelRepository {
     return channelProvider.setSubscription(
         userId, channelId, subscriptionStatus);
   }
+
+  Future<void>? createChannel(Channel channell) {
+    return channelProvider.createChannel(channell);
+    // return true;
+  }
 }

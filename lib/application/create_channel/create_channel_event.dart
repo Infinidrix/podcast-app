@@ -1,9 +1,12 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:podcast_app/models/Channel.dart';
 
 abstract class CreateChannelEvent {}
 
 class CreateChannelSaveEvent extends CreateChannelEvent {
-  final Channel channel;
+  final String Name;
+  final String Description;
+  final String ImageURL;
 
-  CreateChannelSaveEvent({required this.channel});
+  CreateChannelSaveEvent({required this.Name, required this.Description, required this.ImageURL});
 }

@@ -1,7 +1,7 @@
 abstract class RecorderEvent {}
 
-class StartRecordingEvent extends RecorderEvent {}
+class StartRecording extends RecorderEvent {}
 
 class PauseEvent extends RecorderEvent {}
 
-class SaveEvent extends RecorderEvent {}
+class Stop extends RecorderEvent {}

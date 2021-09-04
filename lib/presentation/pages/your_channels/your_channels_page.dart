@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:podcast_app/presentation/core/bottom_navigation.dart';
+import 'package:podcast_app/presentation/pages/core/bottom_nav.dart';
 import 'package:podcast_app/presentation/pages/your_channels/widgets/your_channels_widgets.dart';
 
 class YourChannelsPage extends StatelessWidget {
@@ -37,7 +38,7 @@ class YourChannelsPage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: ABottomNavaigationBar(),
+      bottomNavigationBar: getBottomNavBar(context),
     );
   }
 }

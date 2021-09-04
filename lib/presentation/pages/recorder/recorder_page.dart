@@ -10,7 +10,7 @@ class RecorderPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<RecorderBloc>(
-      create: (context) => RecorderBloc(InitialState()),
+      create: (context) => RecorderBloc(RecorderInitialState()),
       child: Recorder(),
     );
   }

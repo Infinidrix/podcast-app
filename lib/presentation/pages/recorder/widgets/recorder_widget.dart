@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:podcast_app/application/recorder/recorder_application.dart';
 
 class Recorder extends StatelessWidget {
   const Recorder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Widget controlButton = ControlButton(
+      buttonLabel: "Start",
+      onPressed: () {
+        final recorderBloc = BlocProvider.of<RecorderBloc>(context);
+        recorderBloc.add(StartRecording());
+      },
+    );
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -15,6 +24,9 @@ class Recorder extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
+              SizedBox(
+                height: 20,
+              ),
               PageTitle(),
               SizedBox(
                 height: 50,
@@ -41,41 +53,98 @@ class Recorder extends StatelessWidget {
                   fontSize: 38,
                 ),
               ),
-              SizedBox(height: 15),
-              GestureDetector(
-                onTap: () {},
-                child: Icon(
-                  Icons.pause,
-                  color: Colors.white,
-                  size: 50.0,
-                ),
-              ),
+              SizedBox(height: 30),
               SizedBox(
                 height: 20,
               ),
-              Container(
-                width: 170,
-                height: 50,
-                child: ElevatedButton(
-                    onPressed: () {},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+              BlocConsumer<RecorderBloc, RecorderState>(
+                builder: (context, recorderState) {
+                  if (recorderState is Recording) {
+                    // TODO : change the UI TO REFELECT RECORDING
+                    controlButton = ControlButton(
+                      buttonLabel: 'Pause',
+                      onPressed: () {
+                        final recorderBloc =
+                            BlocProvider.of<RecorderBloc>(context);
+                        recorderBloc.add(PauseRecordingEvent());
+                      },
+                    );
+                  }
+
+                  if (recorderState is PauseState) {
+                    // TODO : change the UI TO REFELECT Pause state
+                    controlButton = Column(
                       children: [
-                        Icon(
-                          Icons.stop,
-                          color: Colors.red,
-                          size: 40,
+                        ControlButton(
+                          buttonLabel: 'Resume',
+                          onPressed: () {
+                            final recorderBloc =
+                                BlocProvider.of<RecorderBloc>(context);
+                            recorderBloc.add(ResumeRecordingEvent());
+                          },
                         ),
-                        Text(
-                          "Stop",
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        )
+                        SizedBox(
+                          height: 10,
+                        ),
+                        ControlButton(
+                          buttonLabel: 'Stop',
+                          onPressed: () {
+                            final recorderBloc =
+                                BlocProvider.of<RecorderBloc>(context);
+                            recorderBloc.add(StopRecordingEvent());
+                          },
+                        ),
                       ],
-                    )),
+                    );
+                  }
+
+                  if (recorderState is ResumedState) {
+                    controlButton = ControlButton(
+                      buttonLabel: 'Pause',
+                      onPressed: () {
+                        final recorderBloc =
+                            BlocProvider.of<RecorderBloc>(context);
+                        recorderBloc.add(PauseRecordingEvent());
+                      },
+                    );
+                  }
+                  return Container(
+                    width: 170,
+                    child: controlButton,
+                  );
+                },
+                listener: (context, recorderState) {
+                  if (recorderState is DialogState) {
+                    // Back to create podcast page, by reading the recorded file
+                    context.router.pop();
+                  }
+                },
               )
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ControlButton extends StatelessWidget {
+  final String buttonLabel;
+  final void Function()? onPressed;
+
+  const ControlButton(
+      {Key? key, required this.buttonLabel, required this.onPressed})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      child: Center(
+        child: Text(
+          buttonLabel,
+          style: TextStyle(
+            fontSize: 20,
           ),
         ),
       ),

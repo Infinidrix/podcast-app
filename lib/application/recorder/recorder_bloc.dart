@@ -8,11 +8,21 @@ class RecorderBloc extends Bloc<RecorderEvent, RecorderState> {
   @override
   Stream<RecorderState> mapEventToState(RecorderEvent event) async* {
     if (event is StartRecording) {
+      yield Recording();
       //TODO : Start recording Audio
-    } else if (event is PauseEvent) {
+      print("recording");
+    } else if (event is PauseRecordingEvent) {
+      yield PauseState();
       //TODO : Pause Recording
-    } else if (event is Stop) {
+      print("paused");
+    } else if (event is ResumeRecordingEvent) {
+      yield ResumedState();
+      //TODO : Resume Recording
+      print("Resumed");
+    } else if (event is StopRecordingEvent) {
+      yield DialogState();
       // TODO: Save the record
+      print("stop");
     }
   }
 }

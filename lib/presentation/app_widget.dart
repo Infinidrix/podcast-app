@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:podcast_app/application/channel_description/channel_description_bloc.dart';
+import 'package:podcast_app/application/recorder/recorder_application.dart';
 import 'package:podcast_app/data_provider/channel_provider.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 import 'package:podcast_app/repository/ChannelRepository.dart';
@@ -28,6 +29,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<CreatePodcastBloc>(
           create: (context) => CreatePodcastBloc(
               CreatePodcastInitialState(), CreatePodcastRepository()),
+        ),
+        BlocProvider<RecorderBloc>(
+          create: (context) => RecorderBloc(RecorderInitialState()),
         )
       ],
       child: MaterialApp.router(

@@ -115,7 +115,7 @@ class SigninWidget extends StatelessWidget {
             ));
           }
           if (loginState is LoginSuccessState) {
-            context.router.replace(ChannelDetailRoute());
+            context.router.replace(EditChannelRoute());
           }
         },
         builder: (_, loginState) {
@@ -244,7 +244,7 @@ class SigninWidget extends StatelessWidget {
                                       password: this.password);
                               loginBloc.add(ev);
                               if (loginState is LoginSuccessState) {
-                                context.router.replace(ChannelDetailRoute());
+                                context.router.replace(EditChannelRoute());
                               }
                             }
                           },

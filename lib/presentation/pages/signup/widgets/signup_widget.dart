@@ -140,6 +140,9 @@ class SignupWidget extends StatelessWidget {
               duration: Duration(seconds: 3),
             ));
           }
+          if (signupState is SuccessSignupState) {
+            context.router.push(SigninRoute());
+          }
         },
         builder: (context, signupState) {
           return Padding(

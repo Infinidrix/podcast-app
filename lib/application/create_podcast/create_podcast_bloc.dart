@@ -4,9 +4,13 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:podcast_app/application/create_podcast/create_podcast_event.dart';
 import 'package:podcast_app/application/create_podcast/create_podcast_state.dart';
+import 'package:podcast_app/repository/CreatePodcastRepository.dart';
 
 class CreatePodcastBloc extends Bloc<CreatePodcastEvent, CreatePodcastState> {
-  CreatePodcastBloc(CreatePodcastState initialState) : super(initialState);
+  final CreatePodcastRepository createPodcastRepository;
+  CreatePodcastBloc(
+      CreatePodcastState initialState, this.createPodcastRepository)
+      : super(initialState);
 
   @override
   Stream<CreatePodcastState> mapEventToState(CreatePodcastEvent event) async* {
@@ -36,13 +40,8 @@ class CreatePodcastBloc extends Bloc<CreatePodcastEvent, CreatePodcastState> {
 
     if (event is SaveEvent) {
       yield Saving();
-      print(event.file?.path.toString());
-      print(event.podcastDescription);
-      print(event.podcastTitle);
-      // ignore: todo
-      //TODO : send received data to the repository
-      await Future.delayed(Duration(seconds: 3));
-      print("saved");
+      await createPodcastRepository.savePodcast(
+          event.file, event.podcastTitle, event.podcastDescription);
       yield Saved();
     }
   }

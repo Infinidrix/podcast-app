@@ -42,11 +42,15 @@ dependencies:
   auto_route: ^2.2.0
   dartz: ^0.10.0
   freezed_annotation: ^0.14.2
+  file_picker: ^4.0.1
+  flutter_sound: ^8.3.10
+  permission_handler: ^8.1.4+2
   http: ^0.13.3
   localstorage: ^4.0.0+1
   moor: ^4.5.0
   sqlite3_flutter_libs: ^0.5.0
   path: ^1.8.0
+
 
 dev_dependencies:
   flutter_test:

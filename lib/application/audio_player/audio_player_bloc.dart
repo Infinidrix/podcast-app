@@ -5,6 +5,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flowder/flowder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:podcast_app/application/download/download_events.dart';
 import 'package:podcast_app/models/Podcast.dart';
 import 'package:podcast_app/repository/audio_repository/Iaudio_repository.dart';
 import 'audio_player_states.dart';
@@ -19,23 +20,23 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
             audioPlayer,
             ListQueue.from([
               Podcast(
-                  "NASA Probe Mission",
-                  "There are objects in space and only a few of them are our fault.",
-                  24000,
-                  "https://luan.xyz/files/audio/nasa_on_a_mission.mp3",
-                  "NASA Podcast",
-                  "Unique ID")
+                  name: "NASA Probe Mission",
+                  numberOfListeners: 24000,
+                  channelName: "",
+                  description: "",
+                  url: "https://luan.xyz/files/audio/nasa_on_a_mission.mp3",
+                  id: "ayyyyyyD")
             ]),
             AudioPlayerStatus(
                 false,
                 0,
                 Podcast(
-                    "NASA Probe Mission",
-                    "There are objects in space and only a few of them are our fault.",
-                    24000,
-                    "https://luan.xyz/files/audio/nasa_on_a_mission.mp3",
-                    "NASA Podcast",
-                    "Unique ID")))) {
+                    name: "NASA Probe Mission",
+                    numberOfListeners: 24000,
+                    channelName: "",
+                    description: "",
+                    url: "https://luan.xyz/files/audio/nasa_on_a_mission.mp3",
+                    id: "ayyyyyyD")))) {
     AudioPlayer.logEnabled = false;
     audioPlayer.onPlayerError.listen((event) {
       this.add(AudioPlayerFailedEvent(event));
@@ -110,6 +111,8 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
             this.state.podcasts.elementAt(this.state.status.currentIndex);
         this.add(PlayAudioEvent());
       }
+    } else if (event is DownloadEvent) {
+      await downloadEpisode(this.state.status.currentPodcast);
     } else if (event is AudioPlayerFailedEvent) {
       yield AudioPlayerFailedState(this.state.player, this.state.podcasts,
           event.errorMessage, this.state.status);
@@ -123,4 +126,24 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
   Stream<Duration> fileDuration() async* {
     yield* this.state.player.onDurationChanged;
   }
+}
+
+// TODO: Move this to the download bloc
+Future<void> downloadEpisode(Podcast currentPodcast) async {
+  String path = await getDocumentDir();
+  DownloaderUtils options = DownloaderUtils(
+    progressCallback: (current, total) {
+      final progress = (current / total) * 100;
+      print('Downloading: $progress%');
+    },
+    file: File('$path/test_podcast.mp3'),
+    progress: ProgressImplementation(),
+    onDone: () => print('COMPLETE'),
+    deleteOnCancel: true,
+  );
+  DownloaderCore core = await Flowder.download(currentPodcast.url, options);
+}
+
+Future<String> getDocumentDir() async {
+  return (await getApplicationDocumentsDirectory()).path;
 }

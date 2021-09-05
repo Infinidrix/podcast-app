@@ -1,5 +1,3 @@
-
-
 class Podcast {
   final String name;
   final String url;
@@ -9,5 +7,12 @@ class Podcast {
   final String channelName;
   final String description;
 
-  Podcast(this.name, this.description, this.numberOfListeners, this.url, this.channelName, this.id, {this.imageUrl});
+  Podcast(
+      {required this.name,
+      required this.url,
+      this.imageUrl,
+      required this.id,
+      this.numberOfListeners,
+      required this.channelName,
+      required this.description});
 }

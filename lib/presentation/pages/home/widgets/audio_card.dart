@@ -10,61 +10,49 @@ import 'package:podcast_app/models/Podcast.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 
 class AudioWithThumbnail extends StatelessWidget {
-  final String imgStr;
-  final String audioName;
+  final Podcast podcast;
 
-  const AudioWithThumbnail(
-      {Key? key, required this.imgStr, required this.audioName})
-      : super(key: key);
+  const AudioWithThumbnail({Key? key, required this.podcast}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final audioPlayerBloc = BlocProvider.of<AudioPlayerBloc>(context);
 
-    return InkWell(
-      highlightColor: Colors.white54,
-      onTap: () async {
-        print("Getting to the add event to bloc");
-        // TODO: Change this from hardcoded to state
-        String path = (await getApplicationDocumentsDirectory()).path;
-        audioPlayerBloc.add(InitializePlayerEvent(
-          podcasts: ListQueue.from([
-            Podcast(
-              "NASA Probe Mission 100", 
-              "There are objects in space and only a few of them are our fault.", 
-              24000, 
-              "https://luan.xyz/files/audio/nasa_on_a_mission.mp3", 
-              "The NASA Podcast", 
-              "Unique ID"
-              )])
-          )
-          );
-        context.router.push(PlayerRoute());
-      },
-      child: SizedBox(
-        height: 175,
-        width: 175,
-        child: Padding(
-          padding: const EdgeInsets.only(right: 8.0),
-          child: Column(
-            children: [
-              Stack(
-                clipBehavior: Clip.antiAlias,
-                alignment: Alignment.bottomCenter,
-                children: [
-                  Image.asset(
-                    imgStr,
-                    height: 175,
-                    width: 175,
-                  ),
-                  Text("$audioName",
-                      style: TextStyle(
-                        fontSize: 18.0,
-                      ))
-                ],
-              )
-            ],
-          ),
+    return SizedBox(
+      height: 160,
+      width: 160,
+      child: InkWell(
+        highlightColor: Colors.white54,
+        onTap: () async {
+          print("Getting to the add event to bloc");
+          // TODO: Change this from hardcoded to state
+          String path = await getDocumentDir();
+          audioPlayerBloc
+              .add(InitializePlayerEvent(podcasts: ListQueue.from([podcast])));
+          context.router.push(PlayerRoute());
+        },
+        child: Column(
+          children: [
+            Stack(
+              clipBehavior: Clip.none,
+              alignment: Alignment.bottomCenter,
+              children: [
+                Container(
+                    height: 150,
+                    width: 155,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                            image: AssetImage(
+                          podcast.imageUrl!,
+                        )))),
+                Text("${podcast.name}",
+                    style: TextStyle(
+                      fontSize: 18.0,
+                    ))
+              ],
+            )
+          ],
         ),
       ),
     );

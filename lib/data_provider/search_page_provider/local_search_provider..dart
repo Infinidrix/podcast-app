@@ -1,8 +1,8 @@
-import 'package:podcast_app/data_provider/Ichannel_provider.dart';
+import 'package:podcast_app/data_provider/search_page_provider/ISearch_provider.dart';
 import 'package:podcast_app/models/Channel.dart';
 import 'package:podcast_app/models/Podcast.dart';
 
-class ChannelPorvider implements IChannelProvider {
+class LocalSearchProvider extends ISearchProvider {
   List<Podcast> podcasts = List.generate(
       5,
       (index) => Podcast(
@@ -11,9 +11,10 @@ class ChannelPorvider implements IChannelProvider {
             description: "",
             channelName: "",
             url: "",
-            imageUrl: "",
+            imageUrl: "assets/images/placeholder.jpg",
             id: "$index",
           ));
+
   List<Channel> channels = List.generate(
       5,
       (index) => Channel(
@@ -30,27 +31,31 @@ class ChannelPorvider implements IChannelProvider {
                     channelName: "",
                     description: "",
                     url: "",
-                    imageUrl: "",
+                    imageUrl: "assets/images/placeholder.jpg",
                     id: "$index",
                   ))));
 
-  bool isSubscribedValue = true;
   @override
-  Future<bool> isSubscribed(String userId, String channelId) async {
-    Future.delayed(Duration(seconds: 2));
-    return isSubscribedValue;
+  Future<List<Channel>> recentlySearchedChannel() async {
+    await Future.delayed(Duration(seconds: 2));
+    return channels;
   }
 
   @override
-  Future<Channel> getChannel(String id) async {
-    Future.delayed(Duration(seconds: 2));
-    return channels[0];
+  Future<List<Podcast>> recentlySearchedPodcast() async {
+    await Future.delayed(Duration(seconds: 2));
+    return podcasts;
   }
 
   @override
-  Future<bool> setSubscription(
-      String userId, String channelId, bool subscriptionStatus) async {
-    isSubscribedValue = subscriptionStatus;
-    return isSubscribedValue;
+  Future<List<Channel>> searchChannel(String search) {
+    // TODO: implement searchChannel
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Podcast>> searchPodcast(String search) {
+    // TODO: implement searchPodcast
+    throw UnimplementedError();
   }
 }

@@ -20,7 +20,7 @@ import 'package:podcast_app/presentation/pages/create_podcast/create_podcast.dar
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
-    AutoRoute(page: WelcomePage, path: '/welcome', initial: true),
+    AutoRoute(page: WelcomePage, path: '/welcome'),
     AutoRoute(page: SigninPage, path: '/signin'),
     AutoRoute(page: SignupPage, path: '/signup'),
     AutoRoute(page: HomePage, path: '/home'),
@@ -35,7 +35,7 @@ import 'package:podcast_app/presentation/pages/create_podcast/create_podcast.dar
       page: EditChannelPage,
       path: '/edit_channel',
     ),
-    AutoRoute(page: SearchPage, path: '/search'),
+    AutoRoute(page: SearchPage, path: '/search', initial: true),
     AutoRoute(page: LibraryDownloadSubTabMenuPage, path: "/library")
   ],
 )

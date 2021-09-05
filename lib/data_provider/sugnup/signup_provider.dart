@@ -33,8 +33,9 @@ class SignupProvider implements ISignupProvider {
       if (response.statusCode == 200) {
         final parsed = json.decode(response.body);
         print(parsed);
+        await LoginProvider.getSharedPrefernce();
         await LoginProvider.setItemToLocalStrage(
-            tokenName: "userCred", dataToStore: userCred);
+            tokenName: "userCred", dataToStore: jsonEncode(userCred));
         return right(UserRegister.fromJson(parsed));
       } else if (response.statusCode == 400) {
         final parsed = json.decode(response.body);

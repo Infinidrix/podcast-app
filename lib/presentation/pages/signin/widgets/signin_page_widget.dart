@@ -14,7 +14,6 @@ class SigninWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
     final loginBloc = BlocProvider.of<LoginBloc>(context);
-    loginBloc.add(CheckUserCredPersistedLoginEvent());
     // the input field widget
     // Widget emailInput = Padding(
     //   padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 45.0),
@@ -115,10 +114,11 @@ class SigninWidget extends StatelessWidget {
             ));
           }
           if (loginState is LoginSuccessState) {
-            context.router.replace(EditChannelRoute());
+            context.router.replace(EditProfileRoute());
           }
         },
         builder: (_, loginState) {
+          loginBloc.add(CheckUserCredPersistedLoginEvent());
           return Padding(
             padding: const EdgeInsets.fromLTRB(55.0, 218.0, 55.0, 0.0),
             child: Container(

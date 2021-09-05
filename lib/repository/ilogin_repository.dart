@@ -4,5 +4,5 @@ import 'package:podcast_app/models/user_login/user_login.dart';
 
 abstract class ILoginRepository {
   Future<Either<String, LoginDtoModel>> Login(String email, String password);
-  Future<Either<Unit, UserLogin>> getPersistedUserCredOrNot();
+  Future<UserLogin?> getPersistedUserCredOrNot();
 }

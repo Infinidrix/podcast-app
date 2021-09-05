@@ -21,9 +21,6 @@ import 'package:podcast_app/repository/audio_repository/AudioRepository.dart';
 import 'package:podcast_app/repository/login_repository.dart';
 import 'package:podcast_app/repository/signup%20repository/SignupRepository.dart';
 import 'package:podcast_app/data_provider/downloaded_audio_provider/downloaded_audio_provider.dart';
-import 'package:podcast_app/presentation/routes/router.gr.dart';
-import 'package:podcast_app/repository/ChannelRepository.dart';
-import 'package:podcast_app/repository/audio_repository/AudioRepository.dart';
 import 'package:podcast_app/repository/downloaded_audio_repository/download_audio_repository.dart';
 
 class MyApp extends StatelessWidget {

@@ -8,10 +8,13 @@ import 'package:podcast_app/application/home_page/home_page_bloc.dart';
 import 'package:podcast_app/application/home_page/home_page_event.dart';
 import 'package:podcast_app/application/search/search_bloc.dart';
 import 'package:podcast_app/application/search/search_event.dart';
+import 'package:podcast_app/application/your_channels/your_channel_bloc.dart';
+import 'package:podcast_app/application/your_channels/your_channel_event.dart';
 import 'package:podcast_app/data_provider/channel_provider.dart';
 import 'package:podcast_app/data_provider/home_page_provider/Home_provider.dart';
 import 'package:podcast_app/data_provider/search_page_provider/Search_provider.dart';
 import 'package:podcast_app/data_provider/search_page_provider/local_search_provider..dart';
+import 'package:podcast_app/data_provider/your_channel_provider/YourChannel_provider.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 import 'package:podcast_app/repository/ChannelRepository.dart';
 import 'package:podcast_app/repository/home_page_repository/HomePageRepository.dart';
@@ -26,6 +29,7 @@ import 'package:podcast_app/data_provider/audio_provider/audio_provider.dart';
 import 'package:podcast_app/repository/audio_repository/AudioRepository.dart';
 import 'package:podcast_app/repository/login_repository.dart';
 import 'package:podcast_app/repository/signup%20repository/SignupRepository.dart';
+import 'package:podcast_app/repository/your_channel_repository/YourChannelRepository.dart';
 
 class MyApp extends StatelessWidget {
   final _rootRouter = RootRouter();
@@ -52,6 +56,8 @@ class MyApp extends StatelessWidget {
       ),
     );
     final audioRepository = AudioRepository(AudioProvider());
+    final yourChannelRepository =
+        YourChannelRepository(dataProvider: YourChannelProvider());
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -74,6 +80,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => AudioPlayerBloc(audioRepository),
         ),
+        BlocProvider(
+            create: (_) => YourChannelBloc(repository: yourChannelRepository)
+              ..add(IntialYourChannelEvent()))
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

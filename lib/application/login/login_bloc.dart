@@ -17,20 +17,48 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
     // TODO: Add your event logic
-    final userCredOrNot = await loginRepository.getPersistedUserCredOrNot();
-    print('userCrdOrNot in login bloc ${userCredOrNot}');
-    print(userCredOrNot.isRight());
+    // await LoginProvider.SESSION.clear();
+    // final userCredOrNot = await loginRepository.getPersistedUserCredOrNot();
+    // print('userCrdOrNot in login bloc ${userCredOrNot}');
+    // print(userCredOrNot.isRight());
+    // var som = await LoginProvider.SESSION.getItem("userCred");
+    // print('tring some new${som}');
 
-    yield* userCredOrNot.fold((l) async* {}, (userCred) async* {
-      print('dont now what ${userCred.Password}');
-      final userOrError =
-          await loginRepository.Login(userCred.UserName, userCred.Password);
-      yield* userOrError.fold((errorMessage) async* {
-        yield ErrorFailureLoginState(errorMessage: errorMessage);
-      }, (r) async* {
-        yield LoginSuccessState();
-      });
-    });
+    // if (userCredOrNot != null) {
+    //   print('userCred from new imp ${userCredOrNot}');
+    //   final userOrError = await loginRepository.Login(
+    //       userCredOrNot.UserName, userCredOrNot.Password);
+    //   print(userOrError);
+    //   yield* userOrError.fold((errorMessage) async* {
+    //     yield ErrorFailureLoginState(errorMessage: errorMessage);
+    //   }, (r) async* {
+    //     yield LoginSuccessState();
+    //   });
+    // }
+    //
+
+    // if (som != null) {
+    //   yield LoginSuccessState();
+    // }
+    // yield* userCredOrNot.fold((l) async* {}, (userCred) async* {
+    //   print('dont now what ${userCred.Password}');
+    //   final userOrError =
+    //       await loginRepository.Login(userCred.UserName, userCred.Password);
+    //   bool _som = false;
+    //   String? _temp = null;
+    //   userOrError.fold((errorMessage) async {
+    //     _temp = errorMessage;
+    //     // yield ErrorFailureLoginState(errorMessage: errorMessage);
+    //   }, (r) async {
+    //     _som = true;
+    //     // yield LoginSuccessState();
+    //   });
+    //   if (_som == true) {
+    //     yield LoginSuccessState();
+    //   } else if (_temp != null) {
+    //     yield ErrorFailureLoginState(errorMessage: _temp!);
+    //   }
+    // });
 
     if (event is LoginButtonPressedEvent) {
       yield LoadingLoginState();

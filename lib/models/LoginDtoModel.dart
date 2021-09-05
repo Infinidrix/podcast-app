@@ -5,8 +5,7 @@ part 'LoginDtoModel.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class LoginDtoModel {
-  String Token;
-  String expiration;
+  String Token, expiration;
   User user;
   LoginDtoModel(
       {required this.Token, required this.user, required this.expiration});

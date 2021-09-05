@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 import 'package:podcast_app/data_provider/login/ilogin_provider.dart';
 import 'package:podcast_app/data_provider/login/login_provider.dart';
@@ -20,25 +22,31 @@ class LoginRepository implements ILoginRepository {
   }
 
   @override
-  Future<Either<Unit, UserLogin>> getPersistedUserCredOrNot() async {
+  Future<UserLogin?> getPersistedUserCredOrNot() async {
     // TODO: implement getPersistedUserCredOrNot
 
     final userCredFromLocalStorage =
         await LoginProvider.getItemFromLocalStorage(tokenName: "userCred");
     print("\n\n");
     print(userCredFromLocalStorage);
-
-    UserLogin? ret;
-    await userCredFromLocalStorage.fold((l) {}, (r) {
-      ret = UserLogin.fromJson(r);
-    });
-    // if (userCred is UserLogin) {
-    //   return right(userCred);
-    // }
-    print('del');
-    if (ret == null) {
-      return left(unit);
+    if (userCredFromLocalStorage == null) {
+      return null;
     }
-    return right(ret!);
+
+    return UserLogin.fromJson(jsonDecode(userCredFromLocalStorage));
+
+    // UserLogin? ret;
+
+    // await userCredFromLocalStorage.fold((l) {}, (r) {
+    //   ret = UserLogin.fromJson(r);
+    // });
+    // // if (userCred is UserLogin) {
+    // //   return right(userCred);
+    // // }
+    // print('del');
+    // if (ret == null) {
+    //   return left(unit);
+    // }
+    // return right(ret!);
   }
 }

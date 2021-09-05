@@ -26,7 +26,6 @@ import 'package:podcast_app/repository/signup%20repository/SignupRepository.dart
 import 'package:podcast_app/data_provider/downloaded_audio_provider/downloaded_audio_provider.dart';
 import 'package:podcast_app/repository/downloaded_audio_repository/download_audio_repository.dart';
 
-
 class MyApp extends StatelessWidget {
   final _rootRouter = RootRouter();
   // This widget is the root of your application.
@@ -45,7 +44,8 @@ class MyApp extends StatelessWidget {
       ),
     );
     final audioRepository = AudioRepository(AudioProvider());
-    final downloadedAudioRepository = DownloadedAudioRepository(DownloadedAudioProvider());
+    final downloadedAudioRepository =
+        DownloadedAudioRepository(DownloadedAudioProvider());
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
               CreatePodcastInitialState(), CreatePodcastRepository()),
         ),
         BlocProvider<RecorderBloc>(
-          create: (context) => RecorderBloc(RecorderInitialState()),
+            create: (context) => RecorderBloc(RecorderInitialState())),
         BlocProvider(
             create: (_) => LoginBloc(loginRepository: loginRepository)),
         BlocProvider(
@@ -70,7 +70,8 @@ class MyApp extends StatelessWidget {
           create: (_) => AudioPlayerBloc(audioRepository),
         ),
         BlocProvider(
-          create: (_) => DownloadBloc(downloadedAudioRepository)..add(LoadInitialDownloadEvent()),
+          create: (_) => DownloadBloc(downloadedAudioRepository)
+            ..add(LoadInitialDownloadEvent()),
         ),
         BlocProvider(
             create: (_) =>

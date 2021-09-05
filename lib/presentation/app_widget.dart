@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:podcast_app/application/channel_description/channel_description_bloc.dart';
 import 'package:podcast_app/data_provider/channel_provider.dart';
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final channelRepository =
-        ChannelRepository(channelProvider: ChannelPorvider());
+        ChannelRepository(channelProvider: ChannelPorvider(httpClient: http.Client));
 
     return BlocProvider(
       create: (_) =>

@@ -45,7 +45,7 @@ class ChannelPorvider implements IChannelProvider {
   }
 
   @override
-  Future<Either<String, CreateChannel>> createChannel({required Map<String, dynamic> createChannelInfo}) async{
+  Future<Either<String, Channel>> createChannel({required Map<String, dynamic> createChannelInfo}) async{
       try{
         final response = await httpClient.post(Uri.http(URL, "/api/createChannel"),
         headers: <String, String>{

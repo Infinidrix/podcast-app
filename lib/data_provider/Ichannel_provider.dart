@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:podcast_app/models/Channel.dart';
-import 'package:podcast_app/models/CreateChannel.dart';
+import 'package:podcast_app/models/channel/Channel.dart';
+import 'package:podcast_app/models/channel/CreateChannel.dart';
 
 abstract class IChannelProvider {
   Future<Channel> getChannel(String id);

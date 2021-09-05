@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
-import 'package:podcast_app/models/Channel.dart';
+import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/repository/Ichannel_repository.dart';
 
 part 'channel_description_event.dart';

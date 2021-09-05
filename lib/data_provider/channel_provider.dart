@@ -1,11 +1,11 @@
 import 'package:podcast_app/data_provider/Ichannel_provider.dart';
-import 'package:podcast_app/models/Channel.dart';
+import 'package:podcast_app/models/channel/Channel.dart';
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
-import 'package:podcast_app/models/CreateChannel.dart';
+import 'package:podcast_app/models/channel/CreateChannel.dart';
 import 'constants.dart';
 
 class ChannelPorvider implements IChannelProvider {

@@ -7,6 +7,7 @@ import 'package:podcast_app/application/channel_description/channel_description_
 import 'package:podcast_app/application/create_podcast/create_podcast_application.dart';
 import 'package:podcast_app/application/download/download_bloc.dart';
 import 'package:podcast_app/application/download/download_events.dart';
+import 'package:podcast_app/application/edit_profile/edit_profile_bloc.dart';
 import 'package:podcast_app/application/login/login_bloc.dart';
 import 'package:podcast_app/application/recorder/recorder_application.dart';
 import 'package:podcast_app/application/signup/signup_bloc.dart';
@@ -74,10 +75,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => AudioPlayerBloc(audioRepository),
         ),
-        // BlocProvider(
-        //     create: (_) =>
-        //     EditProfileBloc(editProfileRepository: editProfilRepository)
-        //       ..add(IntitalEditProfileEvent())),
+        BlocProvider(
+            create: (_) =>
+                EditProfileBloc(editProfileRepository: editProfilRepository)
+                  ..add(IntitalEditProfileEvent())),
         BlocProvider(
           create: (_) => DownloadBloc(downloadedAudioRepository)
             ..add(LoadInitialDownloadEvent()),

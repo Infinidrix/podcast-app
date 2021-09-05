@@ -7,10 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class CreateChannelWidget extends StatelessWidget {
-  Widget getFormField(Icon icon, int lineCount, String hint) {
+  final nameTextController = TextEditingController();
+  final descriptionTextController = TextEditingController();
+  final imageController = TextEditingController();
+
+
+  Widget getFormField(Icon icon, int lineCount, String hint, TextEditingController textEditingController) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 15.0),
       child: TextFormField(
+        controller: textEditingController,
         minLines: lineCount,
         maxLines: lineCount,
         style: TextStyle(color: Colors.white),
@@ -40,45 +46,11 @@ class CreateChannelWidget extends StatelessWidget {
     );
   }
 
-  Widget saveButton(BuildContext context, CreateChannelBloc createChannelBloc, CreateChannelState createChannelState){
-    return Padding(
-      padding: const EdgeInsets.only(top: 50.0),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [HexColor("#579EB5"), HexColor("#8EB9C7")]),
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        child: ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.transparent),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-            ),
-          ),
-          onPressed: () {
-            context.router.popAndPush(CreatePodcastRoute());
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Container(
-              child: Center(
-                child: Text("Save"),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  
 
   @override
   Widget build(BuildContext context) {
-
+    final channelBloc = BlocProvider.of<CreateChannelBloc>(context);
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -114,20 +86,20 @@ class CreateChannelWidget extends StatelessWidget {
                   style: TextStyle(color: Colors.grey),
                 ),
                 getFormField(
-                    Icon(Icons.mic_none), 1, "The name of the channel"),
+                    Icon(Icons.mic_none), 1, "The name of the channel", nameTextController),
                 Text(
                   "Description",
                   style: TextStyle(color: Colors.grey),
                 ),
                 getFormField(Icon(Icons.description_outlined), 3,
-                    "Description of the channel"),
+                    "Description of the channel", descriptionTextController),
                 Text(
                   "Cover Photo",
                   style: TextStyle(color: Colors.grey),
                 ),
                 getFormField(
-                    Icon(Icons.insert_photo_outlined), 1, "Attach photo"),
-                // saveButton(context, CreateChannelBloc(channelRepository: channelRepository), createchannelstate),
+                    Icon(Icons.insert_photo_outlined), 1, "Attach photo", imageController),
+                saveButton(context, channelBloc, createchannelstate),
               ],
             ),
           ]),
@@ -137,6 +109,43 @@ class CreateChannelWidget extends StatelessWidget {
           context.router.push(YourChannelsRoute());
         }
       }),
+    );
+  }
+
+  Widget saveButton(BuildContext context, CreateChannelBloc createChannelBloc,
+      CreateChannelState createChannelState) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 50.0),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [HexColor("#579EB5"), HexColor("#8EB9C7")]),
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.transparent),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+            ),
+          ),
+          onPressed: () {
+            context.router.popAndPush(CreatePodcastRoute());
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              child: Center(
+                child: Text("Save"),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

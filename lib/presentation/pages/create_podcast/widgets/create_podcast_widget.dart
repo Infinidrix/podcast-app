@@ -50,8 +50,8 @@ class CreatePodcastWidget extends StatelessWidget {
                       FileEntry(filename: file!.path.split('/').last);
                 }
                 if (createPodcastSate is FilePickingError) {
-                  fileUploadingChoices = FileUploadingChoices(
-                      "File Picking Error, Please Try agin");
+                  fileUploadingChoices =
+                      FileUploadingChoices("Please select a file");
                 }
 
                 if (createPodcastSate is Saving) {

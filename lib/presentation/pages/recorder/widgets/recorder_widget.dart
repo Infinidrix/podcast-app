@@ -3,7 +3,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:podcast_app/application/create_podcast/create_podcast_application.dart';
 import 'package:podcast_app/application/recorder/recorder_application.dart';
-import 'package:podcast_app/presentation/routes/router.gr.dart';
 
 class Recorder extends StatelessWidget {
   const Recorder({Key? key}) : super(key: key);
@@ -21,6 +20,11 @@ class Recorder extends StatelessWidget {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
+        leading: IconButton(
+            onPressed: () {
+              context.router.pop();
+            },
+            icon: Icon(Icons.arrow_back_ios)),
       ),
       body: Container(
         child: Center(
@@ -125,14 +129,6 @@ class Recorder extends StatelessWidget {
                       )),
                   SizedBox(
                     height: 45,
-                  ),
-                  Text(
-                    "00 : 04 : 33",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 38,
-                    ),
                   ),
                   SizedBox(height: 50),
                   Container(

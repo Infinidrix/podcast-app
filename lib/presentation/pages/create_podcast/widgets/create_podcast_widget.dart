@@ -107,12 +107,55 @@ class CreatePodcastWidget extends StatelessWidget {
                       style: TextStyle(color: Colors.white),
                     ),
                     fileUploadingChoices,
-                    SaveButton(
-                        formKey: formKey,
-                        file: file,
-                        podcastTitle: podcastTitle.text,
-                        podcastDescription: podcastDescription.text,
-                        buttonContent: buttonContent)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 50.0),
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                HexColor("#579EB5"),
+                                HexColor("#8EB9C7")
+                              ]),
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            final createPodcastBloc =
+                                BlocProvider.of<CreatePodcastBloc>(context);
+                            final isValid = formKey.currentState?.validate();
+                            if (file == null || !isValid!) {
+                              return;
+                            }
+                            createPodcastBloc.add(
+                              SaveEvent(
+                                file: file,
+                                podcastDescription: podcastDescription.text,
+                                podcastTitle: podcastTitle.text,
+                              ),
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Container(
+                              child: Center(
+                                child: buttonContent,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 );
               },
@@ -127,72 +170,6 @@ class CreatePodcastWidget extends StatelessWidget {
             ),
           ),
         ]),
-      ),
-    );
-  }
-}
-
-class SaveButton extends StatelessWidget {
-  const SaveButton({
-    Key? key,
-    required this.formKey,
-    required this.file,
-    required this.buttonContent,
-    required this.podcastTitle,
-    required this.podcastDescription,
-  }) : super(key: key);
-
-  final GlobalKey<FormState> formKey;
-  final File? file;
-  final Widget buttonContent;
-  final String podcastTitle;
-  final String podcastDescription;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 50.0),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [HexColor("#579EB5"), HexColor("#8EB9C7")]),
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        child: ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.transparent),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-            ),
-          ),
-          onPressed: () {
-            final createPodcastBloc =
-                BlocProvider.of<CreatePodcastBloc>(context);
-            final isValid = formKey.currentState?.validate();
-            if (file == null || !isValid!) {
-              return;
-            }
-            createPodcastBloc.add(
-              SaveEvent(
-                file: file,
-                podcastDescription: podcastDescription,
-                podcastTitle: podcastTitle,
-              ),
-            );
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Container(
-              child: Center(
-                child: buttonContent,
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }

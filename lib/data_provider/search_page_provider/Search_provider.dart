@@ -6,9 +6,11 @@ class SearchProvider extends ISearchProvider {
   List<Podcast> podcasts = List.generate(
       5,
       (index) => Podcast(
-            Name: "Podcast $index",
-            NumberOfLitsners: 0,
+            name: "Podcast $index",
+            numberOfListeners: 0,
             url: "",
+            description: "",
+            channelName: "",
             imageUrl: "assets/images/placeholder.jpg",
             id: "$index",
           ));
@@ -24,8 +26,10 @@ class SearchProvider extends ISearchProvider {
           Podcasts: List.generate(
               5,
               (index) => Podcast(
-                    Name: "Podcast $index",
-                    NumberOfLitsners: 0,
+                    name: "Podcast $index",
+                    numberOfListeners: 0,
+                    description: "",
+                    channelName: "",
                     url: "",
                     imageUrl: "assets/images/placeholder.jpg",
                     id: "$index",

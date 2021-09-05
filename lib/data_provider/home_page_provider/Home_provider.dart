@@ -6,9 +6,11 @@ class HomeProvider implements IHomeProvider {
   List<Podcast> podcasts = List.generate(
       5,
       (index) => Podcast(
-            Name: "Podcast $index",
-            NumberOfLitsners: 0,
+            name: "Podcast $index",
+            numberOfListeners: 0,
             url: "",
+            description: "",
+            channelName: "",
             imageUrl: "assets/images/placeholder.jpg",
             id: "$index",
           ));
@@ -23,9 +25,11 @@ class HomeProvider implements IHomeProvider {
           Podcasts: List.generate(
               5,
               (index) => Podcast(
-                    Name: "Podcast $index",
-                    NumberOfLitsners: 0,
+                    name: "Podcast $index",
+                    numberOfListeners: 0,
                     url: "",
+                    description: "",
+                    channelName: "",
                     imageUrl: "assets/images/placeholder.jpg",
                     id: "$index",
                   ))));

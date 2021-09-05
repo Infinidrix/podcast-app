@@ -7,4 +7,4 @@ class InitialWellcomeState extends WellcomeState {}
 
 class HaveUserCredWellcomeState extends WellcomeState {}
 
-// class Check
+class UserCredNotAvilableWellcomState extends WellcomeState {}

@@ -15,9 +15,11 @@ class YourChannelProvider extends IYourChannelProvider {
           Podcasts: List.generate(
               5,
               (index) => Podcast(
-                    Name: "Podcast $index",
-                    NumberOfLitsners: 0,
+                    name: "Podcast $index",
+                    numberOfListeners: 0,
                     url: "",
+                    description: "",
+                    channelName: "",
                     imageUrl: "assets/images/1by1.png",
                     id: "$index",
                   ))));

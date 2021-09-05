@@ -6,8 +6,10 @@ class ChannelPorvider implements IChannelProvider {
   List<Podcast> podcasts = List.generate(
       5,
       (index) => Podcast(
-            Name: "Podcast $index",
-            NumberOfLitsners: 0,
+            name: "Podcast $index",
+            numberOfListeners: 0,
+            description: "",
+            channelName: "",
             url: "",
             imageUrl: "",
             id: "$index",
@@ -23,8 +25,10 @@ class ChannelPorvider implements IChannelProvider {
           Podcasts: List.generate(
               5,
               (index) => Podcast(
-                    Name: "Podcast $index",
-                    NumberOfLitsners: 0,
+                    name: "Podcast $index",
+                    numberOfListeners: 0,
+                    channelName: "",
+                    description: "",
                     url: "",
                     imageUrl: "",
                     id: "$index",

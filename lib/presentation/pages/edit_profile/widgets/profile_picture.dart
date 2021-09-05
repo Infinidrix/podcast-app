@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class ChangeProfilePricture extends StatefulWidget {
-  const ChangeProfilePricture({ Key? key }) : super(key: key);
-
-  @override
-  _ChangeProfilePrictureState createState() => _ChangeProfilePrictureState();
-}
-
-class _ChangeProfilePrictureState extends State<ChangeProfilePricture> {
+class ChangeProfilePricture extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -25,14 +18,12 @@ class _ChangeProfilePrictureState extends State<ChangeProfilePricture> {
         Padding(
           padding: const EdgeInsets.only(top: 50.0),
           child: Center(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(45),
+            child: CircleAvatar(
+              radius: 60,
+              backgroundImage: NetworkImage(
+                  'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+                  scale: 1),
               child: Stack(alignment: Alignment.center, children: [
-                Container(
-                  color: Colors.grey,
-                  width: 90.0,
-                  height: 90.0,
-                ),
                 Icon(
                   Icons.add,
                   size: 40.0,
@@ -44,7 +35,10 @@ class _ChangeProfilePrictureState extends State<ChangeProfilePricture> {
         Padding(
           padding: const EdgeInsets.only(top: 13.0),
           child: TextButton(
-            child: Text("Change Profile Picture", style: TextStyle(color: HexColor("#579EB5")),),
+            child: Text(
+              "Change Profile Picture",
+              style: TextStyle(color: HexColor("#579EB5")),
+            ),
             onPressed: () {},
           ),
         )

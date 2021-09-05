@@ -3,10 +3,9 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:podcast_app/application/audio_player/audio_player_bloc.dart';
 import 'package:podcast_app/application/audio_player/audio_player_events.dart';
-import 'package:podcast_app/application/audio_player/audio_player_states.dart';
-import 'package:podcast_app/models/Channel.dart';
 import 'package:podcast_app/models/Podcast.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 
@@ -47,7 +46,7 @@ class AudioWithThumbnail extends StatelessWidget {
                             image: AssetImage(
                           podcast.imageUrl!,
                         )))),
-                Text("${podcast.Name}",
+                Text("${podcast.name}",
                     style: TextStyle(
                       fontSize: 18.0,
                     ))

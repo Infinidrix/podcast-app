@@ -82,18 +82,6 @@ class ChannelCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: IconButton(
-                      onPressed: () {
-                        print("Add Icon");
-                      },
-                      icon: Icon(
-                        Icons.add_box,
-                        color: Colors.white,
-                      ),
-                    ),
-                  )
                 ],
               ),
               Padding(

@@ -138,11 +138,7 @@ class _SearchBarState extends State<SearchBar>
                           shrinkWrap: true,
                           itemBuilder: (BuildContext context, count) {
                             return LibraryCard(
-                              subtitle: "Joe Rogan",
-                              when: "12",
-                              title: "The Joe Rogan Experience",
-                              description: "description",
-                              duration: "120",
+                              podcast: podcasts[count],
                             );
                           }),
                       ListView.builder(

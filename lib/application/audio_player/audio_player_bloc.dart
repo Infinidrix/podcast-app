@@ -5,6 +5,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flowder/flowder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:podcast_app/application/download/download_events.dart';
 import 'package:podcast_app/models/Podcast.dart';
 import 'package:podcast_app/repository/audio_repository/Iaudio_repository.dart';
 import 'audio_player_states.dart';
@@ -19,8 +20,10 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
             audioPlayer,
             ListQueue.from([
               Podcast(
-                  Name: "NASA Probe Mission",
-                  NumberOfLitsners: 24000,
+                  name: "NASA Probe Mission",
+                  numberOfListeners: 24000,
+                  channelName: "",
+                  description: "",
                   url: "https://luan.xyz/files/audio/nasa_on_a_mission.mp3",
                   id: "ayyyyyyD")
             ]),
@@ -28,8 +31,10 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
                 false,
                 0,
                 Podcast(
-                    Name: "NASA Probe Mission",
-                    NumberOfLitsners: 24000,
+                    name: "NASA Probe Mission",
+                    numberOfListeners: 24000,
+                    channelName: "",
+                    description: "",
                     url: "https://luan.xyz/files/audio/nasa_on_a_mission.mp3",
                     id: "ayyyyyyD")))) {
     AudioPlayer.logEnabled = false;
@@ -39,6 +44,10 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
     audioPlayer.onPlayerCompletion.listen((event) {
       print("We have arrived at player completed");
       this.add(PlayNextEvent());
+    });
+    audioPlayer.onPlayerError.listen((event) {
+      print("We have an error on player");
+      this.add(AudioPlayerFailedEvent(event));
     });
   }
 

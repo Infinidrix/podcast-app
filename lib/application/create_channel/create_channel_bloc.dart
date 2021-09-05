@@ -29,15 +29,22 @@ class CreateChannelBloc extends Bloc<CreateChannelEvent, CreateChannelState> {
       // } else {
       //   yield CreateChannelFailedState(ErrorMessage: "Failed to create a channel!");
       // }
-      final ChannelOrError = await channelRepository.createChannel(
+      try{
+        final ChannelOrError = await channelRepository.createChannel(
           Name: event.Name,
           Description: event.Description,
           ImageURL: event.ImageURL);
+      print(ChannelOrError);
       yield* ChannelOrError.fold((ErrorMessage) async* {
         yield CreateChannelFailedState(ErrorMessage: ErrorMessage);
       }, (channel) async* {
         yield CreateChannelSuccessState();
       });
+      }
+      catch(e){
+        print("object");
+      }
+      
     }
   }
 }

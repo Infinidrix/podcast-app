@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class CreateChannelWidget extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
   final nameTextController = TextEditingController();
   final descriptionTextController = TextEditingController();
   final imageController = TextEditingController();
@@ -17,6 +18,12 @@ class CreateChannelWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 15.0),
       child: TextFormField(
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return "This field can't be empty";
+          }
+          return null;
+        },
         controller: textEditingController,
         minLines: lineCount,
         maxLines: lineCount,
@@ -69,44 +76,50 @@ class CreateChannelWidget extends StatelessWidget {
         builder: (context, createchannelstate) {
           return Padding(
             padding: const EdgeInsets.fromLTRB(25.0, 15.0, 25.0, 0.0),
-            child: ListView(children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                      child: Text(
-                    "Create Channel",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 28.0,
-                      fontWeight: FontWeight.bold,
+            child: Form(
+              key: _formKey,
+              child: ListView(children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                        child: Text(
+                      "Create Channel",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 28.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 105.0),
                     ),
-                  )),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 105.0),
-                  ),
-                  Text(
-                    "Channel Name",
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                  getFormField(Icon(Icons.mic_none), 1,
-                      "The name of the channel", nameTextController),
-                  Text(
-                    "Description",
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                  getFormField(Icon(Icons.description_outlined), 3,
-                      "Description of the channel", descriptionTextController),
-                  Text(
-                    "Cover Photo",
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                  getFormField(Icon(Icons.insert_photo_outlined), 1,
-                      "Attach photo", imageController),
-                  saveButton(context, channelBloc, createchannelstate),
-                ],
-              ),
-            ]),
+                    Text(
+                      "Channel Name",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    getFormField(Icon(Icons.mic_none), 1,
+                        "The name of the channel", nameTextController),
+                    Text(
+                      "Description",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    getFormField(
+                        Icon(Icons.description_outlined),
+                        3,
+                        "Description of the channel",
+                        descriptionTextController),
+                    Text(
+                      "Cover Photo",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    getFormField(Icon(Icons.insert_photo_outlined), 1,
+                        "Attach photo", imageController),
+                    saveButton(context, channelBloc, createchannelstate),
+                  ],
+                ),
+              ]),
+            ),
           );
         },
       ),
@@ -135,11 +148,16 @@ class CreateChannelWidget extends StatelessWidget {
             ),
           ),
           onPressed: () {
-            print("Entered");
-            createChannelBloc.add(CreateChannelSaveEvent(
-                Name: nameTextController.text,
-                Description: descriptionTextController.text,
-                ImageURL: imageController.text));
+            if (_formKey.currentState!.validate()) {
+              print("Successfully registered!");
+              print("Entered");
+              createChannelBloc.add(CreateChannelSaveEvent(
+                  Name: nameTextController.text,
+                  Description: descriptionTextController.text,
+                  ImageURL: imageController.text));
+            } else {
+              print("Error");
+            }
           },
           child: Padding(
             padding: const EdgeInsets.all(10.0),

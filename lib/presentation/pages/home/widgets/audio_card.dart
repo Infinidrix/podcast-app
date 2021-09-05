@@ -3,10 +3,9 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:podcast_app/application/audio_player/audio_player_bloc.dart';
 import 'package:podcast_app/application/audio_player/audio_player_events.dart';
-import 'package:podcast_app/application/audio_player/audio_player_states.dart';
-import 'package:podcast_app/models/Channel.dart';
 import 'package:podcast_app/models/Podcast.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 
@@ -27,9 +26,17 @@ class AudioWithThumbnail extends StatelessWidget {
       onTap: () async {
         print("Getting to the add event to bloc");
         // TODO: Change this from hardcoded to state
-        String path = await getDocumentDir();
+        String path = (await getApplicationDocumentsDirectory()).path;
         audioPlayerBloc.add(InitializePlayerEvent(
-          podcasts: ListQueue.from([Podcast("NASA Probe Mission", 24000, "$path/test_podcast.mp3", "ayyyyyyD")])
+          podcasts: ListQueue.from([
+            Podcast(
+              "NASA Probe Mission 100", 
+              "There are objects in space and only a few of them are our fault.", 
+              24000, 
+              "https://luan.xyz/files/audio/nasa_on_a_mission.mp3", 
+              "The NASA Podcast", 
+              "Unique ID"
+              )])
           )
           );
         context.router.push(PlayerRoute());

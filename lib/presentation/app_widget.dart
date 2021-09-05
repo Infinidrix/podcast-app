@@ -7,6 +7,10 @@ import 'package:podcast_app/application/channel_description/channel_description_
 import 'package:podcast_app/application/login/login_bloc.dart';
 import 'package:podcast_app/application/signup/signup_bloc.dart';
 import 'package:podcast_app/application/wellcome/wellcome_bloc.dart';
+import 'package:podcast_app/application/download/download_bloc.dart';
+import 'package:podcast_app/application/download/download_events.dart';
+import 'package:podcast_app/application/subscription/subscription_bloc.dart';
+import 'package:podcast_app/application/subscription/subscription_events.dart';
 import 'package:podcast_app/data_provider/audio_provider/audio_provider.dart';
 import 'package:podcast_app/data_provider/channel_provider.dart';
 import 'package:podcast_app/data_provider/login/login_provider.dart';
@@ -16,6 +20,8 @@ import 'package:podcast_app/repository/ChannelRepository.dart';
 import 'package:podcast_app/repository/audio_repository/AudioRepository.dart';
 import 'package:podcast_app/repository/login_repository.dart';
 import 'package:podcast_app/repository/signup%20repository/SignupRepository.dart';
+import 'package:podcast_app/data_provider/downloaded_audio_provider/downloaded_audio_provider.dart';
+import 'package:podcast_app/repository/downloaded_audio_repository/download_audio_repository.dart';
 
 class MyApp extends StatelessWidget {
   final _rootRouter = RootRouter();
@@ -35,6 +41,7 @@ class MyApp extends StatelessWidget {
       ),
     );
     final audioRepository = AudioRepository(AudioProvider());
+    final downloadedAudioRepository = DownloadedAudioRepository(DownloadedAudioProvider());
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -52,6 +59,12 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => AudioPlayerBloc(audioRepository),
         ),
+        BlocProvider(
+          create: (_) => DownloadBloc(downloadedAudioRepository)..add(LoadInitialDownloadEvent()),
+        ),
+        BlocProvider(
+            create: (_) =>
+                SubscriptionBloc()..add(LoadInitialSubscriptionEvent())),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

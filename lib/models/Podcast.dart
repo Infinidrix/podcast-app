@@ -1,11 +1,13 @@
 
 
 class Podcast {
-  final String Name;
+  final String name;
   final String url;
   final String? imageUrl;
   final String id;
-  final int? NumberOfLitsners;
+  final int? numberOfListeners;
+  final String channelName;
+  final String description;
 
-  Podcast(this.Name, this.NumberOfLitsners, this.url, this.id, {this.imageUrl});
+  Podcast(this.name, this.description, this.numberOfListeners, this.url, this.channelName, this.id, {this.imageUrl});
 }

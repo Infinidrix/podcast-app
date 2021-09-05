@@ -8,4 +8,8 @@ class PauseState extends RecorderState {}
 
 class ResumedState extends RecorderState {}
 
-class DialogState extends RecorderState {}
+class StoppedState extends RecorderState {
+  final String path;
+
+  StoppedState({required this.path});
+}

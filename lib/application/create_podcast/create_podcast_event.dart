@@ -4,6 +4,12 @@ abstract class CreatePodcastEvent {}
 
 class RecordEvent extends CreatePodcastEvent {}
 
+class RecordedEvent extends CreatePodcastEvent {
+  final String path;
+
+  RecordedEvent(this.path);
+}
+
 class FilePickEvent extends CreatePodcastEvent {}
 
 class SaveEvent extends CreatePodcastEvent {

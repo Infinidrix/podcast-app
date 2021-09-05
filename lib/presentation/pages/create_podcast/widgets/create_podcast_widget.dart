@@ -39,7 +39,9 @@ class CreatePodcastWidget extends StatelessWidget {
                 Widget buttonContent = Text("Save");
 
                 if (createPodcastSate is Recorded) {
-                  //TODO : add the recorder file to the form
+                  file = createPodcastSate.file;
+                  fileUploadingChoices =
+                      FileEntry(filename: file!.path.split('/').last);
                 }
 
                 if (createPodcastSate is FilePicked) {
@@ -115,7 +117,7 @@ class CreatePodcastWidget extends StatelessWidget {
                 );
               },
               listener: (context, createPodcastState) {
-                if (createPodcastState is Recording) {
+                if (createPodcastState is RecordState) {
                   context.router.push(RecorderRoute());
                 }
                 if (createPodcastState is Saved) {

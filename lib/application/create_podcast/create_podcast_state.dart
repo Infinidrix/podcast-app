@@ -4,7 +4,7 @@ abstract class CreatePodcastState {}
 
 class CreatePodcastInitialState extends CreatePodcastState {}
 
-class Recording extends CreatePodcastState {}
+class RecordState extends CreatePodcastState {}
 
 class RecordingError extends CreatePodcastState {}
 

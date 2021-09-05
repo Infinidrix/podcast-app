@@ -15,7 +15,16 @@ class CreatePodcastBloc extends Bloc<CreatePodcastEvent, CreatePodcastState> {
   @override
   Stream<CreatePodcastState> mapEventToState(CreatePodcastEvent event) async* {
     if (event is RecordEvent) {
-      yield Recording();
+      yield RecordState();
+    }
+
+    if (event is RecordedEvent) {
+      try {
+        final file = File(event.path);
+        yield FilePicked(file: file);
+      } catch (e) {
+        yield FilePickingError();
+      }
     }
 
     if (event is FilePickEvent) {

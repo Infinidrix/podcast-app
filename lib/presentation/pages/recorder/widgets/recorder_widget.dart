@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:podcast_app/application/create_podcast/create_podcast_application.dart';
 import 'package:podcast_app/application/recorder/recorder_application.dart';
+import 'package:podcast_app/presentation/routes/router.gr.dart';
 
 class Recorder extends StatelessWidget {
   const Recorder({Key? key}) : super(key: key);
@@ -25,18 +27,32 @@ class Recorder extends StatelessWidget {
           child: BlocConsumer<RecorderBloc, RecorderState>(
             builder: (context, recorderState) {
               if (recorderState is Recording) {
-                // TODO : change the UI TO REFELECT RECORDING
-                controlButton = ControlButton(
-                  buttonLabel: 'Pause',
-                  onPressed: () {
-                    final recorderBloc = BlocProvider.of<RecorderBloc>(context);
-                    recorderBloc.add(PauseRecordingEvent());
-                  },
+                controlButton = Column(
+                  children: [
+                    ControlButton(
+                      buttonLabel: 'Pause',
+                      onPressed: () {
+                        final recorderBloc =
+                            BlocProvider.of<RecorderBloc>(context);
+                        recorderBloc.add(PauseRecordingEvent());
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ControlButton(
+                      buttonLabel: 'Stop',
+                      onPressed: () {
+                        final recorderBloc =
+                            BlocProvider.of<RecorderBloc>(context);
+                        recorderBloc.add(StopRecordingEvent());
+                      },
+                    ),
+                  ],
                 );
               }
 
               if (recorderState is PauseState) {
-                // TODO : change the UI TO REFELECT Pause state
                 controlButton = Column(
                   children: [
                     ControlButton(
@@ -63,12 +79,28 @@ class Recorder extends StatelessWidget {
               }
 
               if (recorderState is ResumedState) {
-                controlButton = ControlButton(
-                  buttonLabel: 'Pause',
-                  onPressed: () {
-                    final recorderBloc = BlocProvider.of<RecorderBloc>(context);
-                    recorderBloc.add(PauseRecordingEvent());
-                  },
+                controlButton = Column(
+                  children: [
+                    ControlButton(
+                      buttonLabel: 'Pause',
+                      onPressed: () {
+                        final recorderBloc =
+                            BlocProvider.of<RecorderBloc>(context);
+                        recorderBloc.add(PauseRecordingEvent());
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ControlButton(
+                      buttonLabel: 'Stop',
+                      onPressed: () {
+                        final recorderBloc =
+                            BlocProvider.of<RecorderBloc>(context);
+                        recorderBloc.add(StopRecordingEvent());
+                      },
+                    ),
+                  ],
                 );
               }
               return Column(
@@ -111,8 +143,10 @@ class Recorder extends StatelessWidget {
               );
             },
             listener: (context, recorderState) {
-              if (recorderState is DialogState) {
-                // Back to create podcast page, by reading the recorded file
+              if (recorderState is StoppedState) {
+                final createPodcastBloc =
+                    BlocProvider.of<CreatePodcastBloc>(context);
+                createPodcastBloc.add(RecordedEvent(recorderState.path));
                 context.router.pop();
               }
             },

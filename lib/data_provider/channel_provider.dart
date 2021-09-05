@@ -1,15 +1,31 @@
 import 'package:podcast_app/data_provider/Ichannel_provider.dart';
 import 'package:podcast_app/models/Channel.dart';
+import 'package:podcast_app/models/Podcast.dart';
 
 class ChannelPorvider implements IChannelProvider {
-  List<Podcast> podcasts =
-      List.generate(10, (index) => Podcast("Name #$index", index));
+  List<Podcast> podcasts = List.generate(
+      10,
+      (index) => Podcast(
+          "NASA Probe Mission",
+          "There are objects in space and only a few of them are our fault.",
+          24000,
+          "https://luan.xyz/files/audio/nasa_on_a_mission.mp3",
+          "NASA Podcast",
+          "Unique ID"));
   Channel channel = Channel(
       Name: "Name",
       ImageUrl: "ImageUrl",
       Subscribers: 12335245,
       Id: "1",
-      Podcasts: List.generate(10, (index) => Podcast("Name #$index", index)));
+      Podcasts: List.generate(
+          10,
+          (index) => Podcast(
+              "NASA Probe Mission",
+              "There are objects in space and only a few of them are our fault.",
+              24000,
+              "https://luan.xyz/files/audio/nasa_on_a_mission.mp3",
+              "NASA Podcast",
+              "Unique ID")));
   bool isSubscribedValue = true;
   @override
   Future<bool> isSubscribed(String userId, String channelId) async {

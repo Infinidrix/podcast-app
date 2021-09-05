@@ -1,8 +1,13 @@
+import 'dart:collection';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:podcast_app/application/audio_player/audio_player_bloc.dart';
+import 'package:podcast_app/application/audio_player/audio_player_events.dart';
 import 'package:podcast_app/application/channel_description/channel_description_bloc.dart';
+import 'package:podcast_app/presentation/pages/library_download_subscribe_pages/LibDownSubTabMenuPage.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 
 class ChannelDetailWidget extends StatelessWidget {
@@ -36,8 +41,8 @@ class ChannelDetailWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final channelBloc = BlocProvider.of<ChannelDescriptionBloc>(context);
-    return Scaffold(
-        body: BlocBuilder<ChannelDescriptionBloc, ChannelDescriptionState>(
+    final audioBloc = BlocProvider.of<AudioPlayerBloc>(context);
+    return BlocBuilder<ChannelDescriptionBloc, ChannelDescriptionState>(
       builder: (_, channelState) {
         return Container(
             color: Colors.black,
@@ -105,7 +110,12 @@ class ChannelDetailWidget extends StatelessWidget {
                               ),
                             ),
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                if (channelState is InitialChannelDescriptionState) {
+                                  audioBloc.add(InitializePlayerEvent(podcasts: ListQueue.from(channelState.channel.Podcasts)));
+                                  context.router.push(PlayerRoute());
+                                }
+                              },
                               child: Icon(
                                 Icons.play_arrow,
                                 color: Colors.white,
@@ -144,7 +154,7 @@ class ChannelDetailWidget extends StatelessWidget {
                         (BuildContext context, int index) {
                           return InkWell(
                               onTap: () {
-                                context.router.push(CreateChannelRoute());
+                                context.router.push(LibraryDownloadSubTabMenuRoute());
                               },
                               child: Card(
                                   color: Colors.black,
@@ -166,7 +176,7 @@ class ChannelDetailWidget extends StatelessWidget {
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            "${listOfPodcasts?[index]}",
+                                            "${listOfPodcasts[index]}",
                                             style: TextStyle(fontSize: 19.0),
                                           ),
                                           Padding(
@@ -189,7 +199,7 @@ class ChannelDetailWidget extends StatelessWidget {
                                     ],
                                   )));
                         },
-                        childCount: listOfPodcasts?.length,
+                        childCount: listOfPodcasts.length,
                       ),
                     );
                   }
@@ -200,6 +210,6 @@ class ChannelDetailWidget extends StatelessWidget {
               ],
             ));
       },
-    ));
+    );
   }
 }

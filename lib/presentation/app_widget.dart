@@ -4,16 +4,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:podcast_app/application/audio_player/audio_player_bloc.dart';
 import 'package:podcast_app/application/channel_description/channel_description_bloc.dart';
+import 'package:podcast_app/application/edit_profile/edit_profile_bloc.dart';
 import 'package:podcast_app/application/login/login_bloc.dart';
 import 'package:podcast_app/application/signup/signup_bloc.dart';
 import 'package:podcast_app/application/wellcome/wellcome_bloc.dart';
 import 'package:podcast_app/data_provider/audio_provider/audio_provider.dart';
 import 'package:podcast_app/data_provider/channel_provider.dart';
+import 'package:podcast_app/data_provider/edit_profile/edit_profile_provider.dart';
 import 'package:podcast_app/data_provider/login/login_provider.dart';
 import 'package:podcast_app/data_provider/sugnup/signup_provider.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 import 'package:podcast_app/repository/ChannelRepository.dart';
 import 'package:podcast_app/repository/audio_repository/AudioRepository.dart';
+import 'package:podcast_app/repository/edit_profile_repository/edit_profile_repository.dart';
 import 'package:podcast_app/repository/login_repository.dart';
 import 'package:podcast_app/repository/signup%20repository/SignupRepository.dart';
 
@@ -35,6 +38,8 @@ class MyApp extends StatelessWidget {
       ),
     );
     final audioRepository = AudioRepository(AudioProvider());
+    final editProfilRepository =
+        EditProfileRepository(editProfileProvider: EditProfileProvider());
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -47,11 +52,16 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (_) => SignupBloc(signupRepository: signupRepository)),
         BlocProvider(
-            create: (_) => WellcomeBloc(loginRepository: loginRepository)
-              ..add(HaveCredLocalWellcomeEvent())),
+          create: (_) => WellcomeBloc(loginRepository: loginRepository)
+            ..add(HaveCredLocalWellcomeEvent()),
+        ),
         BlocProvider(
           create: (_) => AudioPlayerBloc(audioRepository),
         ),
+        BlocProvider(
+            create: (_) =>
+                EditProfileBloc(editProfileRepository: editProfilRepository)
+                  ..add(IntitalEditProfileEvent())),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

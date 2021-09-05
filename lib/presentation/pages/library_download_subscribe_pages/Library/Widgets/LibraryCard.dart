@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:podcast_app/application/audio_player/audio_player_bloc.dart';
 import 'package:podcast_app/application/audio_player/audio_player_events.dart';
+import 'package:podcast_app/application/download/download_bloc.dart';
+import 'package:podcast_app/application/download/download_events.dart';
 import 'package:podcast_app/models/Podcast.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
@@ -19,6 +21,7 @@ class LibraryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final audioBloc = BlocProvider.of<AudioPlayerBloc>(context);
+    final downloadBloc = BlocProvider.of<DownloadBloc>(context);
 
     return Card(
       margin: EdgeInsets.fromLTRB(0, 0, 0, 24),
@@ -118,10 +121,15 @@ class LibraryCard extends StatelessWidget {
                           ),
                           Container(
                             margin: EdgeInsets.fromLTRB(26, 0, 10, 0),
-                            child: Icon(
-                              Icons.download_rounded,
-                              color: Colors.white,
-                              size: 15,
+                            child: GestureDetector(
+                              child: Icon(
+                                Icons.download_rounded,
+                                color: Colors.white,
+                                size: 15,
+                              ),
+                              onTap: () {
+                                downloadBloc.add(AddToDownloadQueueEvent(podcast));
+                              }
                             ),
                           ),
                         ],

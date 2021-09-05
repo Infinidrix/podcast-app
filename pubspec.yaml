@@ -44,11 +44,6 @@ dependencies:
   freezed_annotation: ^0.14.2
   http: ^0.13.3
   localstorage: ^4.0.0+1
-
-
-  audioplayers: ^0.19.1
-  flowder: ^0.2.0
-  path_provider: ^2.0.3
   moor: ^4.5.0
   sqlite3_flutter_libs: ^0.5.0
   path: ^1.8.0

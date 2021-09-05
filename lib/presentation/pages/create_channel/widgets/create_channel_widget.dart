@@ -40,9 +40,8 @@ class CreateChannelWidget extends StatelessWidget {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    Widget saveButton = Padding(
+  Widget saveButton(BuildContext context, CreateChannelBloc createChannelBloc, CreateChannelState createChannelState){
+    return Padding(
       padding: const EdgeInsets.only(top: 50.0),
       child: DecoratedBox(
         decoration: BoxDecoration(
@@ -75,6 +74,10 @@ class CreateChannelWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -124,7 +127,7 @@ class CreateChannelWidget extends StatelessWidget {
                 ),
                 getFormField(
                     Icon(Icons.insert_photo_outlined), 1, "Attach photo"),
-                saveButton,
+                // saveButton(context, CreateChannelBloc(channelRepository: channelRepository), createchannelstate),
               ],
             ),
           ]),

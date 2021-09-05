@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final channelRepository =
-        ChannelRepository(channelProvider: ChannelPorvider(httpClient: http.Client));
+        ChannelRepository(channelProvider: ChannelPorvider(httpClient: http.Client()));
 
     return BlocProvider(
       create: (_) =>

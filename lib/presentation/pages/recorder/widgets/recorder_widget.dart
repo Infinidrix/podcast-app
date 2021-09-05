@@ -22,105 +22,100 @@ class Recorder extends StatelessWidget {
       ),
       body: Container(
         child: Center(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 20,
-              ),
-              PageTitle(),
-              SizedBox(
-                height: 50,
-              ),
-              Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: Colors.blueAccent),
-                  height: 200,
-                  width: 200,
-                  child: Icon(
-                    Icons.settings_voice_sharp,
-                    color: Colors.white,
-                    size: 100,
-                  )),
-              SizedBox(
-                height: 45,
-              ),
-              Text(
-                "00 : 04 : 33",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 38,
-                ),
-              ),
-              SizedBox(height: 30),
-              SizedBox(
-                height: 20,
-              ),
-              BlocConsumer<RecorderBloc, RecorderState>(
-                builder: (context, recorderState) {
-                  if (recorderState is Recording) {
-                    // TODO : change the UI TO REFELECT RECORDING
-                    controlButton = ControlButton(
-                      buttonLabel: 'Pause',
+          child: BlocConsumer<RecorderBloc, RecorderState>(
+            builder: (context, recorderState) {
+              if (recorderState is Recording) {
+                // TODO : change the UI TO REFELECT RECORDING
+                controlButton = ControlButton(
+                  buttonLabel: 'Pause',
+                  onPressed: () {
+                    final recorderBloc = BlocProvider.of<RecorderBloc>(context);
+                    recorderBloc.add(PauseRecordingEvent());
+                  },
+                );
+              }
+
+              if (recorderState is PauseState) {
+                // TODO : change the UI TO REFELECT Pause state
+                controlButton = Column(
+                  children: [
+                    ControlButton(
+                      buttonLabel: 'Resume',
                       onPressed: () {
                         final recorderBloc =
                             BlocProvider.of<RecorderBloc>(context);
-                        recorderBloc.add(PauseRecordingEvent());
+                        recorderBloc.add(ResumeRecordingEvent());
                       },
-                    );
-                  }
-
-                  if (recorderState is PauseState) {
-                    // TODO : change the UI TO REFELECT Pause state
-                    controlButton = Column(
-                      children: [
-                        ControlButton(
-                          buttonLabel: 'Resume',
-                          onPressed: () {
-                            final recorderBloc =
-                                BlocProvider.of<RecorderBloc>(context);
-                            recorderBloc.add(ResumeRecordingEvent());
-                          },
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        ControlButton(
-                          buttonLabel: 'Stop',
-                          onPressed: () {
-                            final recorderBloc =
-                                BlocProvider.of<RecorderBloc>(context);
-                            recorderBloc.add(StopRecordingEvent());
-                          },
-                        ),
-                      ],
-                    );
-                  }
-
-                  if (recorderState is ResumedState) {
-                    controlButton = ControlButton(
-                      buttonLabel: 'Pause',
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ControlButton(
+                      buttonLabel: 'Stop',
                       onPressed: () {
                         final recorderBloc =
                             BlocProvider.of<RecorderBloc>(context);
-                        recorderBloc.add(PauseRecordingEvent());
+                        recorderBloc.add(StopRecordingEvent());
                       },
-                    );
-                  }
-                  return Container(
+                    ),
+                  ],
+                );
+              }
+
+              if (recorderState is ResumedState) {
+                controlButton = ControlButton(
+                  buttonLabel: 'Pause',
+                  onPressed: () {
+                    final recorderBloc = BlocProvider.of<RecorderBloc>(context);
+                    recorderBloc.add(PauseRecordingEvent());
+                  },
+                );
+              }
+              return Column(
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  PageTitle(),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Colors.blueAccent),
+                      height: 200,
+                      width: 200,
+                      child: Icon(
+                        Icons.settings_voice_sharp,
+                        color: Colors.white,
+                        size: 100,
+                      )),
+                  SizedBox(
+                    height: 45,
+                  ),
+                  Text(
+                    "00 : 04 : 33",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 38,
+                    ),
+                  ),
+                  SizedBox(height: 50),
+                  Container(
                     width: 170,
                     child: controlButton,
-                  );
-                },
-                listener: (context, recorderState) {
-                  if (recorderState is DialogState) {
-                    // Back to create podcast page, by reading the recorded file
-                    context.router.pop();
-                  }
-                },
-              )
-            ],
+                  ),
+                ],
+              );
+            },
+            listener: (context, recorderState) {
+              if (recorderState is DialogState) {
+                // Back to create podcast page, by reading the recorded file
+                context.router.pop();
+              }
+            },
           ),
         ),
       ),

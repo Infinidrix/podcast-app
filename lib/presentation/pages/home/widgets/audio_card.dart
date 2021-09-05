@@ -20,8 +20,8 @@ class AudioWithThumbnail extends StatelessWidget {
     final audioPlayerBloc = BlocProvider.of<AudioPlayerBloc>(context);
 
     return SizedBox(
-      height: 175,
-      width: 175,
+      height: 160,
+      width: 160,
       child: InkWell(
         highlightColor: Colors.white54,
         onTap: () async {
@@ -38,11 +38,15 @@ class AudioWithThumbnail extends StatelessWidget {
               clipBehavior: Clip.none,
               alignment: Alignment.bottomCenter,
               children: [
-                Image.asset(
-                  podcast.imageUrl!,
-                  height: 150,
-                  width: 150,
-                ),
+                Container(
+                    height: 150,
+                    width: 155,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                            image: AssetImage(
+                          podcast.imageUrl!,
+                        )))),
                 Text("${podcast.Name}",
                     style: TextStyle(
                       fontSize: 18.0,

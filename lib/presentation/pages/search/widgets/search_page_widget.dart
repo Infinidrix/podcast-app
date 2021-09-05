@@ -119,8 +119,8 @@ class _SearchBarState extends State<SearchBar>
               );
             }
             if (state is SearchResult) {
-              final podcasts = state.channelResult;
-              final channels = state.podcastResult;
+              final channels = state.channelResult;
+              final podcasts = state.podcastResult;
               return Expanded(
                 child: Column(children: [
                   Align(
@@ -149,11 +149,8 @@ class _SearchBarState extends State<SearchBar>
                           itemCount: channels.length,
                           shrinkWrap: true,
                           itemBuilder: (BuildContext context, count) {
-                            return SubscribedCard(
-                              subtitle: "#240",
-                              title: "Elon Musk - Tesla, SpaceX",
-                              description:
-                                  "In tiis Episode Elon Musk talks about...",
+                            return ChannelCard(
+                              channel: channels[count],
                             );
                           }),
                     ]),

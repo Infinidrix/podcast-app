@@ -20,6 +20,7 @@ class LocalSearchProvider extends ISearchProvider {
           ImageUrl: "ImageUrl",
           Subscribers: 12335245,
           Id: "$index",
+          Desctiption: "This is Channel Description",
           Podcasts: List.generate(
               5,
               (index) => Podcast(

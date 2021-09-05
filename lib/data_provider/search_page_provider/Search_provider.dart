@@ -9,7 +9,7 @@ class SearchProvider extends ISearchProvider {
             Name: "Podcast $index",
             NumberOfLitsners: 0,
             url: "",
-            imageUrl: "",
+            imageUrl: "assets/images/placeholder.jpg",
             id: "$index",
           ));
 
@@ -17,16 +17,17 @@ class SearchProvider extends ISearchProvider {
       5,
       (index) => Channel(
           Name: "Name",
-          ImageUrl: "ImageUrl",
+          ImageUrl: "assets/images/placeholder.jpg",
           Subscribers: 12335245,
           Id: "$index",
+          Desctiption: "This is Channel Description",
           Podcasts: List.generate(
               5,
               (index) => Podcast(
                     Name: "Podcast $index",
                     NumberOfLitsners: 0,
                     url: "",
-                    imageUrl: "",
+                    imageUrl: "assets/images/placeholder.jpg",
                     id: "$index",
                   ))));
   Future<List<Channel>> searchChannel(String search) async {

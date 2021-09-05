@@ -19,6 +19,7 @@ class HomeProvider implements IHomeProvider {
           ImageUrl: "assets/images/placeholder.jpg",
           Subscribers: 12335245,
           Id: "$index",
+          Desctiption: "This is Channel Description",
           Podcasts: List.generate(
               5,
               (index) => Podcast(

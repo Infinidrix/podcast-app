@@ -35,10 +35,12 @@ class TopPicks extends StatelessWidget {
                 width: 60,
                 child: Padding(
                   padding: const EdgeInsets.all(2.0),
-                  child: Image(
-                      image: AssetImage(
-                    channel.ImageUrl,
-                  )),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        image: DecorationImage(
+                            image: AssetImage(channel.ImageUrl))),
+                  ),
                 ),
               ),
               Padding(

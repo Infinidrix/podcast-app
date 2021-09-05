@@ -5,15 +5,7 @@ final BACKGROUND_COLOR = Colors.black26;
 
 final searchText = TextEditingController();
 final imageDecoration = BoxDecoration(
-  borderRadius: BorderRadius.circular(3),
-  boxShadow: [
-    BoxShadow(
-      spreadRadius: 1,
-      color: Colors.black,
-      offset: Offset(2, 2),
-      blurRadius: 3,
-    )
-  ],
+  borderRadius: BorderRadius.circular(10),
 );
 
 final searchInputDecoration = InputDecoration(

@@ -95,14 +95,17 @@ class HomeWidget extends StatelessWidget {
                             SizedBox(
                               height: 55,
                             ),
-                            Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  "Recently Played",
-                                  style: TextStyle(
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.bold),
-                                )),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Recently Played",
+                                    style: TextStyle(
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                            ),
                             SizedBox(
                               height: 175,
                               child: ListView.builder(
@@ -115,16 +118,19 @@ class HomeWidget extends StatelessWidget {
                                     );
                                   }),
                             ),
-                            Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  "Trending",
-                                  style: TextStyle(
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.bold),
-                                )),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Trending",
+                                    style: TextStyle(
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                            ),
                             SizedBox(
-                              height: 175,
+                              height: 170,
                               child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
                                   itemCount: trending.length,

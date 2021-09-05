@@ -1,5 +1,7 @@
+import 'package:dartz/dartz.dart';
 import 'package:podcast_app/data_provider/Ichannel_provider.dart';
 import 'package:podcast_app/models/Channel.dart';
+import 'package:podcast_app/models/CreateChannel.dart';
 import 'package:podcast_app/repository/Ichannel_repository.dart';
 
 class ChannelRepository implements IChannelRepository {
@@ -28,8 +30,16 @@ class ChannelRepository implements IChannelRepository {
         userId, channelId, subscriptionStatus);
   }
 
-  Future<void>? createChannel(Channel channell) {
-    return channelProvider.createChannel(channell);
-    // return true;
+  @override
+  Future<Either<String, Channel>> createChannel(
+      {required String Name,
+      required String Description,
+      required String ImageURL}) async {
+    final channel =
+        CreateChannel(Description: Description, Name: Name, Url: ImageURL);
+        
+
+    return await channelProvider.createChannel(
+        createChannelInfo: channel.toJson());
   }
 }

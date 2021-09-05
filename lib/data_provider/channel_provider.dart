@@ -5,6 +5,8 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
+import 'package:podcast_app/models/CreateChannel.dart';
+import 'constants.dart';
 
 class ChannelPorvider implements IChannelProvider {
   final http.Client httpClient;
@@ -43,7 +45,7 @@ class ChannelPorvider implements IChannelProvider {
   }
 
   @override
-  Future<Either<String, Channel>> createChannel({required Map<String, dynamic> createChannelInfo}) async{
+  Future<Either<String, CreateChannel>> createChannel({required Map<String, dynamic> createChannelInfo}) async{
       try{
         final response = await httpClient.post(Uri.http(URL, "/api/createChannel"),
         headers: <String, String>{
@@ -66,7 +68,7 @@ class ChannelPorvider implements IChannelProvider {
       print(e.message);
       return left("Can not connect to internet ${e.runtimeType}");
     }
-        }
+        
 
   }
 }

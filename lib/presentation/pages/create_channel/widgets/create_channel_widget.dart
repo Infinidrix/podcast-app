@@ -88,51 +88,52 @@ class CreateChannelWidget extends StatelessWidget {
       ),
       body: BlocConsumer<CreateChannelBloc, CreateChannelState>(
           builder: (context, createchannelstate) {
-            return Padding(
-              padding: const EdgeInsets.fromLTRB(25.0, 15.0, 25.0, 0.0),
-              child: ListView(children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                        child: Text(
-                      "Create Channel",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 28.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 105.0),
-                    ),
-                    Text(
-                      "Channel Name",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    getFormField(
-                        Icon(Icons.mic_none), 1, "The name of the channel"),
-                    Text(
-                      "Description",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    getFormField(Icon(Icons.description_outlined), 3,
-                        "Description of the channel"),
-                    Text(
-                      "Cover Photo",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    getFormField(
-                        Icon(Icons.insert_photo_outlined), 1, "Attach photo"),
-                    saveButton,
-                  ],
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(25.0, 15.0, 25.0, 0.0),
+          child: ListView(children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                    child: Text(
+                  "Create Channel",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 28.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 105.0),
                 ),
-              ]),
-            );
-          },
-          listener: (context, createchannelstate) {
-            
-          }),
+                Text(
+                  "Channel Name",
+                  style: TextStyle(color: Colors.grey),
+                ),
+                getFormField(
+                    Icon(Icons.mic_none), 1, "The name of the channel"),
+                Text(
+                  "Description",
+                  style: TextStyle(color: Colors.grey),
+                ),
+                getFormField(Icon(Icons.description_outlined), 3,
+                    "Description of the channel"),
+                Text(
+                  "Cover Photo",
+                  style: TextStyle(color: Colors.grey),
+                ),
+                getFormField(
+                    Icon(Icons.insert_photo_outlined), 1, "Attach photo"),
+                saveButton,
+              ],
+            ),
+          ]),
+        );
+      }, listener: (context, createchannelstate) {
+        if (createchannelstate is CreateChannelSuccessState) {
+          context.router.push(YourChannelsRoute());
+        }
+      }),
     );
   }
 }

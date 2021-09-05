@@ -23,6 +23,8 @@ class Recorder extends StatelessWidget {
         leading: IconButton(
             onPressed: () {
               context.router.pop();
+              BlocProvider.of<RecorderBloc>(context)
+                ..add(FinishRecordingEvent());
             },
             icon: Icon(Icons.arrow_back_ios)),
       ),
@@ -102,6 +104,7 @@ class Recorder extends StatelessWidget {
                         final recorderBloc =
                             BlocProvider.of<RecorderBloc>(context);
                         recorderBloc.add(StopRecordingEvent());
+                        recorderBloc.add(FinishRecordingEvent());
                       },
                     ),
                   ],

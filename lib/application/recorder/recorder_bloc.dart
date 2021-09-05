@@ -47,5 +47,10 @@ class RecorderBloc extends Bloc<RecorderEvent, RecorderState> {
           path: '/data/user/0/com.example.podcast_app/cache/audio.mp4');
       print("stop");
     }
+
+    if (event is FinishRecordingEvent) {
+      _recorder!.closeAudioSession();
+      _recorder = null;
+    }
   }
 }

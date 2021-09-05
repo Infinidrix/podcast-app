@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:podcast_app/data_provider/Ichannel_provider.dart';
-import 'package:podcast_app/models/Channel.dart';
-import 'package:podcast_app/models/CreateChannel.dart';
+import 'package:podcast_app/models/channel/Channel.dart';
+import 'package:podcast_app/models/channel/CreateChannel.dart';
 import 'package:podcast_app/repository/Ichannel_repository.dart';
 
 class ChannelRepository implements IChannelRepository {

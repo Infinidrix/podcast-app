@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:podcast_app/application/create_channel/create_channel_bloc.dart';
+import 'package:podcast_app/application/create_channel/create_channel_event.dart';
 import 'package:podcast_app/application/create_channel/create_channel_state.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +12,8 @@ class CreateChannelWidget extends StatelessWidget {
   final descriptionTextController = TextEditingController();
   final imageController = TextEditingController();
 
-
-  Widget getFormField(Icon icon, int lineCount, String hint, TextEditingController textEditingController) {
+  Widget getFormField(Icon icon, int lineCount, String hint,
+      TextEditingController textEditingController) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 15.0),
       child: TextFormField(
@@ -46,8 +47,6 @@ class CreateChannelWidget extends StatelessWidget {
     );
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     final channelBloc = BlocProvider.of<CreateChannelBloc>(context);
@@ -62,53 +61,55 @@ class CreateChannelWidget extends StatelessWidget {
             icon: Icon(Icons.arrow_back_ios)),
       ),
       body: BlocConsumer<CreateChannelBloc, CreateChannelState>(
-          builder: (context, createchannelstate) {
-        return Padding(
-          padding: const EdgeInsets.fromLTRB(25.0, 15.0, 25.0, 0.0),
-          child: ListView(children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                    child: Text(
-                  "Create Channel",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.bold,
+        listener: (context, createchannelstate) {
+          if (createchannelstate is CreateChannelSuccessState) {
+            context.router.push(YourChannelsRoute());
+          }
+        },
+        builder: (context, createchannelstate) {
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(25.0, 15.0, 25.0, 0.0),
+            child: ListView(children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                      child: Text(
+                    "Create Channel",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 28.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 105.0),
                   ),
-                )),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 105.0),
-                ),
-                Text(
-                  "Channel Name",
-                  style: TextStyle(color: Colors.grey),
-                ),
-                getFormField(
-                    Icon(Icons.mic_none), 1, "The name of the channel", nameTextController),
-                Text(
-                  "Description",
-                  style: TextStyle(color: Colors.grey),
-                ),
-                getFormField(Icon(Icons.description_outlined), 3,
-                    "Description of the channel", descriptionTextController),
-                Text(
-                  "Cover Photo",
-                  style: TextStyle(color: Colors.grey),
-                ),
-                getFormField(
-                    Icon(Icons.insert_photo_outlined), 1, "Attach photo", imageController),
-                saveButton(context, channelBloc, createchannelstate),
-              ],
-            ),
-          ]),
-        );
-      }, listener: (context, createchannelstate) {
-        if (createchannelstate is CreateChannelSuccessState) {
-          context.router.push(YourChannelsRoute());
-        }
-      }),
+                  Text(
+                    "Channel Name",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  getFormField(Icon(Icons.mic_none), 1,
+                      "The name of the channel", nameTextController),
+                  Text(
+                    "Description",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  getFormField(Icon(Icons.description_outlined), 3,
+                      "Description of the channel", descriptionTextController),
+                  Text(
+                    "Cover Photo",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  getFormField(Icon(Icons.insert_photo_outlined), 1,
+                      "Attach photo", imageController),
+                  saveButton(context, channelBloc, createchannelstate),
+                ],
+              ),
+            ]),
+          );
+        },
+      ),
     );
   }
 
@@ -134,7 +135,11 @@ class CreateChannelWidget extends StatelessWidget {
             ),
           ),
           onPressed: () {
-            context.router.popAndPush(CreatePodcastRoute());
+            print("Entered");
+            createChannelBloc.add(CreateChannelSaveEvent(
+                Name: nameTextController.text,
+                Description: descriptionTextController.text,
+                ImageURL: imageController.text));
           },
           child: Padding(
             padding: const EdgeInsets.all(10.0),

@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:podcast_app/models/Channel.dart';
+import 'package:podcast_app/models/channel/Channel.dart';
 
 abstract class IChannelRepository {
   Future<Channel> getChannel(String channelId);

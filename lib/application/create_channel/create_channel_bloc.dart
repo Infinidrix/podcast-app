@@ -36,7 +36,6 @@ class CreateChannelBloc extends Bloc<CreateChannelEvent, CreateChannelState> {
       yield* ChannelOrError.fold((ErrorMessage) async* {
         yield CreateChannelFailedState(ErrorMessage: ErrorMessage);
       }, (channel) async* {
-        
         yield CreateChannelSuccessState();
       });
     }

@@ -1,5 +1,5 @@
 import 'package:podcast_app/data_provider/search_page_provider/ISearch_provider.dart';
-import 'package:podcast_app/models/Channel.dart';
+import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/models/Podcast.dart';
 import 'package:podcast_app/repository/search_repository/ISearchRepository.dart';
 

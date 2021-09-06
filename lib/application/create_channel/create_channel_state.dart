@@ -11,3 +11,6 @@ class CreateChannelFailedState extends CreateChannelState {
 
   CreateChannelFailedState({required this.ErrorMessage});
 }
+class RequestToChangeProfileImageState extends CreateChannelState {
+  // RequestToChangeProfileImageState({required user}) : super(user: user);
+}

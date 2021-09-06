@@ -1,5 +1,5 @@
 import 'package:podcast_app/data_provider/home_page_provider/IHome_provider.dart';
-import 'package:podcast_app/models/Channel.dart';
+import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/models/Podcast.dart';
 
 class HomeProvider implements IHomeProvider {
@@ -21,7 +21,7 @@ class HomeProvider implements IHomeProvider {
           ImageUrl: "assets/images/placeholder.jpg",
           Subscribers: 12335245,
           Id: "$index",
-          Desctiption: "This is Channel Description",
+          Description: "This is Channel Description",
           Podcasts: List.generate(
               5,
               (index) => Podcast(

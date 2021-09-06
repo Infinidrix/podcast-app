@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:podcast_app/models/Podcast.dart';
 
 // part 'user.g.dart';
 
@@ -38,9 +39,3 @@ class Channel {
       };
 }
 
-class Podcast {
-  final String Name;
-  final int? NumberOfLitsners;
-
-  Podcast(this.Name, this.NumberOfLitsners);
-}

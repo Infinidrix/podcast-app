@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:podcast_app/application/channel_description/channel_description_bloc.dart';
-import 'package:podcast_app/models/Channel.dart';
+import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:podcast_app/presentation/pages/edit_channel/edit_channel_page.dart';
 
@@ -72,7 +72,7 @@ class YourChannelTile extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(vertical: 10),
               child: Text(
-                channel.Desctiption,
+                channel.Description,
                 textDirection: TextDirection.ltr,
                 textAlign: TextAlign.start,
                 style: TextStyle(color: Colors.grey),

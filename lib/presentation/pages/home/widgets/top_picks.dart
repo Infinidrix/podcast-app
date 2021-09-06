@@ -5,7 +5,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:podcast_app/application/channel_description/channel_description_bloc.dart';
 import 'package:podcast_app/application/home_page/home_page_bloc.dart';
 import 'package:podcast_app/application/home_page/home_page_event.dart';
-import 'package:podcast_app/models/Channel.dart';
+import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 
 class TopPicks extends StatelessWidget {

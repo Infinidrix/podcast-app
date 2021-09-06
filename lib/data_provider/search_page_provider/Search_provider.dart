@@ -1,5 +1,5 @@
 import 'package:podcast_app/data_provider/search_page_provider/ISearch_provider.dart';
-import 'package:podcast_app/models/Channel.dart';
+import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/models/Podcast.dart';
 
 class SearchProvider extends ISearchProvider {
@@ -22,7 +22,7 @@ class SearchProvider extends ISearchProvider {
           ImageUrl: "assets/images/placeholder.jpg",
           Subscribers: 12335245,
           Id: "$index",
-          Desctiption: "This is Channel Description",
+          Description: "This is Channel Description",
           Podcasts: List.generate(
               5,
               (index) => Podcast(

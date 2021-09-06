@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:podcast_app/application/create_channel/create_channel_bloc.dart';
 import 'package:podcast_app/application/create_channel/create_channel_event.dart';
 import 'package:podcast_app/application/create_channel/create_channel_state.dart';
@@ -12,7 +15,7 @@ class CreateChannelWidget extends StatelessWidget {
   final nameTextController = TextEditingController();
   final descriptionTextController = TextEditingController();
   final imageController = TextEditingController();
-
+  late File _image;
   Widget getFormField(Icon icon, int lineCount, String hint,
       TextEditingController textEditingController) {
     return Padding(
@@ -113,8 +116,35 @@ class CreateChannelWidget extends StatelessWidget {
                       "Cover Photo",
                       style: TextStyle(color: Colors.grey),
                     ),
-                    getFormField(Icon(Icons.insert_photo_outlined), 1,
-                        "Attach photo", imageController),
+                    Container(
+                      height: 32,
+                      child: GestureDetector(
+                        onTap: () {
+                          _showPicker(context);
+                        },
+                        child: Container(
+                          color: Colors.grey,
+                          child: _image != null
+                              ? Container(
+                                  child: Image.file(_image,
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.fitHeight),
+                                )
+                              : Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[200],
+                                      borderRadius: BorderRadius.circular(50)),
+                                  width: 100,
+                                  height: 100,
+                                  child: Icon(
+                                    Icons.camera_alt,
+                                    color: Colors.grey[800],
+                                  ),
+                                ),
+                        ),
+                      ),
+                    ),
                     saveButton(context, channelBloc, createchannelstate),
                   ],
                 ),
@@ -171,4 +201,35 @@ class CreateChannelWidget extends StatelessWidget {
       ),
     );
   }
+  
+  void _showPicker(context) {
+  showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc) {
+        return SafeArea(
+          child: Container(
+            child: new Wrap(
+              children: <Widget>[
+                new ListTile(
+                    leading: new Icon(Icons.photo_library),
+                    title: new Text('Photo Library'),
+                    onTap: () {
+                      _image = ImagePicker.pickImage(source: ImageSource.gallery);
+                      Navigator.of(context).pop();
+                    }),
+                new ListTile(
+                  leading: new Icon(Icons.photo_camera),
+                  title: new Text('Camera'),
+                  onTap: () {
+                    _imgFromCamera();
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      }
+    );
+}
 }

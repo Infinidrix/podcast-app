@@ -86,38 +86,17 @@ class CreateChannelWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Center(
-                        child: Text(
-                      "Create Channel",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 28.0,
-                        fontWeight: FontWeight.bold,
+                      child: Text(
+                        "Create Channel",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 28.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    )),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 105.0),
-                    ),
-                    Text(
-                      "Channel Name",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    getFormField(Icon(Icons.mic_none), 1,
-                        "The name of the channel", nameTextController),
-                    Text(
-                      "Description",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    getFormField(
-                        Icon(Icons.description_outlined),
-                        3,
-                        "Description of the channel",
-                        descriptionTextController),
-                    Text(
-                      "Cover Photo",
-                      style: TextStyle(color: Colors.grey),
                     ),
                     Container(
-                      height: 32,
+                      height: 130,
                       child: GestureDetector(
                         onTap: () {
                           _showPicker(context);
@@ -138,6 +117,28 @@ class CreateChannelWidget extends StatelessWidget {
                           },
                         ),
                       ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 60.0),
+                    ),
+                    Text(
+                      "Channel Name",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    getFormField(Icon(Icons.mic_none), 1,
+                        "The name of the channel", nameTextController),
+                    Text(
+                      "Description",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    getFormField(
+                        Icon(Icons.description_outlined),
+                        3,
+                        "Description of the channel",
+                        descriptionTextController),
+                    Text(
+                      "Cover Photo",
+                      style: TextStyle(color: Colors.grey),
                     ),
                     saveButton(context, channelBloc, createchannelstate),
                   ],
@@ -178,7 +179,9 @@ class CreateChannelWidget extends StatelessWidget {
               createChannelBloc.add(CreateChannelSaveEvent(
                   Name: nameTextController.text,
                   Description: descriptionTextController.text,
-                  ImageURL: imageController.text));
+                  ImageURL: createChannelState is OnImageUploadedState
+                      ? createChannelState.image
+                      : ""));
             } else {
               print("Error");
             }
@@ -212,8 +215,8 @@ class CreateChannelWidget extends StatelessWidget {
                         leading: new Icon(Icons.photo_library),
                         title: new Text('Photo Library'),
                         onTap: () async {
-                          image =
-                              await _image?.pickImage(source: ImageSource.gallery);
+                          image = await _image?.pickImage(
+                              source: ImageSource.gallery);
                           BlocProvider.of<CreateChannelBloc>(context)
                               .add(ChangeImageButtonPressedEvent(image: image));
                           Navigator.of(context).pop();
@@ -222,7 +225,8 @@ class CreateChannelWidget extends StatelessWidget {
                       leading: new Icon(Icons.photo_camera),
                       title: new Text('Camera'),
                       onTap: () async {
-                        image = await _image?.pickImage(source: ImageSource.camera);
+                        image =
+                            await _image?.pickImage(source: ImageSource.camera);
                         BlocProvider.of<CreateChannelBloc>(context)
                             .add(ChangeImageButtonPressedEvent(image: image));
                         Navigator.of(context).pop();

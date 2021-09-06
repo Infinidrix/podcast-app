@@ -1,6 +1,7 @@
 import 'package:podcast_app/presentation/pages/edit_channel/edit_channel_page.dart';
 import 'package:podcast_app/presentation/pages/edit_profile/profile_page.dart';
 import 'package:podcast_app/presentation/pages/home/home_page.dart';
+import 'package:podcast_app/presentation/pages/library_download_subscribe_pages/LibDownSubTabMenuPage.dart';
 import 'package:podcast_app/presentation/pages/recorder/recorder_page.dart';
 import 'package:podcast_app/presentation/pages/search/search_page.dart';
 import 'package:podcast_app/presentation/pages/welcome/welcome_page.dart';
@@ -22,7 +23,7 @@ import 'package:podcast_app/presentation/pages/create_podcast/create_podcast.dar
     AutoRoute(page: WelcomePage, path: '/welcome'),
     AutoRoute(page: SigninPage, path: '/signin'),
     AutoRoute(page: SignupPage, path: '/signup'),
-    AutoRoute(page: HomePage, path: '/', initial: true),
+    AutoRoute(page: HomePage, path: '/home'),
     AutoRoute(page: ChannelDetailPage, path: '/channel'),
     AutoRoute(page: CreateChannelPage, path: '/create'),
     AutoRoute(page: PlayerPage, path: '/player'),
@@ -34,7 +35,8 @@ import 'package:podcast_app/presentation/pages/create_podcast/create_podcast.dar
       page: EditChannelPage,
       path: '/edit_channel',
     ),
-    AutoRoute(page: SearchPage, path: '/search')
+    AutoRoute(page: SearchPage, path: '/search', initial: true),
+    AutoRoute(page: LibraryDownloadSubTabMenuPage, path: "/library")
   ],
 )
 class $RootRouter {}

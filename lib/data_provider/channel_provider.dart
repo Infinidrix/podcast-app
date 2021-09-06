@@ -7,21 +7,55 @@ import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'package:podcast_app/models/channel/CreateChannel.dart';
 import 'constants.dart';
+import 'package:podcast_app/models/channel/Channel.dart';
+import 'package:podcast_app/models/Podcast.dart';
 
 class ChannelPorvider implements IChannelProvider {
   final http.Client httpClient;
 
   ChannelPorvider({required this.httpClient});
 
-  List<Podcast> podcasts =
-      List.generate(10, (index) => Podcast("Name #$index", index));
+  // List<Podcast> podcasts =
+  //     List.generate(10, (index) => Podcast("Name #$index", index));
   Channel channel = Channel(
       Name: "Name",
       ImageUrl: "ImageUrl",
       Subscribers: 12335245,
       Id: "1",
       Description: "This is some description about the channel",
-      Podcasts: List.generate(10, (index) => Podcast("Name #$index", index)));
+      Podcasts: List.generate(10, (index) => Podcast(id: "",channelName: "",description: "",name: "",url: "")));
+
+  List<Podcast> podcasts = List.generate(
+      5,
+      (index) => Podcast(
+            name: "Podcast $index",
+            numberOfListeners: 0,
+            description: "",
+            channelName: "",
+            url: "",
+            imageUrl: "",
+            id: "$index",
+          ));
+  List<Channel> channels = List.generate(
+      5,
+      (index) => Channel(
+          Name: "Name",
+          ImageUrl: "ImageUrl",
+          Subscribers: 12335245,
+          Id: "$index",
+          Description: "This is Channel Description",
+          Podcasts: List.generate(
+              5,
+              (index) => Podcast(
+                    name: "Podcast $index",
+                    numberOfListeners: 0,
+                    channelName: "",
+                    description: "",
+                    url: "",
+                    imageUrl: "",
+                    id: "$index",
+                  ))));
+
   bool isSubscribedValue = true;
   @override
   Future<bool> isSubscribed(String userId, String channelId) async {
@@ -31,15 +65,13 @@ class ChannelPorvider implements IChannelProvider {
 
   @override
   Future<Channel> getChannel(String id) async {
-    // TODO: implement getChannel
     Future.delayed(Duration(seconds: 2));
-    return channel;
+    return channels[0];
   }
 
   @override
   Future<bool> setSubscription(
       String userId, String channelId, bool subscriptionStatus) async {
-    // TODO: implement setSubscription
     isSubscribedValue = subscriptionStatus;
     return isSubscribedValue;
   }

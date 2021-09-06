@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:podcast_app/application/your_channels/your_channel_bloc.dart';
+import 'package:podcast_app/application/your_channels/your_channel_state.dart';
+import 'package:podcast_app/models/Channel.dart';
 import 'package:podcast_app/presentation/core/bottom_navigation.dart';
+import 'package:podcast_app/presentation/pages/core/bottom_nav.dart';
 import 'package:podcast_app/presentation/pages/your_channels/widgets/your_channels_widgets.dart';
 
 class YourChannelsPage extends StatelessWidget {
@@ -28,16 +33,32 @@ class YourChannelsPage extends StatelessWidget {
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.8,
-              child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (BuildContext context, int index) =>
-                    YourChannelTile(),
+              child: BlocBuilder<YourChannelBloc, YourChannelState>(
+                builder: (context, state) {
+                  if (state is LoadingYourChannel) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is LoadedYourChannel) {
+                    List<Channel> channels = state.channels;
+
+                    return ListView.builder(
+                      itemCount: channels.length,
+                      itemBuilder: (BuildContext context, int index) =>
+                          YourChannelTile(
+                        channel: channels[index],
+                      ),
+                    );
+                  }
+
+                  return Container();
+                },
               ),
             )
           ],
         ),
       ),
-      bottomNavigationBar: ABottomNavaigationBar(),
+      bottomNavigationBar: getBottomNavBar(context),
     );
   }
 }

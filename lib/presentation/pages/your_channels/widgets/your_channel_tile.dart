@@ -1,70 +1,89 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:podcast_app/application/channel_description/channel_description_bloc.dart';
+import 'package:podcast_app/models/Channel.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:podcast_app/presentation/pages/edit_channel/edit_channel_page.dart';
+
+import 'package:podcast_app/presentation/routes/router.gr.dart';
 
 class YourChannelTile extends StatelessWidget {
-  const YourChannelTile({Key? key}) : super(key: key);
+  final Channel channel;
+
+  const YourChannelTile({Key? key, required this.channel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            children: [
-              Image.asset(
-                "assets/images/1by1.png",
-                height: 60,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "This American Life",
-                        textDirection: TextDirection.ltr,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
+    final channelBloc = BlocProvider.of<ChannelDescriptionBloc>(context);
+    return InkWell(
+      onTap: () {
+        channelBloc.add(LoadInitialEvent(channel: channel));
+        context.router.push(ChannelDetailRoute());
+      },
+      child: Container(
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.symmetric(vertical: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                Image.asset(
+                  channel.ImageUrl,
+                  height: 60,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          channel.Name,
+                          textDirection: TextDirection.ltr,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      Text(
-                        "1 year ago",
-                        textDirection: TextDirection.ltr,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                        ),
-                      )
-                    ],
+                        Text(
+                          "1 year ago",
+                          textDirection: TextDirection.ltr,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Icon(
-                Icons.edit_outlined,
-                color: Colors.white,
-              )
-            ],
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 10),
-            child: Text(
-              "The Basement Yard is a weekly podcast hosted by Joe Santagato & featuring Danny LoPriore.",
-              textDirection: TextDirection.ltr,
-              textAlign: TextAlign.start,
-              style: TextStyle(color: Colors.grey),
+                IconButton(
+                  icon: Icon(Icons.edit_outlined),
+                  onPressed: () {
+                    context.router.push(EditChannelRoute());
+                  },
+                  color: Colors.white,
+                )
+              ],
             ),
-          )
-        ],
-      ),
-      decoration: BoxDecoration(
-        color: HexColor('#282828'),
-        borderRadius: BorderRadius.circular(10),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 10),
+              child: Text(
+                channel.Desctiption,
+                textDirection: TextDirection.ltr,
+                textAlign: TextAlign.start,
+                style: TextStyle(color: Colors.grey),
+              ),
+            )
+          ],
+        ),
+        decoration: BoxDecoration(
+          color: HexColor('#282828'),
+          borderRadius: BorderRadius.circular(10),
+        ),
       ),
     );
   }

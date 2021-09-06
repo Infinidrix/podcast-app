@@ -1,9 +1,17 @@
+import 'dart:collection';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:podcast_app/application/audio_player/audio_player_bloc.dart';
+import 'package:podcast_app/application/audio_player/audio_player_events.dart';
 import 'package:podcast_app/application/channel_description/channel_description_bloc.dart';
+import 'package:podcast_app/presentation/core/loading_list_widget.dart';
+import 'package:podcast_app/presentation/pages/library_download_subscribe_pages/LibDownSubTabMenuPage.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
+import 'package:skeleton_text/skeleton_text.dart';
 
 class ChannelDetailWidget extends StatelessWidget {
   Widget _getSubscribeButton(
@@ -36,8 +44,8 @@ class ChannelDetailWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final channelBloc = BlocProvider.of<ChannelDescriptionBloc>(context);
-    return Scaffold(
-        body: BlocBuilder<ChannelDescriptionBloc, ChannelDescriptionState>(
+    final audioBloc = BlocProvider.of<AudioPlayerBloc>(context);
+    return BlocBuilder<ChannelDescriptionBloc, ChannelDescriptionState>(
       builder: (_, channelState) {
         return Container(
             color: Colors.black,
@@ -55,12 +63,26 @@ class ChannelDetailWidget extends StatelessWidget {
                   expandedHeight: 300.0,
                   flexibleSpace: FlexibleSpaceBar(
                       title: (channelState is LoadingChannelDescriptionState)
-                          ? SizedBox(child: CircularProgressIndicator())
+                          ? SizedBox(
+                              child: SkeletonAnimation(
+                                borderRadius: BorderRadius.circular(10.0),
+                                shimmerColor:
+                                    2 % 2 != 0 ? Colors.grey : Colors.white54,
+                                child: Container(
+                                  height: 15,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.15,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      color: HexColor('#202020')),
+                                ),
+                              ),
+                            )
                           : (channelState is InitialChannelDescriptionState)
                               ? Text(
                                   "${channelState.channel.Name}",
                                 )
-                              : Text("impossibel"),
+                              : Text("impossible"),
                       background: FlutterLogo(),
                       stretchModes: [
                         StretchMode.zoomBackground,
@@ -86,8 +108,28 @@ class ChannelDetailWidget extends StatelessWidget {
                                       child: (channelState
                                               is LoadingChannelDescriptionState)
                                           ? SizedBox(
-                                              child:
-                                                  CircularProgressIndicator())
+                                              child: SizedBox(
+                                              child: SkeletonAnimation(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                                shimmerColor: 2 % 2 != 0
+                                                    ? Colors.grey
+                                                    : Colors.white54,
+                                                child: Container(
+                                                  height: 15,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.15,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                      color:
+                                                          HexColor('#202020')),
+                                                ),
+                                              ),
+                                            ))
                                           : (channelState
                                                   is InitialChannelDescriptionState)
                                               ? Text(
@@ -105,7 +147,15 @@ class ChannelDetailWidget extends StatelessWidget {
                               ),
                             ),
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                if (channelState
+                                    is InitialChannelDescriptionState) {
+                                  audioBloc.add(InitializePlayerEvent(
+                                      podcasts: ListQueue.from(
+                                          channelState.channel.Podcasts!)));
+                                  context.router.push(PlayerRoute());
+                                }
+                              },
                               child: Icon(
                                 Icons.play_arrow,
                                 color: Colors.white,
@@ -143,70 +193,63 @@ class ChannelDetailWidget extends StatelessWidget {
                       delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
                           return InkWell(
-                            onTap: () {
-                              context.router.push(CreateChannelRoute());
-                            },
-                            child: Card(
-                              color: Colors.black,
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.all(10.0),
-                                    child: Text("$index"),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(right: 17.0),
-                                    child: FlutterLogo(
-                                      size: 35.0,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "${listOfPodcasts?[index]}",
-                                          style: TextStyle(fontSize: 19.0),
+                              onTap: () {
+                                context.router
+                                    .push(LibraryDownloadSubTabMenuRoute());
+                              },
+                              child: Card(
+                                  color: Colors.black,
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.all(10.0),
+                                        child: Text("$index"),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(right: 17.0),
+                                        child: FlutterLogo(
+                                          size: 35.0,
                                         ),
-                                        Padding(
-                                            padding:
-                                                EdgeInsets.only(bottom: 4.0)),
-                                        Text(
-                                          "23,342,322",
-                                          style: TextStyle(
-                                              fontSize: 10.0,
-                                              color: Colors.grey),
-                                        ),
-                                      ],
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                    ),
-                                  ),
-                                  PopupMenuButton(
-                                    itemBuilder: (c) =>
-                                        <PopupMenuEntry<Object?>>[],
-                                  )
-                                ],
-                              ),
-                            ),
-                          );
+                                      ),
+                                      Expanded(
+                                          child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "${listOfPodcasts![index]}",
+                                            style: TextStyle(fontSize: 19.0),
+                                          ),
+                                          Padding(
+                                              padding:
+                                                  EdgeInsets.only(bottom: 4.0)),
+                                          Text(
+                                            "23,342,322",
+                                            style: TextStyle(
+                                                fontSize: 10.0,
+                                                color: Colors.grey),
+                                          ),
+                                        ],
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                      )),
+                                      PopupMenuButton(
+                                        itemBuilder: (c) =>
+                                            <PopupMenuEntry<Object?>>[],
+                                      )
+                                    ],
+                                  )));
                         },
-                        childCount: listOfPodcasts?.length,
+                        childCount: listOfPodcasts!.length,
                       ),
                     );
                   }
                   return SliverToBoxAdapter(
-                    child: Center(
-                      child: SizedBox(
-                        child: CircularProgressIndicator(),
-                      ),
-                    ),
-                  );
+                      child: Flexible(child: LoadingList()));
                 })
               ],
             ));
       },
-    ));
+    );
   }
 }

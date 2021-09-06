@@ -12,6 +12,8 @@ part 'channel_description_state.dart';
 class ChannelDescriptionBloc
     extends Bloc<ChannelDescriptionEvent, ChannelDescriptionState> {
   IChannelRepository channelRepository;
+  late Channel channel;
+  late bool isSubscribed;
 
   ChannelDescriptionBloc({required this.channelRepository})
       : super(LoadingChannelDescriptionState());
@@ -19,9 +21,6 @@ class ChannelDescriptionBloc
   @override
   Stream<ChannelDescriptionState> mapEventToState(
       ChannelDescriptionEvent event) async* {
-    // TODO: Add your event logic
-    final channel = await channelRepository.getChannel("channelId");
-    final isSubscribed = await channelRepository.isSubscribed("channelId");
     if (event is SubscriptionEvent) {
       yield LoadingChannelDescriptionState();
       Future.delayed(Duration(seconds: 1), () {
@@ -30,6 +29,9 @@ class ChannelDescriptionBloc
       channelRepository.setSubscription(event.channelId, event.isSubscribing);
       yield InitialChannelDescriptionState(channel, event.isSubscribing);
     } else if (event is LoadInitialEvent) {
+      channel = event.channel;
+      isSubscribed = await channelRepository.isSubscribed(channel.Id);
+
       yield LoadingChannelDescriptionState();
       await Future.delayed(Duration(seconds: 3), () {});
       yield InitialChannelDescriptionState(channel, isSubscribed);

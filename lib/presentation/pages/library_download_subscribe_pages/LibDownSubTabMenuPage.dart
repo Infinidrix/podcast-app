@@ -2,23 +2,24 @@
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:podcast_app/presentation/pages/core/bottom_nav.dart';
 
 import 'Download/Download.dart';
 import 'Library/Library.dart';
 import 'Subscribe/Subscribe.dart';
 
-class LibraryDownloadSub_TabMenuPage extends StatefulWidget {
-  const LibraryDownloadSub_TabMenuPage({Key? key}) : super(key: key);
+class LibraryDownloadSubTabMenuPage extends StatefulWidget {
+  const LibraryDownloadSubTabMenuPage({Key? key}) : super(key: key);
 
   @override
-  _LibraryDownloadSub_TabMenuPageState createState() => _LibraryDownloadSub_TabMenuPageState();
+  _LibraryDownloadSubTabMenuPageState createState() => _LibraryDownloadSubTabMenuPageState();
 }
 
-class _LibraryDownloadSub_TabMenuPageState extends State<LibraryDownloadSub_TabMenuPage> {
+class _LibraryDownloadSubTabMenuPageState extends State<LibraryDownloadSubTabMenuPage> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
+    return DefaultTabController(
         length: 3,
         child: Scaffold(
           appBar: AppBar(
@@ -57,14 +58,10 @@ class _LibraryDownloadSub_TabMenuPageState extends State<LibraryDownloadSub_TabM
           ),
           body: TabBarView(
             children: [
-              LibraryPage(
-                when: "Yesterday",
-                title: '#250- Joe Kisses Danny',
-                description: 'On this episode, we dive into Danny dream where Joe Kissed her at a party ... we also dive into the dark underworld of the Karens.',
-                subtitle:'The Basement Yard ',
-                duration:  "1HR 10MIN",
-
-              ),
+              // BlocProvider(create: (context) => )
+              // (child: 
+              LibraryPage(),
+              // ),
 
               DownloadPage(),
               Subscribed(title: '#250- Joe Kisses Danny',
@@ -73,29 +70,9 @@ class _LibraryDownloadSub_TabMenuPageState extends State<LibraryDownloadSub_TabM
             ],
           ),
 
-          bottomNavigationBar: CurvedNavigationBar(
-            index: 0,
-            height: 60.0,
-            items: <Widget>[
-              Icon(Icons.home_outlined, size: 30,color:Colors.white,),
-              Icon(Icons.search_outlined, size: 30,color: Colors.white),
-              Icon(Icons.compare_arrows, size: 30,color: Colors.white),
-              Icon(Icons.call_split, size: 30,color: Colors.white),
-            ],
-            color: Color(0xff282828),
-            buttonBackgroundColor: Color(0xff282828),
-            backgroundColor: Color(0xff121212),
-            animationCurve: Curves.easeInOut,
-            animationDuration: Duration(milliseconds: 600),
-
-          ),
-
-
-
-
+          bottomNavigationBar: getBottomNavBar(context)
         ),
 
-      ),
-    );
+      );
   }
 }

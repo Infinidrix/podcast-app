@@ -6,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:podcast_app/application/create_channel/create_channel_bloc.dart';
 import 'package:podcast_app/application/create_channel/create_channel_event.dart';
 import 'package:podcast_app/application/create_channel/create_channel_state.dart';
-import 'package:podcast_app/presentation/pages/create_channel/widgets/image_picker.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -16,7 +15,7 @@ class CreateChannelWidget extends StatelessWidget {
   final nameTextController = TextEditingController();
   final descriptionTextController = TextEditingController();
   final imageController = TextEditingController();
-  late XFile? _image;
+  final ImagePicker? _image = ImagePicker();
   Widget getFormField(Icon icon, int lineCount, String hint,
       TextEditingController textEditingController) {
     return Padding(
@@ -117,12 +116,29 @@ class CreateChannelWidget extends StatelessWidget {
                       "Cover Photo",
                       style: TextStyle(color: Colors.grey),
                     ),
-                    AppImagePicker(
-                        maxImageWidth: 20,
-                        maxImageHeight: 20,
-                        onImageSelected: (context) {
-                          return FileImage(context);
-                        }),
+                    Container(
+                      height: 32,
+                      child: GestureDetector(
+                        onTap: () {
+                          _showPicker(context);
+                        },
+                        child:
+                            BlocBuilder<CreateChannelBloc, CreateChannelState>(
+                          builder: (context, createChannelState) {
+                            return createChannelState is OnImageUploadedState
+                                ? CircleAvatar(
+                                    radius: 500,
+                                    backgroundImage: FileImage(
+                                        File(createChannelState.image.path)),
+                                  )
+                                : CircleAvatar(
+                                    backgroundColor: Colors.blue,
+                                    radius: 500,
+                                  );
+                          },
+                        ),
+                      ),
+                    ),
                     saveButton(context, channelBloc, createchannelstate),
                   ],
                 ),
@@ -180,34 +196,43 @@ class CreateChannelWidget extends StatelessWidget {
     );
   }
 
-//   // void _showPicker(context) {
-//   // showModalBottomSheet(
-//   //     context: context,
-//   //     builder: (BuildContext bc) {
-//   //       return SafeArea(
-//   //         child: Container(
-//   //           child: new Wrap(
-//   //             children: <Widget>[
-//   //               new ListTile(
-//   //                   leading: new Icon(Icons.photo_library),
-//   //                   title: new Text('Photo Library'),
-//   //                   onTap: () {
-//   //                     _image = ImagePicker.pickImage(source: ImageSource.gallery);
-//   //                     Navigator.of(context).pop();
-//   //                   }),
-//   //               new ListTile(
-//   //                 leading: new Icon(Icons.photo_camera),
-//   //                 title: new Text('Camera'),
-//   //                 onTap: () {
-//   //                   _imgFromCamera();
-//   //                   Navigator.of(context).pop();
-//   //                 },
-//   //               ),
-//   //             ],
-//   //           ),
-//   //         ),
-//   //       );
-//   //     }
-//   //   );
-// }
+  void _showPicker(context) {
+    dynamic image;
+
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return BlocBuilder<CreateChannelBloc, CreateChannelState>(
+              builder: (context, createChannelState) {
+            return SafeArea(
+              child: Container(
+                child: new Wrap(
+                  children: <Widget>[
+                    new ListTile(
+                        leading: new Icon(Icons.photo_library),
+                        title: new Text('Photo Library'),
+                        onTap: () async {
+                          image =
+                              await _image?.pickImage(source: ImageSource.gallery);
+                          BlocProvider.of<CreateChannelBloc>(context)
+                              .add(ChangeImageButtonPressedEvent(image: image));
+                          Navigator.of(context).pop();
+                        }),
+                    new ListTile(
+                      leading: new Icon(Icons.photo_camera),
+                      title: new Text('Camera'),
+                      onTap: () async {
+                        image = await _image?.pickImage(source: ImageSource.camera);
+                        BlocProvider.of<CreateChannelBloc>(context)
+                            .add(ChangeImageButtonPressedEvent(image: image));
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            );
+          });
+        });
+  }
 }

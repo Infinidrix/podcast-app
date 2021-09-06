@@ -11,6 +11,10 @@ class CreateChannelFailedState extends CreateChannelState {
 
   CreateChannelFailedState({required this.ErrorMessage});
 }
-class RequestToChangeProfileImageState extends CreateChannelState {
-  // RequestToChangeProfileImageState({required user}) : super(user: user);
+
+class OnImageUploadedState extends CreateChannelState {
+  final dynamic image;
+
+  OnImageUploadedState({this.image});
+  // OnImageUploadedState copyWith({});
 }

@@ -7,6 +7,7 @@
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
 
+import '../../models/edit_profile/edit_profile.dart' as _i17;
 import '../pages/channel_detail/channel_detail_page.dart' as _i7;
 import '../pages/create_channel/create_channel_page.dart' as _i8;
 import '../pages/create_podcast/create_podcast.dart' as _i12;
@@ -77,8 +78,9 @@ class RootRouter extends _i1.RootStackRouter {
         }),
     EditProfileRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
-        builder: (_) {
-          return const _i11.EditProfilePage();
+        builder: (data) {
+          final args = data.argsAs<EditProfileRouteArgs>();
+          return _i11.EditProfilePage(key: args.key, user: args.user);
         }),
     CreatePodcastRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
@@ -200,10 +202,21 @@ class YourChannelsRoute extends _i1.PageRouteInfo {
   static const String name = 'YourChannelsRoute';
 }
 
-class EditProfileRoute extends _i1.PageRouteInfo {
-  const EditProfileRoute() : super(name, path: '/edit_profile');
+class EditProfileRoute extends _i1.PageRouteInfo<EditProfileRouteArgs> {
+  EditProfileRoute({_i2.Key? key, required _i17.UserEditProfile user})
+      : super(name,
+            path: '/edit_profile',
+            args: EditProfileRouteArgs(key: key, user: user));
 
   static const String name = 'EditProfileRoute';
+}
+
+class EditProfileRouteArgs {
+  const EditProfileRouteArgs({this.key, required this.user});
+
+  final _i2.Key? key;
+
+  final _i17.UserEditProfile user;
 }
 
 class CreatePodcastRoute extends _i1.PageRouteInfo<CreatePodcastRouteArgs> {

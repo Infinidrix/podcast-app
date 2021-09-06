@@ -8,6 +8,7 @@ import 'package:podcast_app/application/create_podcast/create_podcast_applicatio
 import 'package:podcast_app/application/download/download_bloc.dart';
 import 'package:podcast_app/application/download/download_events.dart';
 import 'package:podcast_app/application/edit_profile/edit_profile_bloc.dart';
+import 'package:podcast_app/application/home/home_bloc.dart';
 import 'package:podcast_app/application/login/login_bloc.dart';
 import 'package:podcast_app/application/recorder/recorder_application.dart';
 import 'package:podcast_app/application/signup/signup_bloc.dart';
@@ -86,6 +87,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (_) =>
                 SubscriptionBloc()..add(LoadInitialSubscriptionEvent())),
+        BlocProvider(create: (_) => HomeBloc()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

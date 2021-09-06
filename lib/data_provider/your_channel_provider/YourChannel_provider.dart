@@ -1,5 +1,5 @@
 import 'package:podcast_app/data_provider/your_channel_provider/IYourChannel_provider.dart';
-import 'package:podcast_app/models/Channel.dart';
+import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/models/Podcast.dart';
 
 class YourChannelProvider extends IYourChannelProvider {
@@ -10,7 +10,7 @@ class YourChannelProvider extends IYourChannelProvider {
           ImageUrl: "assets/images/1by1.png",
           Subscribers: 12335245,
           Id: "$index",
-          Desctiption:
+          Description:
               "The Basement Yard is a weekly podcast hosted by Joe Santagato & featuring Danny LoPriore.",
           Podcasts: List.generate(
               5,

@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:podcast_app/application/your_channels/your_channel_bloc.dart';
 import 'package:podcast_app/application/your_channels/your_channel_state.dart';
-import 'package:podcast_app/models/Channel.dart';
+// import 'package:podcast_app/models/Channel.dart';
+import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/presentation/core/bottom_navigation.dart';
 import 'package:podcast_app/presentation/pages/core/bottom_nav.dart';
 import 'package:podcast_app/presentation/pages/your_channels/widgets/your_channels_widgets.dart';
@@ -40,7 +41,7 @@ class YourChannelsPage extends StatelessWidget {
                       child: CircularProgressIndicator(),
                     );
                   } else if (state is LoadedYourChannel) {
-                    List<Channel> channels = state.channels;
+                    List<dynamic> channels = state.channels;
 
                     return ListView.builder(
                       itemCount: channels.length,

@@ -1,9 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:podcast_app/application/audio_player/audio_player_bloc.dart';
 import 'package:podcast_app/application/channel_description/channel_description_bloc.dart';
+import 'package:podcast_app/application/create_channel/create_channel_bloc.dart';
 import 'package:podcast_app/application/home_page/home_page_bloc.dart';
 import 'package:podcast_app/application/home_page/home_page_event.dart';
 import 'package:podcast_app/application/search/search_bloc.dart';
@@ -48,8 +50,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final channelRepository =
-        ChannelRepository(channelProvider: ChannelPorvider());
+    final channelRepository = ChannelRepository(
+        channelProvider: ChannelPorvider(httpClient: http.Client()));
 
     final searchRepository = SearchRepository(
         apiDataProvider: SearchProvider(),
@@ -117,6 +119,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (_) =>
                 SubscriptionBloc()..add(LoadInitialSubscriptionEvent())),
+                BlocProvider(
+            create: (_) =>
+                CreateChannelBloc(channelRepository: channelRepository)),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

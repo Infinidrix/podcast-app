@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:podcast_app/application/subscription/subscription_events.dart';
 import 'package:podcast_app/application/subscription/subscription_states.dart';
-import 'package:podcast_app/models/Channel.dart';
+import 'package:podcast_app/models/channel/Channel.dart';
 
 class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
   static List<Channel> channels = [
@@ -10,21 +10,21 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
         ImageUrl: "https://www.image.com/image.jpg",
         Subscribers: 200,
         Id: "Another Unique ID",
-        Desctiption: "",
+        Description: "",
         Podcasts: []),
     Channel(
         Name: "Super Awesome",
         ImageUrl: "https://www.image.com/image.jpg",
         Subscribers: 300,
         Id: "Amaze Unique ID",
-        Desctiption: "",
+        Description: "",
         Podcasts: []),
     Channel(
         Name: "Wooden Overcoats",
         ImageUrl: "https://www.image.com/image.jpg",
         Subscribers: 400,
         Id: "Super Cool Unique ID",
-        Desctiption: "",
+        Description: "",
         Podcasts: []),
   ];
 

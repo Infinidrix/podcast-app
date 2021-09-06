@@ -4,7 +4,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:auto_route/auto_route.dart';
 
 import 'package:podcast_app/application/channel_description/channel_description_bloc.dart';
-import 'package:podcast_app/models/Channel.dart';
+import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 
 import '../constants.dart';
@@ -87,7 +87,7 @@ class ChannelCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(3.0),
                 child: Text(
-                  "${channel.Desctiption}",
+                  "${channel.Description}",
                   style: TextStyle(color: Color(0xffb3b3b3), fontSize: 14),
                 ),
               )

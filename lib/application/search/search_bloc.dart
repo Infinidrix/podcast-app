@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:podcast_app/application/search/search_event.dart';
 import 'package:podcast_app/application/search/search_state.dart';
-import 'package:podcast_app/models/Channel.dart';
+import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/models/Podcast.dart';
 import 'package:podcast_app/repository/search_repository/ISearchRepository.dart';
 

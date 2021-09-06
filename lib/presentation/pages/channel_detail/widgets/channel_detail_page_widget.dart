@@ -152,7 +152,7 @@ class ChannelDetailWidget extends StatelessWidget {
                                     is InitialChannelDescriptionState) {
                                   audioBloc.add(InitializePlayerEvent(
                                       podcasts: ListQueue.from(
-                                          channelState.channel.Podcasts)));
+                                          channelState.channel.Podcasts!)));
                                   context.router.push(PlayerRoute());
                                 }
                               },
@@ -217,7 +217,7 @@ class ChannelDetailWidget extends StatelessWidget {
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            "${listOfPodcasts[index]}",
+                                            "${listOfPodcasts![index]}",
                                             style: TextStyle(fontSize: 19.0),
                                           ),
                                           Padding(
@@ -240,7 +240,7 @@ class ChannelDetailWidget extends StatelessWidget {
                                     ],
                                   )));
                         },
-                        childCount: listOfPodcasts.length,
+                        childCount: listOfPodcasts!.length,
                       ),
                     );
                   }

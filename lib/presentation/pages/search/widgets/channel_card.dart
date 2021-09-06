@@ -1,108 +1,98 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:auto_route/auto_route.dart';
+
+import 'package:podcast_app/application/channel_description/channel_description_bloc.dart';
+import 'package:podcast_app/models/Channel.dart';
+import 'package:podcast_app/presentation/routes/router.gr.dart';
 
 import '../constants.dart';
 
 class ChannelCard extends StatelessWidget {
-  final String img;
-  final String description;
-  final String podcastName;
-  final String podcasterName;
+  final Channel channel;
 
-  const ChannelCard({
-    Key? key,
-    required this.img,
-    required this.description,
-    required this.podcastName,
-    required this.podcasterName,
-  }) : super(key: key);
+  const ChannelCard({Key? key, required this.channel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 20,
-      color: HexColor("#282828"),
-      child: Container(
-        margin: EdgeInsets.only(top: 8.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: HexColor("#282828"),
-        ),
-        padding: EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: DecoratedBox(
-                      decoration: imageDecoration,
-                      child: Image.asset(
-                        '$img',
-                        fit: BoxFit.cover,
-                        width: 60,
-                        height: 60,
+    final channelBloc = BlocProvider.of<ChannelDescriptionBloc>(context);
+
+    return InkWell(
+      onTap: () {
+        channelBloc.add(LoadInitialEvent(channel: channel));
+        context.router.push(ChannelDetailRoute());
+      },
+      child: Card(
+        color: HexColor("#282828"),
+        child: Container(
+          margin: EdgeInsets.only(top: 8.0),
+          padding: EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            image: DecorationImage(
+                              image: AssetImage(channel.ImageUrl),
+                              fit: BoxFit.cover,
+                            )),
+                        width: 75,
+                        height: 65,
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  flex: 7,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "$podcastName",
-                          style: TextStyle(
-                              fontSize: 19,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10.0),
-                            child: Text(
-                              "$podcasterName",
-                              style: TextStyle(
-                                  fontSize: 16,
+                  Expanded(
+                    flex: 6,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${channel.Name}",
+                            style: TextStyle(
+                                fontSize: 19,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 10.0),
+                              child: Text(
+                                "${channel.Name}",
+                                style: TextStyle(
+                                  fontSize: 14,
                                   color: Colors.white,
-                                  fontStyle: FontStyle.italic),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: IconButton(
-                    onPressed: () {
-                      print("Add Icon");
-                    },
-                    icon: Icon(
-                      Icons.add_box,
-                      color: Colors.white,
-                    ),
-                  ),
-                )
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(3.0),
-              child: Text(
-                "$description",
-                style: TextStyle(color: Colors.white),
+                ],
               ),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.all(3.0),
+                child: Text(
+                  "${channel.Desctiption}",
+                  style: TextStyle(color: Color(0xffb3b3b3), fontSize: 14),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

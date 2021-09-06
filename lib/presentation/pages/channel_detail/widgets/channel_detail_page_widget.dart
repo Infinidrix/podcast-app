@@ -4,11 +4,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:podcast_app/application/audio_player/audio_player_bloc.dart';
 import 'package:podcast_app/application/audio_player/audio_player_events.dart';
 import 'package:podcast_app/application/channel_description/channel_description_bloc.dart';
+import 'package:podcast_app/presentation/core/loading_list_widget.dart';
 import 'package:podcast_app/presentation/pages/library_download_subscribe_pages/LibDownSubTabMenuPage.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
+import 'package:skeleton_text/skeleton_text.dart';
 
 class ChannelDetailWidget extends StatelessWidget {
   Widget _getSubscribeButton(
@@ -60,12 +63,26 @@ class ChannelDetailWidget extends StatelessWidget {
                   expandedHeight: 300.0,
                   flexibleSpace: FlexibleSpaceBar(
                       title: (channelState is LoadingChannelDescriptionState)
-                          ? SizedBox(child: CircularProgressIndicator())
+                          ? SizedBox(
+                              child: SkeletonAnimation(
+                                borderRadius: BorderRadius.circular(10.0),
+                                shimmerColor:
+                                    2 % 2 != 0 ? Colors.grey : Colors.white54,
+                                child: Container(
+                                  height: 15,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.15,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      color: HexColor('#202020')),
+                                ),
+                              ),
+                            )
                           : (channelState is InitialChannelDescriptionState)
                               ? Text(
                                   "${channelState.channel.Name}",
                                 )
-                              : Text("impossibel"),
+                              : Text("impossible"),
                       background: FlutterLogo(),
                       stretchModes: [
                         StretchMode.zoomBackground,
@@ -91,8 +108,28 @@ class ChannelDetailWidget extends StatelessWidget {
                                       child: (channelState
                                               is LoadingChannelDescriptionState)
                                           ? SizedBox(
-                                              child:
-                                                  CircularProgressIndicator())
+                                              child: SizedBox(
+                                              child: SkeletonAnimation(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                                shimmerColor: 2 % 2 != 0
+                                                    ? Colors.grey
+                                                    : Colors.white54,
+                                                child: Container(
+                                                  height: 15,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.15,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                      color:
+                                                          HexColor('#202020')),
+                                                ),
+                                              ),
+                                            ))
                                           : (channelState
                                                   is InitialChannelDescriptionState)
                                               ? Text(
@@ -111,8 +148,11 @@ class ChannelDetailWidget extends StatelessWidget {
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                if (channelState is InitialChannelDescriptionState) {
-                                  audioBloc.add(InitializePlayerEvent(podcasts: ListQueue.from(channelState.channel.Podcasts)));
+                                if (channelState
+                                    is InitialChannelDescriptionState) {
+                                  audioBloc.add(InitializePlayerEvent(
+                                      podcasts: ListQueue.from(
+                                          channelState.channel.Podcasts)));
                                   context.router.push(PlayerRoute());
                                 }
                               },
@@ -154,7 +194,8 @@ class ChannelDetailWidget extends StatelessWidget {
                         (BuildContext context, int index) {
                           return InkWell(
                               onTap: () {
-                                context.router.push(LibraryDownloadSubTabMenuRoute());
+                                context.router
+                                    .push(LibraryDownloadSubTabMenuRoute());
                               },
                               child: Card(
                                   color: Colors.black,
@@ -204,8 +245,7 @@ class ChannelDetailWidget extends StatelessWidget {
                     );
                   }
                   return SliverToBoxAdapter(
-                      child: Center(
-                          child: SizedBox(child: CircularProgressIndicator())));
+                      child: Flexible(child: LoadingList()));
                 })
               ],
             ));

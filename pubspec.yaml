@@ -50,6 +50,7 @@ dependencies:
   flutter_sound: ^8.3.10
   permission_handler: ^8.1.4+2
   localstorage: ^4.0.0+1
+  skeleton_text: ^3.0.0
   moor: ^4.5.0
   sqlite3_flutter_libs: ^0.5.0
   path: ^1.8.0

@@ -11,7 +11,6 @@ class ChannelRepository implements IChannelRepository {
 
   @override
   Future<Channel> getChannel(String channelId) async {
-    // TODO: implement getChannel
     return channelProvider.getChannel(channelId);
   }
 

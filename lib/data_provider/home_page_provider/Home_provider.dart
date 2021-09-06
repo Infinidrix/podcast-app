@@ -1,24 +1,24 @@
-import 'package:podcast_app/data_provider/Ichannel_provider.dart';
+import 'package:podcast_app/data_provider/home_page_provider/IHome_provider.dart';
 import 'package:podcast_app/models/Channel.dart';
 import 'package:podcast_app/models/Podcast.dart';
 
-class ChannelPorvider implements IChannelProvider {
+class HomeProvider implements IHomeProvider {
   List<Podcast> podcasts = List.generate(
       5,
       (index) => Podcast(
             name: "Podcast $index",
             numberOfListeners: 0,
+            url: "",
             description: "",
             channelName: "",
-            url: "",
-            imageUrl: "",
+            imageUrl: "assets/images/placeholder.jpg",
             id: "$index",
           ));
   List<Channel> channels = List.generate(
       5,
       (index) => Channel(
           Name: "Name",
-          ImageUrl: "ImageUrl",
+          ImageUrl: "assets/images/placeholder.jpg",
           Subscribers: 12335245,
           Id: "$index",
           Desctiption: "This is Channel Description",
@@ -27,30 +27,25 @@ class ChannelPorvider implements IChannelProvider {
               (index) => Podcast(
                     name: "Podcast $index",
                     numberOfListeners: 0,
-                    channelName: "",
-                    description: "",
                     url: "",
-                    imageUrl: "",
+                    description: "",
+                    channelName: "",
+                    imageUrl: "assets/images/placeholder.jpg",
                     id: "$index",
                   ))));
 
-  bool isSubscribedValue = true;
   @override
-  Future<bool> isSubscribed(String userId, String channelId) async {
-    Future.delayed(Duration(seconds: 2));
-    return isSubscribedValue;
+  Future<List<Podcast>> getRecentlyPlayed() async {
+    return podcasts;
   }
 
   @override
-  Future<Channel> getChannel(String id) async {
-    Future.delayed(Duration(seconds: 2));
-    return channels[0];
+  Future<List<Channel>> getTopPicks() async {
+    return channels;
   }
 
   @override
-  Future<bool> setSubscription(
-      String userId, String channelId, bool subscriptionStatus) async {
-    isSubscribedValue = subscriptionStatus;
-    return isSubscribedValue;
+  Future<List<Podcast>> getTrending() async {
+    return podcasts;
   }
 }

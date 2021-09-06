@@ -5,6 +5,7 @@ class Channel {
   final String Name;
   final String ImageUrl;
   final int Subscribers;
+  final String Desctiption;
   final List<Podcast> Podcasts;
 
   Channel(
@@ -12,5 +13,6 @@ class Channel {
       required this.ImageUrl,
       required this.Subscribers,
       required this.Id,
+      required this.Desctiption,
       required this.Podcasts});
 }

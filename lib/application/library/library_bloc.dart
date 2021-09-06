@@ -3,43 +3,38 @@ import 'package:podcast_app/application/library/library_events.dart';
 import 'package:podcast_app/application/library/library_states.dart';
 import 'package:podcast_app/models/Podcast.dart';
 
-class LibraryBloc extends Bloc<LibraryEvent, LibraryState>{
+class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
   static List<Podcast> podcasts = [
     Podcast(
-      "NASA Probe Mission", 
-      "There are objects in space and only a few of them are our fault.", 
-      24000, 
-      "https://luan.xyz/files/audio/nasa_on_a_mission.mp3", 
-      "NASA Podcast", 
-      "Unique ID"
-    ),
+        name: "NASA Probe Mission",
+        description:
+            "There are objects in space and only a few of them are our fault.",
+        numberOfListeners: 24000,
+        url: "https://luan.xyz/files/audio/nasa_on_a_mission.mp3",
+        channelName: "NASA Podcast",
+        id: "Unique ID"),
     Podcast(
-      "Probe Mission", 
-      "There are objects are our fault.", 
-      2400, 
-      "https://luan.xyz/files/audio/nasa_on_a_mission.mp3", 
-      "NASA Podcast", 
-      "Unique ID"
-    ),
+        name: "Probe Mission",
+        description: "There are objects are our fault.",
+        numberOfListeners: 2400,
+        url: "https://luan.xyz/files/audio/nasa_on_a_mission.mp3",
+        channelName: "NASA Podcast",
+        id: "Unique ID"),
     Podcast(
-      "NASA Mission", 
-      "There are a few of them are our fault.", 
-      24000, 
-      "https://luan.xyz/files/audio/nasa_on_a_mission.mp3", 
-      "NASA Podcast", 
-      "Unique ID"
-    )
-  ]; 
-  LibraryBloc(): super(
-    LoadingLibraryState()
-  );
-  
+        name: "NASA Mission",
+        description: "There are a few of them are our fault.",
+        numberOfListeners: 24000,
+        url: "https://luan.xyz/files/audio/nasa_on_a_mission.mp3",
+        channelName: "NASA Podcast",
+        id: "Unique ID")
+  ];
+  LibraryBloc() : super(LoadingLibraryState());
+
   @override
   Stream<LibraryState> mapEventToState(LibraryEvent event) async* {
-    if (event is LoadLibraryEvent){
+    if (event is LoadLibraryEvent) {
       await Future.delayed(Duration(seconds: 2));
       yield InitialLibraryState(podcasts);
-    } 
+    }
   }
-  
 }

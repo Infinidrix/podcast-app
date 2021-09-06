@@ -20,11 +20,18 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
     var currentState = this.state;
     print("Got to Download bloc with event: $event");
     if (event is AddToDownloadQueueEvent) {
-      var podcast = await this.downloadedAudioRepository.getPodcastById(event.podcast.id);
+      var podcast =
+          await this.downloadedAudioRepository.getPodcastById(event.podcast.id);
       // TODO: Check if already downloaded
       if (currentState is LoadedDownloadState) {
-        if (podcast != null){
-          yield FailedLoadedDownloadState("Already Downloaded", currentState.podcasts, currentState.currentPodcast, currentState.index, currentState.downloadProgress, core: currentState.core);
+        if (podcast != null) {
+          yield FailedLoadedDownloadState(
+              "Already Downloaded",
+              currentState.podcasts,
+              currentState.currentPodcast,
+              currentState.index,
+              currentState.downloadProgress,
+              core: currentState.core);
         } else if (currentState.core == null) {
           final core = await downloadEpisode(event.podcast);
           // final core = null;
@@ -34,7 +41,7 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
               core: core);
         }
       } else {
-        if (podcast != null){
+        if (podcast != null) {
           yield FailedDownloadState("Already Downloaded");
         } else {
           final core = await downloadEpisode(event.podcast);
@@ -51,10 +58,17 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
             currentState.index,
             currentState.downloadProgress);
       } else {
-        var result = await this.downloadedAudioRepository.getAllDownloadedAudios();
-        var podcasts = result.map((e) => Podcast(e.name, e.description, e.numberOfListeners, e.localFilePath, e.channelName, e.id));
-        yield InitialDownloadState(
-            ListQueue.from(podcasts), null, podcasts.length, DownloadProgress(0, false));
+        var result =
+            await this.downloadedAudioRepository.getAllDownloadedAudios();
+        var podcasts = result.map((e) => Podcast(
+            name: e.name,
+            description: e.description,
+            numberOfListeners: e.numberOfListeners,
+            url: e.localFilePath,
+            channelName: e.channelName,
+            id: e.id));
+        yield InitialDownloadState(ListQueue.from(podcasts), null,
+            podcasts.length, DownloadProgress(0, false));
       }
     } else if (event is UpdateProgressEvent) {
       if (currentState is LoadedDownloadState) {
@@ -111,14 +125,16 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
       if (currentState is LoadedDownloadState) {
         String path = await getDocumentDir();
         DownloadedAudiosCompanion downloadedAudio = DownloadedAudiosCompanion(
-          id: Value(currentState.currentPodcast!.id), 
-          name: Value(currentState.currentPodcast!.name), 
-          url: Value(currentState.currentPodcast!.url), 
-          channelName: Value(currentState.currentPodcast!.channelName), 
-          description: Value(currentState.currentPodcast!.description), 
-          localFilePath: Value('$path/${currentState.currentPodcast!.id}.mp3')
-          );
-        var result = await this.downloadedAudioRepository.addDownloadAudio(downloadedAudio);
+            id: Value(currentState.currentPodcast!.id),
+            name: Value(currentState.currentPodcast!.name),
+            url: Value(currentState.currentPodcast!.url),
+            channelName: Value(currentState.currentPodcast!.channelName),
+            description: Value(currentState.currentPodcast!.description),
+            localFilePath:
+                Value('$path/${currentState.currentPodcast!.id}.mp3'));
+        var result = await this
+            .downloadedAudioRepository
+            .addDownloadAudio(downloadedAudio);
         currentState.index++;
         if (currentState.index < currentState.podcasts.length) {
           currentState.currentPodcast =
@@ -143,8 +159,7 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
   Future<DownloaderCore> downloadEpisode(Podcast currentPodcast) async {
     String path = await getDocumentDir();
     DownloaderUtils options = DownloaderUtils(
-      progressCallback: (current, total)
-      {
+      progressCallback: (current, total) {
         this.add(UpdateProgressEvent(current, total));
       },
       file: File('$path/${currentPodcast.id}.mp3'),

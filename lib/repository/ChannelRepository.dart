@@ -34,7 +34,7 @@ class ChannelRepository implements IChannelRepository {
   Future<Either<String, Channel>> createChannel(
       {required String Name,
       required String Description,
-      required String ImageURL}) async {
+      required dynamic ImageURL}) async {
     final channel =
         CreateChannel(Description: Description, Name: Name, Url: ImageURL);
         

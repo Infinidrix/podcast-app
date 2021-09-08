@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:podcast_app/application/home_page/home_page_bloc.dart';
-import 'package:podcast_app/application/home_page/home_page_event.dart';
 import 'package:podcast_app/application/home_page/home_page_state.dart';
-import 'package:podcast_app/presentation/pages/home/widgets/top_picks.dart';
-
 import 'package:podcast_app/presentation/pages/home/widgets/audio_card.dart';
+import 'package:podcast_app/presentation/pages/home/widgets/top_picks.dart';
 
 class HomeWidget extends StatelessWidget {
   const HomeWidget({Key? key}) : super(key: key);

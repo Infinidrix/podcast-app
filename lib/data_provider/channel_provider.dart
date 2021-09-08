@@ -23,7 +23,10 @@ class ChannelPorvider implements IChannelProvider {
       Subscribers: 12335245,
       Id: "1",
       Description: "This is some description about the channel",
-      Podcasts: List.generate(10, (index) => Podcast(id: "",channelName: "",description: "",name: "",url: "")));
+      Podcasts: List.generate(
+          10,
+          (index) => Podcast(
+              id: "", channelName: "", description: "", name: "", url: "")));
 
   List<Podcast> podcasts = List.generate(
       5,
@@ -108,7 +111,5 @@ class ChannelPorvider implements IChannelProvider {
         Subscribers: 0,
         Id: "Id",
         Description: "Description"));
-
-        
   }
 }

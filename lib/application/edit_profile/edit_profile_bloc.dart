@@ -44,6 +44,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
         ? UserEditProfile.fromJson(jsonDecode(userInfo))
         : temp;
     print("in edit profile bloc ${userInfo}");
+    final XFile? pickedImage;
     final _picker = ImagePicker();
     yield InitialEditProfileState(user: va, isShown: true);
 
@@ -56,7 +57,6 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
       print("profile ${va.ProfilePicture}");
       print("profile ${va.UserName}");
       print("profile ${va.Email}");
-
       if (va.Email == event.Email) {
         yield SuccesEditProfileState(user: va);
       } else {
@@ -79,7 +79,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
       yield RequestToChangeProfileImageState(user: va);
     } else if (event is OpenImagePickerEvent) {
       yield InitialEditProfileState(user: va, isShown: true);
-      final pickedImage = await _picker.getImage(source: event.imageSource);
+      pickedImage = await _picker.pickImage(source: event.imageSource);
       if (pickedImage == null) {
         yield ErrorStateEditProfileState(
             ErrorMessage: "ErrorMessage", user: va);

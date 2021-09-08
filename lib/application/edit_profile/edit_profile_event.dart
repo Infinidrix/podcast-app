@@ -26,6 +26,5 @@ class ChangeProfileImageButtonPressed extends EditProfileEvent {}
 
 class OpenImagePickerEvent extends EditProfileEvent {
   final ImageSource imageSource;
-
   OpenImagePickerEvent({required this.imageSource});
 }

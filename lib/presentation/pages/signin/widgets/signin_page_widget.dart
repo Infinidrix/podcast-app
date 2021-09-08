@@ -114,7 +114,7 @@ class SigninWidget extends StatelessWidget {
             ));
           }
           if (loginState is LoginSuccessState) {
-            context.router.replace(EditProfileRoute());
+            context.router.replace(HomeRoute());
           }
         },
         builder: (_, loginState) {

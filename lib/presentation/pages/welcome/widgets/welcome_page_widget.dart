@@ -15,7 +15,7 @@ class WelcomeWidget extends StatelessWidget {
       listener: (context, state) {
         // TODO: implement listener
         if (state is HaveUserCredWellcomeState) {
-          context.router.replace(EditProfileRoute());
+          context.router.replace(HomeRoute());
         }
       },
       builder: (context, state) {

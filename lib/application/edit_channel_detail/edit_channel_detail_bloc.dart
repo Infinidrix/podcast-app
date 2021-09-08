@@ -6,16 +6,31 @@ import 'package:podcast_app/repository/Ichannel_repository.dart';
 class EditChannelDetailBloc
     extends Bloc<EditChannelDetailEvent, EditChannelDetailState> {
   IChannelRepository channelRepository;
-  EditChannelDetailBloc({required this.channelRepository}):super(EditChannelDetailInitialState());
+  EditChannelDetailBloc({required this.channelRepository})
+      : super(EditChannelDetailInitialState());
 
   @override
-  Stream<EditChannelDetailState> mapEventToState(EditChannelDetailEvent event) async*{
+  Stream<EditChannelDetailState> mapEventToState(
+      EditChannelDetailEvent event) async* {
     if (event is EditChannelChangeImageButtonPressedEvent) {
       yield EditChannelDetailImageUploadedState(Image: event.Image);
-    }
-
-    else if (event is EditChannelDetailSaveEvent) {
+    } else if (event is EditChannelDetailSaveEvent) {
       yield EditChannelDetailLoadingState();
 
+      try {
+        final ChannelOrError = await channelRepository.editChannel(
+            Name: event.Name,
+            Description: event.Description,
+            ImageURL: event.Image);
+        print(ChannelOrError);
+        yield* ChannelOrError.fold((ErrorMessage) async* {
+          yield EditChannelDetailFailedState(ErrorMessage: ErrorMessage);
+        }, (channel) async* {
+          yield EditChannelDetailSuccessState();
+        });
+      } catch (e) {
+        print("object");
+      }
+    }
   }
 }

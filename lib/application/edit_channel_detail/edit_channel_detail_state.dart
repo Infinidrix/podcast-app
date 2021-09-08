@@ -11,4 +11,8 @@ class EditChannelDetailImageUploadedState extends EditChannelDetailState {
   EditChannelDetailImageUploadedState({required this.Image});
 }
 
-class EditChannelDetailFailedState extends EditChannelDetailState {}
+class EditChannelDetailFailedState extends EditChannelDetailState {
+  final String ErrorMessage;
+
+  EditChannelDetailFailedState({required this.ErrorMessage});
+}

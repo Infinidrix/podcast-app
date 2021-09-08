@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:podcast_app/application/audio_player/audio_player_bloc.dart';
 import 'package:podcast_app/application/channel_description/channel_description_bloc.dart';
 import 'package:podcast_app/application/create_channel/create_channel_bloc.dart';
+import 'package:podcast_app/application/edit_channel_detail/edit_channel_detail_bloc.dart';
 import 'package:podcast_app/application/home_page/home_page_bloc.dart';
 import 'package:podcast_app/application/home_page/home_page_event.dart';
 import 'package:podcast_app/application/search/search_bloc.dart';
@@ -88,6 +89,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) =>
               ChannelDescriptionBloc(channelRepository: channelRepository),
+        ),
+        BlocProvider(
+          create: (_) =>
+              EditChannelDetailBloc(channelRepository: channelRepository),
         ),
         BlocProvider(
             create: (_) => HomePageBloc(repository: homePageRepository)

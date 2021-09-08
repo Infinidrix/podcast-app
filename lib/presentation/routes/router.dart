@@ -28,14 +28,14 @@ import 'package:podcast_app/presentation/pages/create_podcast/create_podcast.dar
     AutoRoute(page: ChannelDetailPage, path: '/channel'),
     AutoRoute(page: CreateChannelPage, path: '/create'),
     AutoRoute(page: PlayerPage, path: '/player'),
-    AutoRoute(page: YourChannelsPage, path: '/your_channels'),
+    AutoRoute(page: YourChannelsPage, path: '/your_channels',initial: true),
     AutoRoute(page: EditProfilePage, path: '/edit_profile'),
     AutoRoute(page: CreatePodcastPage, path: '/add_podcast'),
     AutoRoute(page: RecorderPage, path: 'record'),
     AutoRoute(page: EditChannelDetailPage, path: '/edit_channel_detail_page'),
     AutoRoute(
       page: EditChannelPage,
-      path: '/edit_channel',initial: true
+      path: '/edit_channel'
     ),
     AutoRoute(page: SearchPage, path: '/search'),
     AutoRoute(page: LibraryDownloadSubTabMenuPage, path: "/library")

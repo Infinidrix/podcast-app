@@ -13,7 +13,7 @@ class EditChannelDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: EditChannelDetailWidget(Name: Name, Description: Description, Image: Image),
+      body: EditChannelDetailWidget(Name: Name, Description: Description, ChannelImage: Image),
       bottomNavigationBar: getBottomNavBar(context),
     );
   }

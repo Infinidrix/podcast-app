@@ -13,10 +13,12 @@ import 'package:hexcolor/hexcolor.dart';
 class EditChannelDetailWidget extends StatelessWidget {
   final String Name;
   final String Description;
-  dynamic Image;
+  dynamic ChannelImage;
 
   EditChannelDetailWidget(
-      {required this.Name, required this.Description, required this.Image});
+      {required this.Name,
+      required this.Description,
+      required this.ChannelImage});
 
   final _formKey = GlobalKey<FormState>();
   var nameTextController = TextEditingController();
@@ -122,8 +124,8 @@ class EditChannelDetailWidget extends StatelessWidget {
                                   )
                                 : CircleAvatar(
                                     radius: 500,
-                                    backgroundImage: FileImage(File(Image)),
-                                  );
+                                    backgroundImage: AssetImage(ChannelImage));
+                            
                           },
                         ),
                       ),

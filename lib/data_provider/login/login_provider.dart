@@ -64,8 +64,8 @@ class LoginProvider implements ILoginProvider {
         return left("Can not connect to internet");
       }
       return left("Some Error Happened");
-    } catch (e) {
-      return left("Can not connect to internet ${e.runtimeType}");
+    } on CastError catch (e) {
+      return left("Can not connect to internet ${e.runtimeType} add ${e}");
     }
   }
 

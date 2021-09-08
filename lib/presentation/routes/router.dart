@@ -32,10 +32,10 @@ import 'package:podcast_app/presentation/pages/create_podcast/create_podcast.dar
     AutoRoute(page: EditProfilePage, path: '/edit_profile'),
     AutoRoute(page: CreatePodcastPage, path: '/add_podcast'),
     AutoRoute(page: RecorderPage, path: 'record'),
-    AutoRoute(page: EditChannelDetailPage, path: '/edit_channel_detail_page', initial: true),
+    AutoRoute(page: EditChannelDetailPage, path: '/edit_channel_detail_page'),
     AutoRoute(
       page: EditChannelPage,
-      path: '/edit_channel',
+      path: '/edit_channel',initial: true
     ),
     AutoRoute(page: SearchPage, path: '/search'),
     AutoRoute(page: LibraryDownloadSubTabMenuPage, path: "/library")

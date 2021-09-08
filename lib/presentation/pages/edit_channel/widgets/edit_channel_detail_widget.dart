@@ -17,12 +17,12 @@ class EditChannelDetailWidget extends StatelessWidget {
 
   EditChannelDetailWidget(
       {required this.Name, required this.Description, required this.Image});
-      
+
   final _formKey = GlobalKey<FormState>();
-  final nameTextController = TextEditingController();
-  final descriptionTextController = TextEditingController();
-  final imageController = TextEditingController();
-  final ImagePicker? _image = ImagePicker();
+  var nameTextController = TextEditingController();
+  var descriptionTextController = TextEditingController();
+  ImagePicker? _image = ImagePicker();
+
   Widget getFormField(Icon icon, int lineCount, String hint,
       TextEditingController textEditingController) {
     return Padding(
@@ -67,6 +67,9 @@ class EditChannelDetailWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final channelBloc = BlocProvider.of<CreateChannelBloc>(context);
+    nameTextController.text = Name;
+    descriptionTextController.text = Description;
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -118,11 +121,17 @@ class EditChannelDetailWidget extends StatelessWidget {
                                         File(createChannelState.image.path)),
                                   )
                                 : CircleAvatar(
-                                    backgroundColor: Colors.blue,
                                     radius: 500,
+                                    backgroundImage: FileImage(File(Image)),
                                   );
                           },
                         ),
+                      ),
+                    ),
+                    Center(
+                      child: Text(
+                        "Cover Photo",
+                        style: TextStyle(color: Colors.grey),
                       ),
                     ),
                     Padding(
@@ -143,10 +152,6 @@ class EditChannelDetailWidget extends StatelessWidget {
                         3,
                         "Description of the channel",
                         descriptionTextController),
-                    Text(
-                      "Cover Photo",
-                      style: TextStyle(color: Colors.grey),
-                    ),
                     saveButton(context, channelBloc, createchannelstate),
                   ],
                 ),

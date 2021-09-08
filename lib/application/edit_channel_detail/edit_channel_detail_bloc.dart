@@ -14,6 +14,8 @@ class EditChannelDetailBloc
       yield EditChannelDetailImageUploadedState(Image: event.Image);
     }
 
-    
+    else if (event is EditChannelDetailSaveEvent) {
+      yield EditChannelDetailLoadingState();
+
   }
 }

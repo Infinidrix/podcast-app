@@ -2,23 +2,27 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
 import 'package:podcast_app/application/audio_player/audio_player_bloc.dart';
 import 'package:podcast_app/application/channel_description/channel_description_bloc.dart';
 import 'package:podcast_app/application/create_channel/create_channel_bloc.dart';
 import 'package:podcast_app/application/home_page/home_page_bloc.dart';
 import 'package:podcast_app/application/home_page/home_page_event.dart';
+import 'package:podcast_app/application/library/library_bloc.dart';
+import 'package:podcast_app/application/library/library_events.dart';
 import 'package:podcast_app/application/search/search_bloc.dart';
 import 'package:podcast_app/application/search/search_event.dart';
 import 'package:podcast_app/application/your_channels/your_channel_bloc.dart';
 import 'package:podcast_app/application/your_channels/your_channel_event.dart';
 import 'package:podcast_app/data_provider/channel_provider.dart';
 import 'package:podcast_app/data_provider/home_page_provider/Home_provider.dart';
+import 'package:podcast_app/data_provider/library_provider/library_provider.dart';
 import 'package:podcast_app/data_provider/search_page_provider/Search_provider.dart';
 import 'package:podcast_app/data_provider/search_page_provider/local_search_provider..dart';
+import 'package:podcast_app/data_provider/subscription_provider/SubscriptionProvider.dart';
 import 'package:podcast_app/data_provider/your_channel_provider/YourChannel_provider.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 import 'package:podcast_app/repository/home_page_repository/HomePageRepository.dart';
+import 'package:podcast_app/repository/library_repository/library_repository.dart';
 import 'package:podcast_app/repository/search_repository/SearchRepository.dart';
 import 'package:podcast_app/application/create_podcast/create_podcast_application.dart';
 import 'package:podcast_app/application/download/download_bloc.dart';
@@ -43,6 +47,7 @@ import 'package:podcast_app/repository/downloaded_audio_repository/download_audi
 import 'package:podcast_app/repository/edit_profile_repository/edit_profile_repository.dart';
 import 'package:podcast_app/repository/login_repository.dart';
 import 'package:podcast_app/repository/signup%20repository/SignupRepository.dart';
+import 'package:podcast_app/repository/subscription_repository/SubscriptionRepository.dart';
 import 'package:podcast_app/repository/your_channel_repository/YourChannelRepository.dart';
 
 class MyApp extends StatelessWidget {
@@ -64,6 +69,11 @@ class MyApp extends StatelessWidget {
         httpClient: http.Client(),
       ),
     );
+    final subscriptionRepository = SubscriptionRepository(
+        apiProvider: OnlineSubscriptionProvider(http.Client()));
+    final libraryRepository = LibraryRepository(
+        apiLibraryProvider: LibraryProviderOnline(httpClient: http.Client()));
+
     final signupRepository = SignupRepository(
       signupProvider: SignupProvider(
         httpClient: http.Client(),
@@ -117,11 +127,16 @@ class MyApp extends StatelessWidget {
             ..add(LoadInitialDownloadEvent()),
         ),
         BlocProvider(
-            create: (_) =>
-                SubscriptionBloc()..add(LoadInitialSubscriptionEvent())),
-                BlocProvider(
+          create: (_) => SubscriptionBloc(subscriptionRepository)
+            ..add(LoadInitialSubscriptionEvent()),
+        ),
+        BlocProvider(
             create: (_) =>
                 CreateChannelBloc(channelRepository: channelRepository)),
+        BlocProvider(
+          create: (_) =>
+              LibraryBloc(libraryRepository)..add(LoadLibraryEvent()),
+        ),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

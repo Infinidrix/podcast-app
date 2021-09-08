@@ -1,5 +1,10 @@
+import 'package:json_annotation/json_annotation.dart';
+
 import 'Podcast.dart';
 
+part 'Channel.g.dart';
+
+@JsonSerializable()
 class Channel {
   final String Id;
   final String Name;
@@ -15,4 +20,7 @@ class Channel {
       required this.Id,
       required this.Desctiption,
       required this.Podcasts});
+
+  factory Channel.fromJson(Map<String, dynamic> json) => _$ChannelFromJson(json);
+  Map<String, dynamic> toJson() => _$ChannelToJson(this);
 }

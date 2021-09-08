@@ -8,6 +8,7 @@ class AudioProvider implements IAudioProvider {
     });
   }
 
+  // TODO: remove this, it's probably useless
   Future<Null> downloadPodcast(String id) async {
     await Future.delayed(Duration(seconds: 25), () {
       print("downloaded audio");

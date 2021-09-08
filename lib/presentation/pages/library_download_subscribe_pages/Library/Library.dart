@@ -30,25 +30,22 @@ class LibraryPage extends StatelessWidget {
                   children: <Widget>[
                     FirstRowLibrary()
                     ,
-                    BlocProvider(
-                      create: (context) => LibraryBloc()..add(LoadLibraryEvent()),
-                      child: Expanded(
-                          flex: 15,
-                          child: BlocBuilder<LibraryBloc, LibraryState>(
-                            builder: (_, state) {
-                              if (state is InitialLibraryState){
-                                return ListView.builder(
-                                  itemBuilder: (_, i) => LibraryCard(podcast: state.podcasts[i]),
-                                  itemCount: state.podcasts.length,
-                                );
-                              } else{
-                                return Center(child: CircularProgressIndicator());
-                              }
-                              
-                            }
-                          )
-                      ),
-                    )
+                    Expanded(
+                      flex: 15,
+                      child: BlocBuilder<LibraryBloc, LibraryState>(
+                        builder: (_, state) {
+                          if (state is InitialLibraryState){
+                            return ListView.builder(
+                              itemBuilder: (_, i) => LibraryCard(podcast: state.podcasts[i]),
+                              itemCount: state.podcasts.length,
+                            );
+                          } else{
+                            return Center(child: CircularProgressIndicator());
+                          }
+                          
+                        }
+                      )
+                    ),
                   ],
                 ),
               )),

@@ -1,6 +1,13 @@
+import 'dart:core';
+
+import 'package:json_annotation/json_annotation.dart';
+
+part 'Podcast.g.dart';
+
+@JsonSerializable()
 class Podcast {
   final String name;
-  final String url;
+  String url;
   final String? imageUrl;
   final String id;
   final int? numberOfListeners;
@@ -15,4 +22,8 @@ class Podcast {
       this.numberOfListeners,
       required this.channelName,
       required this.description});
+
+  factory Podcast.fromJson(Map<String, dynamic> json) =>
+      _$PodcastFromJson(json);
+  Map<String, dynamic> toJson() => _$PodcastToJson(this);
 }

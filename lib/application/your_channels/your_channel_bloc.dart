@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:podcast_app/application/your_channels/your_channel_event.dart';
 import 'package:podcast_app/application/your_channels/your_channel_state.dart';
 
-import 'package:podcast_app/models/Channel.dart';
+import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/repository/your_channel_repository/IYourChannelRepository.dart';
 
 class YourChannelBloc extends Bloc<YourChannelEvent, YourChannelState> {

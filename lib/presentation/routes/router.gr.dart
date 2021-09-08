@@ -10,7 +10,7 @@ import 'package:flutter/material.dart' as _i2;
 import '../pages/channel_detail/channel_detail_page.dart' as _i7;
 import '../pages/create_channel/create_channel_page.dart' as _i8;
 import '../pages/create_podcast/create_podcast.dart' as _i12;
-import '../pages/edit_channel/edit_channel_page.dart' as _i14;
+import '../pages/edit_channel2/edit_channel_page.dart' as _i14;
 import '../pages/edit_profile/profile_page.dart' as _i11;
 import '../pages/home/home_page.dart' as _i6;
 import '../pages/library_download_subscribe_pages/LibDownSubTabMenuPage.dart'
@@ -113,7 +113,7 @@ class RootRouter extends _i1.RootStackRouter {
   @override
   List<_i1.RouteConfig> get routes => [
         _i1.RouteConfig('/#redirect',
-            path: '/', redirectTo: '/search', fullMatch: true),
+            path: '/', redirectTo: '/create', fullMatch: true),
         _i1.RouteConfig(WelcomeRoute.name, path: '/welcome'),
         _i1.RouteConfig(SigninRoute.name, path: '/signin'),
         _i1.RouteConfig(SignupRoute.name, path: '/signup'),

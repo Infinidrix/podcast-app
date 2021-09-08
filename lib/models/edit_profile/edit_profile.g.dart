@@ -8,12 +8,12 @@ part of 'edit_profile.dart';
 
 UserEditProfile _$UserEditProfileFromJson(Map<String, dynamic> json) {
   return UserEditProfile(
-    ProfilePicture: json['ProfilePicture'].toString(),
-    UserName: json['UserName'].toString(),
-    Email: json['Email'].toString(),
-    Password: json['Password'].toString(),
-    FirsName: json['FirsName'].toString(),
-    LastName: json['LastName'].toString(),
+    ProfilePicture: json['ProfilePicture'] as String,
+    UserName: json['UserName'] as String,
+    Email: json['Email'] as String,
+    Password: json['Password'] as String,
+    FirsName: json['FirsName'] as String,
+    LastName: json['LastName'] as String,
   );
 }
 

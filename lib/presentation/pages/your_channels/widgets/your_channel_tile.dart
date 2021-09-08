@@ -4,7 +4,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:podcast_app/application/channel_description/channel_description_bloc.dart';
 import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:podcast_app/presentation/pages/edit_channel/edit_channel_page.dart';
+import 'package:podcast_app/presentation/pages/edit_channel2/edit_channel_page.dart';
 
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 

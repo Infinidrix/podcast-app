@@ -182,6 +182,9 @@ class CreateChannelWidget extends StatelessWidget {
                   ImageURL: createChannelState is OnImageUploadedState
                       ? createChannelState.image
                       : ""));
+              if (createChannelState is OnImageUploadedState)
+                print(createChannelState.image);
+              context.router.push(YourChannelsRoute());
             } else {
               print("Error");
             }

@@ -4,25 +4,31 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:podcast_app/application/edit_profile/edit_profile_bloc.dart';
+import 'package:podcast_app/models/edit_profile/edit_profile.dart';
 import 'package:podcast_app/presentation/core/constants.dart';
 
-class EditProfileWidget extends StatefulWidget {
-  const EditProfileWidget({Key? key}) : super(key: key);
+// class EditProfileWidget extends StatefulWidget {
+//   EditProfileWidget({Key? key,required this.user}) : super(key: key);
+//   UserEditProfile user;
+//   @override
+//   _EditProfileWidgetState createState() => _EditProfileWidgetState();
+// }
 
-  @override
-  _EditProfileWidgetState createState() => _EditProfileWidgetState();
-}
-
-class _EditProfileWidgetState extends State<EditProfileWidget> {
+class EditProfileWidget extends StatelessWidget {
+  EditProfileWidget({Key? key, required this.user}) : super(key: key);
+  UserEditProfile user;
   @override
   Widget build(BuildContext context) {
+    TextEditingController _userNameController =
+        TextEditingController(text: "Set My Text Here");
+
     final editProfileBloc = BlocProvider.of<EditProfileBloc>(context);
     editProfileBloc.add(IntitalEditProfileEvent());
     final _formKey = GlobalKey<FormState>();
     final editBloc = BlocProvider.of<EditProfileBloc>(context);
-    late String _email = '';
-    late String _userName = '';
-    late String _password = '';
+    late String _email = user.Email;
+    late String _userName = user.UserName;
+    late String _password = user.Password;
     bool _isPasswordObsecure = true;
 
     Widget username() {
@@ -49,10 +55,11 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
     }
 
     Widget emailInput(EditProfileState state) {
+      _userNameController = TextEditingController(text: state.user.UserName);
       return Padding(
         padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 45.0),
         child: TextFormField(
-            initialValue: state.user.Email,
+            initialValue: _email,
             style: TextStyle(color: Colors.white),
             decoration: textfieldDecoration,
             validator: (value) {
@@ -260,6 +267,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
           child: Center(
             child: CircleAvatar(
               radius: 60,
+              backgroundImage: AssetImage(state.user.ProfilePicture),
               // backgroundImage: (state is InitialEditProfileState)
               //     ? AssetImage(state.user.ProfilePicture)
               //     : AssetImage("assets/images/welcome.png"),

@@ -2,8 +2,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:podcast_app/application/library/library_events.dart';
 import 'package:podcast_app/application/library/library_states.dart';
 import 'package:podcast_app/models/Podcast.dart';
+import 'package:podcast_app/repository/library_repository/Ilibrary_repository.dart';
 
 class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
+  final ILibraryRepository libraryRepository;
   static List<Podcast> podcasts = [
     Podcast(
         name: "NASA Probe Mission",
@@ -28,13 +30,17 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
         channelName: "NASA Podcast",
         id: "Unique ID")
   ];
-  LibraryBloc() : super(LoadingLibraryState());
+  LibraryBloc(this.libraryRepository) : super(LoadingLibraryState());
 
   @override
   Stream<LibraryState> mapEventToState(LibraryEvent event) async* {
     if (event is LoadLibraryEvent) {
-      await Future.delayed(Duration(seconds: 2));
-      yield InitialLibraryState(podcasts);
+      try {
+        final result = await libraryRepository.getRecentPodcasts("userId");
+        yield InitialLibraryState(result);
+      } on Exception catch(e){
+        yield FailedLibraryState(e.toString());
+      }
     }
   }
 }

@@ -1,5 +1,5 @@
 import 'package:podcast_app/data_provider/subscription_provider/ISubscriptionProvider.dart';
-import 'package:podcast_app/models/Channel.dart';
+import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/repository/subscription_repository/ISubscriptionRepository.dart';
 
 class SubscriptionRepository extends ISubscriptionRepository {

@@ -1,4 +1,4 @@
-import 'package:podcast_app/models/Channel.dart';
+import 'package:podcast_app/models/channel/Channel.dart';
 
 abstract class ISubscriptionRepository {
   Future<List<Channel>> getSubscribedChannels(String userId);

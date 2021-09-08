@@ -41,4 +41,16 @@ class ChannelRepository implements IChannelRepository {
     return await channelProvider.createChannel(
         createChannelInfo: channel.toJson());
   }
+
+  Future<Either<String, Channel>> editChannel(
+      {required String Name,
+      required String Description,
+      required dynamic ImageURL}) async {
+    final channel =
+        CreateChannel(Description: Description, Name: Name, Url: ImageURL);
+        
+
+    return await channelProvider.editChannel(
+        editChannelInfo: channel.toJson());
+  }
 }

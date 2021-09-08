@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:podcast_app/presentation/pages/edit_channel/edit_channel.dart';
+import 'package:podcast_app/presentation/routes/router.gr.dart';
 
 class EditChannelSliverAppBar extends StatelessWidget {
   const EditChannelSliverAppBar({Key? key}) : super(key: key);
@@ -23,7 +26,8 @@ class EditChannelSliverAppBar extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              Icon(Icons.edit_outlined),
+              GestureDetector(onTap: () => context.router.push(EditChannelDetailRoute(Name: "Hanan", Description: "Description", Image: "")),
+                child: Icon(Icons.edit_outlined)),
             ],
           ),
         ),

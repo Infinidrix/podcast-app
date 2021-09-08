@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:podcast_app/presentation/pages/edit_channel/widgets/recently_uploaded_podcast_tile.dart';
+import 'package:podcast_app/presentation/pages/edit_channel2/widgets/recently_uploaded_podcast_tile.dart';
 
 class RecentlyUploadedPodcastsList extends StatelessWidget {
   const RecentlyUploadedPodcastsList({

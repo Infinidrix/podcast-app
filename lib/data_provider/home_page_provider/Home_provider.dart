@@ -8,7 +8,8 @@ class HomeProvider implements IHomeProvider {
       (index) => Podcast(
             name: "Podcast $index",
             numberOfListeners: 0,
-            url: "",
+            url:
+                "http://192.168.43.110:44343/api/Users/b7d27747-e66f-403d-8bcb-2125656ccb53/Audios/4335478d-dd31-4e00-bdbf-60a2986ad1c0/download.mp3",
             description: "",
             channelName: "",
             imageUrl: "assets/images/placeholder.jpg",

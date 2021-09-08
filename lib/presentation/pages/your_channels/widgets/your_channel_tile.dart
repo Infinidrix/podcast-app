@@ -63,7 +63,7 @@ class YourChannelTile extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.edit_outlined),
                   onPressed: () {
-                    context.router.push(EditChannelRoute());
+                    context.router.push(EditChannelDetailRoute(Name: channel.Name, Description: channel.Description, Image: channel.ImageUrl));
                   },
                   color: Colors.white,
                 )

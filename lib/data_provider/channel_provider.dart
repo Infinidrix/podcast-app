@@ -2,7 +2,7 @@ import 'package:podcast_app/data_provider/Ichannel_provider.dart';
 import 'package:podcast_app/models/Channel.dart';
 import 'package:podcast_app/models/Podcast.dart';
 
-class ChannelPorvider implements IChannelProvider {
+class ChannelProvider implements IChannelProvider {
   List<Podcast> podcasts = List.generate(
       5,
       (index) => Podcast(

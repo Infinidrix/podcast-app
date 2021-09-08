@@ -2,8 +2,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:podcast_app/application/subscription/subscription_events.dart';
 import 'package:podcast_app/application/subscription/subscription_states.dart';
 import 'package:podcast_app/models/Channel.dart';
+import 'package:podcast_app/repository/library_repository/library_repository.dart';
+import 'package:podcast_app/repository/subscription_repository/ISubscriptionRepository.dart';
 
 class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
+  final ISubscriptionRepository subscriptionRepository;
   static List<Channel> channels = [
     Channel(
         Name: "The Nasa Channel",
@@ -28,18 +31,22 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
         Podcasts: []),
   ];
 
-  SubscriptionBloc() : super(LoadingSubscriptionState());
+  SubscriptionBloc(this.subscriptionRepository)
+      : super(LoadingSubscriptionState());
 
   @override
   Stream<SubscriptionState> mapEventToState(SubscriptionEvent event) async* {
     if (event is LoadInitialSubscriptionEvent) {
       yield LoadingSubscriptionState();
-      await Future.delayed(Duration(seconds: 2));
-      yield InitialSubscriptionState(channels);
+      try {
+        List<Channel> subscriptionChannels =
+            await subscriptionRepository.getSubscribedChannels("userId");
+        yield InitialSubscriptionState(subscriptionChannels);
+      } catch (e) {
+        yield FailedSubscriptionState(e.toString());
+      }
     } else if (event is UnsubscribeEvent) {
-      yield LoadingSubscriptionState();
-      await Future.delayed(Duration(seconds: 2));
-      yield InitialSubscriptionState(channels);
+      throw UnimplementedError();
     }
   }
 }

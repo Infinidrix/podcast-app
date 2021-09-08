@@ -10,14 +10,15 @@ import 'package:flutter/material.dart' as _i2;
 import '../pages/channel_detail/channel_detail_page.dart' as _i7;
 import '../pages/create_channel/create_channel_page.dart' as _i8;
 import '../pages/create_podcast/create_podcast.dart' as _i12;
-import '../pages/edit_channel2/edit_channel_page.dart' as _i14;
+import '../pages/edit_channel/edit_channel.dart' as _i14;
+import '../pages/edit_channel2/edit_channel_page.dart' as _i15;
 import '../pages/edit_profile/profile_page.dart' as _i11;
 import '../pages/home/home_page.dart' as _i6;
 import '../pages/library_download_subscribe_pages/LibDownSubTabMenuPage.dart'
-    as _i16;
+    as _i17;
 import '../pages/player/player_page.dart' as _i9;
 import '../pages/recorder/recorder_page.dart' as _i13;
-import '../pages/search/search_page.dart' as _i15;
+import '../pages/search/search_page.dart' as _i16;
 import '../pages/signin/signin_page.dart' as _i4;
 import '../pages/signup/signup.dart' as _i5;
 import '../pages/welcome/welcome_page.dart' as _i3;
@@ -92,28 +93,39 @@ class RootRouter extends _i1.RootStackRouter {
         builder: (_) {
           return const _i13.RecorderPage();
         }),
+    EditChannelDetailRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
+        routeData: routeData,
+        builder: (data) {
+          final args = data.argsAs<EditChannelDetailRouteArgs>();
+          return _i14.EditChannelDetailPage(
+              Name: args.Name,
+              Description: args.Description,
+              Image: args.Image);
+        }),
     EditChannelRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return const _i14.EditChannelPage();
+          return const _i15.EditChannelPage();
         }),
     SearchRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return _i15.SearchPage();
+          return _i16.SearchPage();
         }),
     LibraryDownloadSubTabMenuRoute.name: (routeData) =>
         _i1.MaterialPageX<dynamic>(
             routeData: routeData,
             builder: (_) {
-              return const _i16.LibraryDownloadSubTabMenuPage();
+              return const _i17.LibraryDownloadSubTabMenuPage();
             })
   };
 
   @override
   List<_i1.RouteConfig> get routes => [
         _i1.RouteConfig('/#redirect',
-            path: '/', redirectTo: '/create', fullMatch: true),
+            path: '/',
+            redirectTo: '/edit_channel_detail_page',
+            fullMatch: true),
         _i1.RouteConfig(WelcomeRoute.name, path: '/welcome'),
         _i1.RouteConfig(SigninRoute.name, path: '/signin'),
         _i1.RouteConfig(SignupRoute.name, path: '/signup'),
@@ -125,6 +137,8 @@ class RootRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(EditProfileRoute.name, path: '/edit_profile'),
         _i1.RouteConfig(CreatePodcastRoute.name, path: '/add_podcast'),
         _i1.RouteConfig(RecorderRoute.name, path: 'record'),
+        _i1.RouteConfig(EditChannelDetailRoute.name,
+            path: '/edit_channel_detail_page'),
         _i1.RouteConfig(EditChannelRoute.name, path: '/edit_channel'),
         _i1.RouteConfig(SearchRoute.name, path: '/search'),
         _i1.RouteConfig(LibraryDownloadSubTabMenuRoute.name, path: '/library')
@@ -224,6 +238,31 @@ class RecorderRoute extends _i1.PageRouteInfo {
   const RecorderRoute() : super(name, path: 'record');
 
   static const String name = 'RecorderRoute';
+}
+
+class EditChannelDetailRoute
+    extends _i1.PageRouteInfo<EditChannelDetailRouteArgs> {
+  EditChannelDetailRoute(
+      {required String Name,
+      required String Description,
+      required dynamic Image})
+      : super(name,
+            path: '/edit_channel_detail_page',
+            args: EditChannelDetailRouteArgs(
+                Name: Name, Description: Description, Image: Image));
+
+  static const String name = 'EditChannelDetailRoute';
+}
+
+class EditChannelDetailRouteArgs {
+  const EditChannelDetailRouteArgs(
+      {required this.Name, required this.Description, required this.Image});
+
+  final String Name;
+
+  final String Description;
+
+  final dynamic Image;
 }
 
 class EditChannelRoute extends _i1.PageRouteInfo {

@@ -24,16 +24,22 @@ class Subscribed extends StatelessWidget {
               color: mainBackGroundColor,
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 10, 16, 0),
-                child: BlocBuilder<SubscriptionBloc, SubscriptionState>(
+                child: BlocConsumer<SubscriptionBloc, SubscriptionState>(
                     builder: (context, state) {
                   if (state is InitialSubscriptionState) {
+                    if (state.channels.length == 0) {
+                      return Center(
+                          child: Text("You have no subscribed channels"));
+                    }
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Expanded(
                             flex: 15,
                             child: ListView.builder(
-                              itemBuilder: (context, index) => SubscribedCard(channel: state.channels[index],),
+                              itemBuilder: (context, index) => SubscribedCard(
+                                channel: state.channels[index],
+                              ),
                               itemCount: state.channels.length,
                             ))
                       ],
@@ -42,6 +48,13 @@ class Subscribed extends StatelessWidget {
                     return Center(
                       child: CircularProgressIndicator(),
                     );
+                  }
+                }, listener: (context, state) {
+                  if (state is FailedSubscriptionState) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("${state.errorMessage}"),
+                      duration: Duration(seconds: 2),
+                    ));
                   }
                 }),
               )),

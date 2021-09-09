@@ -45,12 +45,13 @@ class ChannelRepository implements IChannelRepository {
   Future<Either<String, Channel>> editChannel(
       {required String Name,
       required String Description,
-      required dynamic ImageURL}) async {
+      required dynamic ImageURL,
+      required String ChannelID}) async {
     final channel =
         CreateChannel(Description: Description, Name: Name, Url: ImageURL);
         
 
     return await channelProvider.editChannel(
-        editChannelInfo: channel.toJson());
+        editChannelInfo: channel.toJson(), ChannelID: ChannelID);
   }
 }

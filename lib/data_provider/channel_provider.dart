@@ -113,7 +113,7 @@ class ChannelPorvider implements IChannelProvider {
         Description: "Description"));
   }
 
-  Future<Either<String, Channel>> editChannel({required Map<String, dynamic> editChannelInfo}) async {
+  Future<Either<String, Channel>> editChannel({required Map<String, dynamic> editChannelInfo, required String ChannelID}) async {
       //   try{
     //     final response = await httpClient.put(Uri.http(URL, "/api/editChannel"),
     //     headers: <String, String>{

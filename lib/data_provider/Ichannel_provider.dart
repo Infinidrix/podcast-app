@@ -11,5 +11,5 @@ abstract class IChannelProvider {
   Future<Either<String, Channel>> createChannel(
       {required Map<String, dynamic> createChannelInfo});
       Future<Either<String, Channel>> editChannel(
-      {required Map<String, dynamic> editChannelInfo});
+      {required Map<String, dynamic> editChannelInfo,required String ChannelID});
 }

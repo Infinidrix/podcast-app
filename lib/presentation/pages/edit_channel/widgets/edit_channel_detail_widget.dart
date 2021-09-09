@@ -190,6 +190,7 @@ class EditChannelDetailWidget extends StatelessWidget {
               editChannelBloc.add(EditChannelDetailSaveEvent(
                   Name: nameTextController.text,
                   Description: descriptionTextController.text,
+                  ChannelID: channel.Id,
                   Image: editChannelState is EditChannelDetailImageUploadedState
                       ? editChannelState.Image
                       : ""));

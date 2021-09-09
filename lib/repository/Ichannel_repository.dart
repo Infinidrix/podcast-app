@@ -7,10 +7,11 @@ abstract class IChannelRepository {
       {required String Name,
       required String Description,
       required dynamic ImageURL});
-      Future<Either<String, Channel>> editChannel(
+  Future<Either<String, Channel>> editChannel(
       {required String Name,
       required String Description,
-      required dynamic ImageURL});
+      required dynamic ImageURL,
+      required String ChannelID});
   Future<bool> isSubscribed(String channelId);
   Future<bool> setSubscription(String channelId, bool subscriptionStatus);
 }

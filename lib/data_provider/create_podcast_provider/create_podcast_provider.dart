@@ -12,7 +12,7 @@ class CreatePodcastProvider extends ICreatePodcastProvider {
       String podcastDescription, String channelId, String? userId) async {
     var request = MultipartRequest(
       'POST',
-      Uri.parse('$URL/api/$userId/audios'),
+      Uri.parse('http://$URL/api/users/$userId/audios'),
     )
       ..fields.addAll({
         "Title": podcastTitle,
@@ -39,6 +39,7 @@ class CreatePodcastProvider extends ICreatePodcastProvider {
         ),
       );
     } else {
+      print(response.statusCode.toString());
       return null;
     }
   }

@@ -23,12 +23,14 @@ class Channel {
   // Map<String, dynamic> toJson() => _$UserToJson(this);
 
   Channel.fromJson(Map<String, dynamic> json)
-      : Id = json['Id'],
-        Name = json['Name'],
-        ImageUrl = json['Url'],
-        Description = json['Description'],
-        Subscribers = json['Subscribers'],
-        Podcasts = json['Podcasts'];
+      : Id = json['id'],
+        Name = json['name'],
+        ImageUrl = json['url'],
+        Description = json['description'],
+        Subscribers = json['subscribers'],
+        Podcasts = (json['podcasts'] as List<dynamic>)
+            .map((e) => Podcast.fromJson(e as Map<String, dynamic>))
+            .toList();
 
   Map<String, dynamic> toJson() => {
         'Id': Id,
@@ -38,4 +40,3 @@ class Channel {
         "Podcasts": Podcasts
       };
 }
-

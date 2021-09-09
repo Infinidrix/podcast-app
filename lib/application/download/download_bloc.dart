@@ -32,9 +32,17 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
               currentState.index,
               currentState.downloadProgress,
               core: currentState.core);
+        } else if (currentState.podcasts
+            .any((element) => element.id == event.podcast.id)) {
+          yield FailedLoadedDownloadState(
+              "Already in the Download Queue",
+              currentState.podcasts,
+              currentState.currentPodcast,
+              currentState.index,
+              currentState.downloadProgress,
+              core: currentState.core);
         } else if (currentState.core == null) {
           final core = await downloadEpisode(event.podcast);
-          // final core = null;
           currentState.podcasts.add(event.podcast);
           yield InitialDownloadState(currentState.podcasts, event.podcast,
               currentState.podcasts.length - 1, DownloadProgress(0, false),
@@ -84,12 +92,21 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
     } else if (event is PauseDownloadEvent) {
       if (currentState is LoadedDownloadState) {
         if (currentState.core != null) {
-          await currentState.core!.pause();
-          yield InitialDownloadState(
-              currentState.podcasts,
-              currentState.currentPodcast,
-              currentState.index,
-              DownloadProgress(currentState.downloadProgress.progress, true));
+          if (currentState.downloadProgress.isPaused) {
+            yield FailedLoadedDownloadState(
+                "Download already paused",
+                currentState.podcasts,
+                currentState.currentPodcast,
+                currentState.index,
+                currentState.downloadProgress);
+          } else {
+            await currentState.core!.pause();
+            yield InitialDownloadState(
+                currentState.podcasts,
+                currentState.currentPodcast,
+                currentState.index,
+                DownloadProgress(currentState.downloadProgress.progress, true));
+          }
         } else {
           yield FailedLoadedDownloadState(
               "No ongoing downloads",
@@ -104,6 +121,14 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
     } else if (event is ResumeDownloadEvent) {
       if (currentState is LoadedDownloadState) {
         if (currentState.core != null) {
+          if (currentState.downloadProgress.isPaused == false) {
+            yield FailedLoadedDownloadState(
+                "Already Downloading",
+                currentState.podcasts,
+                currentState.currentPodcast,
+                currentState.index,
+                currentState.downloadProgress);
+          }
           await currentState.core!.resume();
           yield InitialDownloadState(
               currentState.podcasts,

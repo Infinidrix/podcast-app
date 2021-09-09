@@ -79,7 +79,7 @@ class MyApp extends StatelessWidget {
         apiDataProvider: SearchProvider(),
         localDataProvider: LocalSearchProvider());
 
-    final homePageRepository = HomePageRepository(dataProvider: HomeProvider());
+    final homePageRepository = HomePageRepository(dataProvider: HomeProvider(httpClient: http.Client()));
 
     final loginRepository = LoginRepository(
       loginDataProvider: LoginProvider(

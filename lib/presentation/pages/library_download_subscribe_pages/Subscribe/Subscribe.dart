@@ -27,13 +27,19 @@ class Subscribed extends StatelessWidget {
                 child: BlocBuilder<SubscriptionBloc, SubscriptionState>(
                     builder: (context, state) {
                   if (state is InitialSubscriptionState) {
+                    if (state.channels.length == 0) {
+                      return Center(
+                          child: Text("You have no subscribed channels"));
+                    }
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Expanded(
                             flex: 15,
                             child: ListView.builder(
-                              itemBuilder: (context, index) => SubscribedCard(channel: state.channels[index],),
+                              itemBuilder: (context, index) => SubscribedCard(
+                                channel: state.channels[index],
+                              ),
                               itemCount: state.channels.length,
                             ))
                       ],

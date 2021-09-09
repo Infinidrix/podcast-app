@@ -30,6 +30,14 @@ class WellcomeBloc extends Bloc<WellcomeEvent, WellcomeState> {
     // await LoginProvider.SESSION.deleteItem("userCred");
     // await LoginProvider.SESSION.setItem("userCred", "value");
     await LoginProvider.getSharedPrefernce();
+    print(
+        "this is the UserId from wellcome bloc ${await LoginProvider.SESSION.getString("userId")}");
+
+    print(
+        "this is the user from wellcome bloc ${await LoginProvider.SESSION.getString("user")}");
+    print(
+        "this is the roles from wellcome bloc ${await LoginProvider.SESSION.getString("roles")}");
+
     await LoginProvider.SESSION.remove("userCred");
 
     var userCredOrNot = await LoginProvider.SESSION.getString("userCred");

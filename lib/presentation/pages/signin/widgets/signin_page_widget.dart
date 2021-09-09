@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:podcast_app/application/login/login_bloc.dart';
+import 'package:podcast_app/models/edit_profile/edit_profile.dart';
 import 'package:podcast_app/presentation/core/constants.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 
@@ -113,8 +114,15 @@ class SigninWidget extends StatelessWidget {
               duration: Duration(seconds: 3),
             ));
           }
+          final delete = UserEditProfile(
+              ProfilePicture: "ProfilePicture",
+              UserName: "UserName",
+              Email: "Email",
+              Password: "Password",
+              FirsName: "FirsName",
+              LastName: "LastName");
           if (loginState is LoginSuccessState) {
-            context.router.replace(HomeRoute());
+            context.router.replace(EditProfileRoute(user: delete));
           }
         },
         builder: (_, loginState) {

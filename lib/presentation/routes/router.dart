@@ -20,14 +20,14 @@ import 'package:podcast_app/presentation/pages/your_channels/your_channels_page.
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
-    AutoRoute(page: WelcomePage, path: '/welcome', initial: true),
+    AutoRoute(page: WelcomePage, path: '/welcome'),
     AutoRoute(page: SigninPage, path: '/signin'),
     AutoRoute(page: SignupPage, path: '/signup'),
     AutoRoute(page: HomePage, path: '/home'),
     AutoRoute(page: ChannelDetailPage, path: '/channel'),
     AutoRoute(page: CreateChannelPage, path: '/create'),
     AutoRoute(page: PlayerPage, path: '/player'),
-    AutoRoute(page: YourChannelsPage, path: '/your_channels'),
+    AutoRoute(page: YourChannelsPage, path: '/your_channels', initial: true),
     AutoRoute(page: EditProfilePage, path: '/edit_profile'),
     AutoRoute(page: CreatePodcastPage, path: '/add_podcast'),
     AutoRoute(page: RecorderPage, path: 'record'),

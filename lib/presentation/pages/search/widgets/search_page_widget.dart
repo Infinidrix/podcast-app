@@ -5,10 +5,9 @@ import 'package:podcast_app/application/search/search_bloc.dart';
 import 'package:podcast_app/application/search/search_event.dart';
 import 'package:podcast_app/application/search/search_state.dart';
 import 'package:podcast_app/presentation/pages/library_download_subscribe_pages/Library/Widgets/LibraryCard.dart';
-import 'package:podcast_app/presentation/pages/library_download_subscribe_pages/Subscribe/Widgets/SubscribedCard.dart';
-import 'package:podcast_app/presentation/pages/search/widgets/audio_card.dart';
 import 'package:podcast_app/presentation/pages/search/widgets/channel_card.dart';
 import 'package:podcast_app/presentation/pages/search/widgets/custom_text.dart';
+import 'package:podcast_app/presentation/pages/search/widgets/recently_searched_channel.dart';
 import 'package:podcast_app/presentation/pages/search/widgets/recently_searched_widget.dart';
 
 import '../constants.dart';
@@ -89,9 +88,7 @@ class _SearchBarState extends State<SearchBar>
                               child: Column(
                                 children: [
                                   Recently(
-                                    img: "assets/images/1by1.png",
-                                    title: "This is American Life",
-                                    subtitle: "After Hours",
+                                    podcast: podcast[count],
                                   ),
                                 ],
                               ),
@@ -104,11 +101,7 @@ class _SearchBarState extends State<SearchBar>
                             return Expanded(
                               child: Column(
                                 children: [
-                                  Recently(
-                                    img: "assets/images/1by1.png",
-                                    title: "This is American Life",
-                                    subtitle: "After Hours",
-                                  ),
+                                  RecentlyChannel(channel: channels[count]),
                                 ],
                               ),
                             );

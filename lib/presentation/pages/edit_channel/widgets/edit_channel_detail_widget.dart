@@ -6,16 +6,28 @@ import 'package:image_picker/image_picker.dart';
 import 'package:podcast_app/application/create_channel/create_channel_bloc.dart';
 import 'package:podcast_app/application/create_channel/create_channel_event.dart';
 import 'package:podcast_app/application/create_channel/create_channel_state.dart';
+import 'package:podcast_app/application/edit_channel_detail/edit_channel_detail_bloc.dart';
+import 'package:podcast_app/application/edit_channel_detail/edit_channel_detail_event.dart';
+import 'package:podcast_app/application/edit_channel_detail/edit_channel_detail_state.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class CreateChannelWidget extends StatelessWidget {
+class EditChannelDetailWidget extends StatelessWidget {
+  final String Name;
+  final String Description;
+  dynamic ChannelImage;
+
+  EditChannelDetailWidget(
+      {required this.Name,
+      required this.Description,
+      required this.ChannelImage});
+
   final _formKey = GlobalKey<FormState>();
-  final nameTextController = TextEditingController();
-  final descriptionTextController = TextEditingController();
-  final imageController = TextEditingController();
-  final ImagePicker? _image = ImagePicker();
+  var nameTextController = TextEditingController();
+  var descriptionTextController = TextEditingController();
+  ImagePicker? _image = ImagePicker();
+
   Widget getFormField(Icon icon, int lineCount, String hint,
       TextEditingController textEditingController) {
     return Padding(
@@ -59,7 +71,10 @@ class CreateChannelWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final channelBloc = BlocProvider.of<CreateChannelBloc>(context);
+    final channelBloc = BlocProvider.of<EditChannelDetailBloc>(context);
+    nameTextController.text = Name;
+    descriptionTextController.text = Description;
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -70,13 +85,13 @@ class CreateChannelWidget extends StatelessWidget {
             },
             icon: Icon(Icons.arrow_back_ios)),
       ),
-      body: BlocConsumer<CreateChannelBloc, CreateChannelState>(
-        listener: (context, createchannelstate) {
-          if (createchannelstate is CreateChannelSuccessState) {
+      body: BlocConsumer<EditChannelDetailBloc, EditChannelDetailState>(
+        listener: (context, editchannelstate) {
+          if (editchannelstate is EditChannelDetailSuccessState) {
             context.router.push(YourChannelsRoute());
           }
         },
-        builder: (context, createchannelstate) {
+        builder: (context, editchannelstate) {
           return Padding(
             padding: const EdgeInsets.fromLTRB(25.0, 15.0, 25.0, 0.0),
             child: Form(
@@ -101,21 +116,27 @@ class CreateChannelWidget extends StatelessWidget {
                         onTap: () {
                           _showPicker(context);
                         },
-                        child:
-                            BlocBuilder<CreateChannelBloc, CreateChannelState>(
-                          builder: (context, createChannelState) {
-                            return createChannelState is OnImageUploadedState
+                        child: BlocBuilder<EditChannelDetailBloc,
+                            EditChannelDetailState>(
+                          builder: (context, editChannelState) {
+                            return editChannelState
+                                    is EditChannelDetailImageUploadedState
                                 ? CircleAvatar(
                                     radius: 500,
                                     backgroundImage: FileImage(
-                                        File(createChannelState.image.path)),
+                                        File(editChannelState.Image.path)),
                                   )
                                 : CircleAvatar(
-                                    backgroundColor: Colors.blue,
                                     radius: 500,
-                                  );
+                                    backgroundImage: AssetImage(ChannelImage));
                           },
                         ),
+                      ),
+                    ),
+                    Center(
+                      child: Text(
+                        "Cover Photo",
+                        style: TextStyle(color: Colors.grey),
                       ),
                     ),
                     Padding(
@@ -136,11 +157,7 @@ class CreateChannelWidget extends StatelessWidget {
                         3,
                         "Description of the channel",
                         descriptionTextController),
-                    Text(
-                      "Cover Photo",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    saveButton(context, channelBloc, createchannelstate),
+                    saveButton(context, channelBloc, editchannelstate),
                   ],
                 ),
               ]),
@@ -151,8 +168,8 @@ class CreateChannelWidget extends StatelessWidget {
     );
   }
 
-  Widget saveButton(BuildContext context, CreateChannelBloc createChannelBloc,
-      CreateChannelState createChannelState) {
+  Widget saveButton(BuildContext context, EditChannelDetailBloc editChannelBloc,
+      EditChannelDetailState editChannelState) {
     return Padding(
       padding: const EdgeInsets.only(top: 50.0),
       child: DecoratedBox(
@@ -176,14 +193,13 @@ class CreateChannelWidget extends StatelessWidget {
             if (_formKey.currentState!.validate()) {
               print("Successfully registered!");
               print("Entered");
-              createChannelBloc.add(CreateChannelSaveEvent(
+              editChannelBloc.add(EditChannelDetailSaveEvent(
                   Name: nameTextController.text,
                   Description: descriptionTextController.text,
-                  ImageURL: createChannelState is OnImageUploadedState
-                      ? createChannelState.image
+                  Image: editChannelState is EditChannelDetailImageUploadedState
+                      ? editChannelState.Image
                       : ""));
-              if (createChannelState is OnImageUploadedState)
-                print(createChannelState.image);
+
               context.router.push(YourChannelsRoute());
             } else {
               print("Error");
@@ -208,8 +224,8 @@ class CreateChannelWidget extends StatelessWidget {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
-          return BlocBuilder<CreateChannelBloc, CreateChannelState>(
-              builder: (context, createChannelState) {
+          return BlocBuilder<EditChannelDetailBloc, EditChannelDetailState>(
+              builder: (context, editChannelState) {
             return SafeArea(
               child: Container(
                 child: new Wrap(
@@ -220,8 +236,8 @@ class CreateChannelWidget extends StatelessWidget {
                         onTap: () async {
                           image = await _image?.pickImage(
                               source: ImageSource.gallery);
-                          BlocProvider.of<CreateChannelBloc>(context)
-                              .add(ChangeImageButtonPressedEvent(image: image));
+                          BlocProvider.of<EditChannelDetailBloc>(context)
+                              .add(EditChannelChangeImageButtonPressedEvent(Image: image));
                           Navigator.of(context).pop();
                         }),
                     new ListTile(
@@ -230,8 +246,8 @@ class CreateChannelWidget extends StatelessWidget {
                       onTap: () async {
                         image =
                             await _image?.pickImage(source: ImageSource.camera);
-                        BlocProvider.of<CreateChannelBloc>(context)
-                            .add(ChangeImageButtonPressedEvent(image: image));
+                        BlocProvider.of<EditChannelDetailBloc>(context)
+                            .add(EditChannelChangeImageButtonPressedEvent(Image: image));
                         Navigator.of(context).pop();
                       },
                     ),

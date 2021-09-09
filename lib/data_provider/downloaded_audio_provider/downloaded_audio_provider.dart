@@ -5,7 +5,7 @@ import 'package:podcast_app/models/Podcast.dart';
 import 'downloaded_audio.dart';
 
 class DownloadedAudioProvider implements IDownloadedAudioProvider {
-  final MyDatabase myDatabase = MyDatabase();
+  static final MyDatabase myDatabase = MyDatabase();
 
   DownloadedAudioProvider();
 

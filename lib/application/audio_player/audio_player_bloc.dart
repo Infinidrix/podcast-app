@@ -64,7 +64,7 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
       yield LoadingAudioPlayerState(
           this.state.player, this.state.podcasts, this.state.status);
       await this.state.player.stop();
-
+      print("We are about to play the audio");
       await this.state.player.play(this.state.status.currentPodcast.url);
       this.state.status.isPlaying = true;
       yield InitialAudioPlayerState(

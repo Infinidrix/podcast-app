@@ -9,10 +9,8 @@ class EditProfilePage extends StatelessWidget {
   UserEditProfile user;
   @override
   Widget build(BuildContext context) {
-    print('this is from EritProfilePage to print userInfo$user');
     return Scaffold(
       body: EditProfileWidget(user: user),
-      bottomNavigationBar: getBottomNavBar(context),
     );
   }
 }

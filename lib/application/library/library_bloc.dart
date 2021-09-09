@@ -34,11 +34,13 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
 
   @override
   Stream<LibraryState> mapEventToState(LibraryEvent event) async* {
+    print("Got to the library state with event $event");
     if (event is LoadLibraryEvent) {
       try {
         final result = await libraryRepository.getRecentPodcasts("userId");
+        print("Got out of result with $result");
         yield InitialLibraryState(result);
-      } on Exception catch(e){
+      } on Exception catch (e) {
         yield FailedLibraryState(e.toString());
       }
     }

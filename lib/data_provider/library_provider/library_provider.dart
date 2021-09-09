@@ -15,6 +15,7 @@ class LibraryProviderOnline extends ILibraryProvider {
 
   @override
   Future<List<Podcast>> getRecentPodcasts(String userId) async {
+    print("Getting to the recent podcast API call");
     final response = await httpClient
         .get(Uri.http(URL, "/api/users/$userId/subscribed/podcasts"));
     print("Result from recent podcasts API call: ${response.statusCode}");

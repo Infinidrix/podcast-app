@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:podcast_app/models/Podcast.dart';
 import 'package:podcast_app/presentation/pages/edit_channel/widgets/recently_uploaded_podcast_tile.dart';
 
 class RecentlyUploadedPodcastsList extends StatelessWidget {
@@ -11,7 +12,13 @@ class RecentlyUploadedPodcastsList extends StatelessWidget {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
-          return RecentlyUploadedPodcast();
+          return RecentlyUploadedPodcast(
+              podcast: Podcast(
+                  channelName: "Joe Rogan",
+                  name: "Guy Raz",
+                  description: "",
+                  id: "",
+                  url: ""));
         },
         childCount: 20,
       ),

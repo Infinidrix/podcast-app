@@ -16,10 +16,11 @@ class LibraryProviderOnline extends ILibraryProvider {
   @override
   Future<List<Podcast>> getRecentPodcasts(String userId) async {
     print("Getting to the recent podcast API call");
-	// TODO: Change this to actual user id
+    // TODO: Change this to actual user id
     final response = await httpClient
-        .get(Uri.parse('http://$URL/api/users/b7d27747-e66f-403d-8bcb-2125656ccb53/Audios/Subscribed'));
-    print("Result from recent podcasts API call: ${response.statusCode}");
+        .get(Uri.parse(
+            'http://$URL/api/users/b7d27747-e66f-403d-8bcb-2125656ccb53/Audios/Subscribed'))
+        .timeout(Duration(seconds: 5));
     if (response.statusCode == 200) {
       Iterable parsed = json.decode(response.body);
       List<Podcast> podcasts =

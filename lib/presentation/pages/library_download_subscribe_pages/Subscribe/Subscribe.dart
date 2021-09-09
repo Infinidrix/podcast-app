@@ -65,6 +65,22 @@ class Subscribed extends StatelessWidget {
                         ],
                       ),
                     );
+                  } else if (state is FailedSubscriptionState) {
+                    return RefreshIndicator(
+                      onRefresh: () async {
+                        subscriptionBloc.add(LoadInitialSubscriptionEvent());
+                      },
+                      child: Center(
+                          child: ListView(
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              children: [
+                            Center(
+                                child: Text(
+                              "Internet Error. Please Try again",
+                              style: TextStyle(color: Colors.grey),
+                            ))
+                          ])),
+                    );
                   } else {
                     return Center(
                       child: CircularProgressIndicator(),

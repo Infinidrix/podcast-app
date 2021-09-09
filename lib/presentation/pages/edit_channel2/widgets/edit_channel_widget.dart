@@ -5,11 +5,11 @@ import 'package:podcast_app/application/edit_channel/edit_channel_state.dart';
 import 'package:podcast_app/models/Podcast.dart';
 import 'package:podcast_app/presentation/core/loading_list_widget.dart';
 import 'package:podcast_app/presentation/core/loading_skeleton_text.dart';
-import 'package:podcast_app/presentation/pages/edit_channel/widgets/edit_channel_sliver_app_bar.dart';
-import 'package:podcast_app/presentation/pages/edit_channel/widgets/recently_uploaded_podcast_tile.dart';
-import 'package:podcast_app/presentation/pages/edit_channel/widgets/recently_uploaded_podcasts_list.dart';
+// import 'package:podcast_app/presentation/pages/edit_channel/widgets/edit_channel_sliver_app_bar.dart';
+import 'package:podcast_app/presentation/pages/edit_channel2/widgets/recently_uploaded_podcast_tile.dart';
+// import 'package:podcast_app/presentation/pages/edit_channel/widgets/recently_uploaded_podcasts_list.dart';
 
-import 'edit_page_description_and_number_of_listeners_tile.dart';
+// import '../../edit_channel/widgets/edit_page_description_and_number_of_listeners_tile.dart';
 
 class EditChannel extends StatelessWidget {
   @override

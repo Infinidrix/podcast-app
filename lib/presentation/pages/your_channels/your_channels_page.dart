@@ -41,7 +41,7 @@ class YourChannelsPage extends StatelessWidget {
                       child: CircularProgressIndicator(),
                     );
                   } else if (state is LoadedYourChannel) {
-                    List<dynamic> channels = state.channels;
+                    List<Channel> channels = state.channels;
 
                     return ListView.builder(
                       itemCount: channels.length,

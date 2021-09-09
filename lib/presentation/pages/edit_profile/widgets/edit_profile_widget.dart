@@ -4,8 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:podcast_app/application/edit_profile/edit_profile_bloc.dart';
+import 'package:podcast_app/application/home_page/home_page_bloc.dart';
+import 'package:podcast_app/application/home_page/home_page_event.dart';
 import 'package:podcast_app/models/edit_profile/edit_profile.dart';
 import 'package:podcast_app/presentation/core/constants.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:podcast_app/presentation/routes/router.gr.dart';
 
 // class EditProfileWidget extends StatefulWidget {
 //   EditProfileWidget({Key? key,required this.user}) : super(key: key);
@@ -144,6 +148,7 @@ class EditProfileWidget extends StatelessWidget {
     }
 
     editProfileBloc.add(IntitalEditProfileEvent());
+    final homePageBloc = BlocProvider.of<HomePageBloc>(context);
 
     return BlocConsumer<EditProfileBloc, EditProfileState>(
       listener: (context, state) {
@@ -175,44 +180,61 @@ class EditProfileWidget extends StatelessWidget {
         }
         print(_userName);
 
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 47.5),
-          child: Container(
-            child: Form(
-                key: _formKey,
-                child: ListView(
-                  children: [
-                    _getProfilePicture(state, editProfileBloc),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 73.3),
-                      child: Text(
-                        "Username",
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 33.3),
-                      child: username(),
-                    ),
-                    Text(
-                      "Email",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    emailInput(state),
-                    Text(
-                      "Password",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10.0),
-                      child: _passwordInput(state),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 30.0),
-                      child: _saveButton(state),
-                    ),
-                  ],
-                )),
+        return SafeArea(
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                    onPressed: () {
+                      homePageBloc.add(LoadIntialHomeEvent());
+                      context.router.push(HomeRoute());
+                    },
+                    icon: Icon(Icons.arrow_back_ios)),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 47.5),
+                  child: Container(
+                    child: Form(
+                        key: _formKey,
+                        child: ListView(
+                          children: [
+                            _getProfilePicture(state, editProfileBloc),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 73.3),
+                              child: Text(
+                                "Username",
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 33.3),
+                              child: username(),
+                            ),
+                            Text(
+                              "Email",
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                            emailInput(state),
+                            Text(
+                              "Password",
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 10.0),
+                              child: _passwordInput(state),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 30.0),
+                              child: _saveButton(state),
+                            ),
+                          ],
+                        )),
+                  ),
+                ),
+              ),
+            ],
           ),
         );
       },

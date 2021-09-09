@@ -5,8 +5,8 @@ abstract class HomeState {}
 
 class InitialHomeState extends HomeState {}
 
-class NavigateToProfileHomeState extends HomeState {
-  final UserEditProfile user;
+// class NavigateToProfileHomeState extends HomeState {
+//   final UserEditProfile user;
 
-  NavigateToProfileHomeState({required this.user});
-}
+//   NavigateToProfileHomeState({required this.user});
+// }

@@ -1,5 +1,6 @@
 import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/models/Podcast.dart';
+import 'package:podcast_app/models/edit_profile/edit_profile.dart';
 
 abstract class HomePageState {}
 
@@ -14,4 +15,10 @@ class LoadedHomePageState extends HomePageState {
     required this.trending,
     required this.recentlyPlayed,
   });
+}
+
+class NavigateToProfileHomeState extends HomePageState {
+  final UserEditProfile user;
+
+  NavigateToProfileHomeState({required this.user});
 }

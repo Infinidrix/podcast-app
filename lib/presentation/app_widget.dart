@@ -23,6 +23,7 @@ import 'package:podcast_app/repository/search_repository/SearchRepository.dart';
 import 'package:podcast_app/application/create_podcast/create_podcast_application.dart';
 import 'package:podcast_app/application/download/download_bloc.dart';
 import 'package:podcast_app/application/download/download_events.dart';
+import 'package:podcast_app/application/edit_channel/edit_channel_bloc.dart';
 import 'package:podcast_app/application/edit_profile/edit_profile_bloc.dart';
 import 'package:podcast_app/application/home_page/home_page_bloc.dart';
 import 'package:podcast_app/application/home_page/home_page_event.dart';
@@ -41,6 +42,7 @@ import 'package:podcast_app/application/your_channels/your_channel_event.dart';
 import 'package:podcast_app/data_provider/audio_provider/audio_provider.dart';
 import 'package:podcast_app/data_provider/channel_provider.dart';
 import 'package:podcast_app/data_provider/downloaded_audio_provider/downloaded_audio_provider.dart';
+import 'package:podcast_app/data_provider/edit_channel/EditChannelProvider.dart';
 import 'package:podcast_app/data_provider/edit_profile/edit_profile_provider.dart';
 import 'package:podcast_app/data_provider/home_page_provider/Home_provider.dart';
 import 'package:podcast_app/data_provider/library_provider/library_provider.dart';
@@ -55,6 +57,7 @@ import 'package:podcast_app/repository/ChannelRepository.dart';
 import 'package:podcast_app/repository/CreatePodcastRepository.dart';
 import 'package:podcast_app/repository/audio_repository/AudioRepository.dart';
 import 'package:podcast_app/repository/downloaded_audio_repository/download_audio_repository.dart';
+import 'package:podcast_app/repository/edit_channel/EditChannelRepository.dart';
 import 'package:podcast_app/repository/edit_profile_repository/edit_profile_repository.dart';
 import 'package:podcast_app/repository/home_page_repository/HomePageRepository.dart';
 import 'package:podcast_app/repository/library_repository/library_repository.dart';
@@ -101,6 +104,8 @@ class MyApp extends StatelessWidget {
     final downloadedAudioRepository =
         DownloadedAudioRepository(DownloadedAudioProvider());
 
+    final editChannelRepository =
+        EditChannelRepository(apidataProvider: EditChannelProvider());
     return MultiBlocProvider(
       providers: [
         BlocProvider<CreatePodcastBloc>(
@@ -154,6 +159,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) =>
               LibraryBloc(libraryRepository)..add(LoadLibraryEvent()),
+        ),
+        BlocProvider(
+          create: (_) =>
+              EditChannelBloc(editChannelRepository: editChannelRepository),
         ),
       ],
       child: MaterialApp.router(

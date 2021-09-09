@@ -1,5 +1,3 @@
-
-
 abstract class HomePageEvent {}
 
 class LoadIntialHomeEvent extends HomePageEvent {}
@@ -9,3 +7,5 @@ class TopPickClicked extends HomePageEvent {
 
   TopPickClicked(this.channelId);
 }
+
+class ProfileButtonPressedEvent extends HomePageEvent {}

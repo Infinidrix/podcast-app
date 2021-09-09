@@ -23,13 +23,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Stream<HomeState> mapEventToState(HomeEvent event) async* {
     // TODO: Add your event logic
 
-    if (event is ProfileButtonPressedEvent) {
-      final userInfo =
-          await LoginProvider.getItemFromLocalStorage(tokenName: "userInfo");
-      UserEditProfile va = userInfo != null
-          ? UserEditProfile.fromJson(jsonDecode(userInfo))
-          : temp;
-      yield NavigateToProfileHomeState(user: va);
-    }
+    // if (event is ProfileButtonPressedEvent) {
+    //   final userInfo =
+    //       await LoginProvider.getItemFromLocalStorage(tokenName: "userInfo");
+    //   UserEditProfile va = userInfo != null
+    //       ? UserEditProfile.fromJson(jsonDecode(userInfo))
+    //       : temp;
+    //   // yield NavigateToProfileHomeState(user: va);
+    // }
   }
 }

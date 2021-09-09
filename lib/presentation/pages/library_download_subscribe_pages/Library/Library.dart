@@ -8,12 +8,10 @@ import 'package:podcast_app/models/Podcast.dart';
 import 'Widgets/LibraryCard.dart';
 import 'Widgets/firstRow.dart';
 
-
 const Color mainBackGroundColor = Color(0xff121212);
 
 class LibraryPage extends StatelessWidget {
-
-  LibraryPage() ;
+  LibraryPage();
 
   @override
   Widget build(BuildContext context) {
@@ -28,24 +26,27 @@ class LibraryPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    FirstRowLibrary()
-                    ,
+                    FirstRowLibrary(),
                     Expanded(
-                      flex: 15,
-                      child: BlocBuilder<LibraryBloc, LibraryState>(
-                        builder: (_, state) {
-                          if (state is InitialLibraryState){
+                        flex: 15,
+                        child: BlocBuilder<LibraryBloc, LibraryState>(
+                            builder: (_, state) {
+                          if (state is InitialLibraryState) {
+                            if (state.podcasts.length == 0) {
+                              return Center(
+                                child: Text(
+                                    "You have no podcasts in your library"),
+                              );
+                            }
                             return ListView.builder(
-                              itemBuilder: (_, i) => LibraryCard(podcast: state.podcasts[i]),
+                              itemBuilder: (_, i) =>
+                                  LibraryCard(podcast: state.podcasts[i]),
                               itemCount: state.podcasts.length,
                             );
-                          } else{
+                          } else {
                             return Center(child: CircularProgressIndicator());
                           }
-                          
-                        }
-                      )
-                    ),
+                        })),
                   ],
                 ),
               )),

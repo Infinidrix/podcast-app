@@ -62,8 +62,13 @@ class ChannelPorvider implements IChannelProvider {
   bool isSubscribedValue = true;
   @override
   Future<bool> isSubscribed(String userId, String channelId) async {
-    Future.delayed(Duration(seconds: 2));
-    return isSubscribedValue;
+    final response = await httpClient.get(Uri.parse(
+        'http://$URL/api/users/b7d27747-e66f-403d-8bcb-2125656ccb53/Subscriptions/9830371b-97f7-4655-8ebc-d9837be8edf7'));
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @override
@@ -75,8 +80,25 @@ class ChannelPorvider implements IChannelProvider {
   @override
   Future<bool> setSubscription(
       String userId, String channelId, bool subscriptionStatus) async {
-    isSubscribedValue = subscriptionStatus;
-    return isSubscribedValue;
+    if (subscriptionStatus) {
+      final response = await httpClient.put(Uri.parse(
+          'http://$URL/api/users/b7d27747-e66f-403d-8bcb-2125656ccb53/Subscriptions/9830371b-97f7-4655-8ebc-d9837be8edf7'));
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        throw SocketException("Response Code: ${response.statusCode}");
+      }
+    } else {
+      final response = await httpClient.delete(Uri.parse(
+          'http://$URL/api/users/b7d27747-e66f-403d-8bcb-2125656ccb53/Subscriptions/9830371b-97f7-4655-8ebc-d9837be8edf7'));
+
+      if (response.statusCode == 200) {
+        return false;
+      } else {
+        throw SocketException("Response Code: ${response.statusCode}");
+      }
+    }
   }
 
   @override

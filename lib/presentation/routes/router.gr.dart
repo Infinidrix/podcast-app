@@ -7,7 +7,7 @@
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
 
-import '../../models/edit_profile/edit_profile.dart' as _i17;
+import '../../models/edit_profile/edit_profile.dart' as _i18;
 import '../pages/channel_detail/channel_detail_page.dart' as _i7;
 import '../pages/create_channel/create_channel_page.dart' as _i8;
 import '../pages/create_podcast/create_podcast.dart' as _i12;
@@ -215,7 +215,7 @@ class YourChannelsRoute extends _i1.PageRouteInfo {
 }
 
 class EditProfileRoute extends _i1.PageRouteInfo<EditProfileRouteArgs> {
-  EditProfileRoute({_i2.Key? key, required _i17.UserEditProfile user})
+  EditProfileRoute({_i2.Key? key, required _i18.UserEditProfile user})
       : super(name,
             path: '/edit_profile',
             args: EditProfileRouteArgs(key: key, user: user));
@@ -228,7 +228,7 @@ class EditProfileRouteArgs {
 
   final _i2.Key? key;
 
-  final _i17.UserEditProfile user;
+  final _i18.UserEditProfile user;
 }
 
 class CreatePodcastRoute extends _i1.PageRouteInfo<CreatePodcastRouteArgs> {

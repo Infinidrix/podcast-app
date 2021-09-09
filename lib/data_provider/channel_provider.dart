@@ -106,7 +106,7 @@ class ChannelPorvider implements IChannelProvider {
   Future<Channel?> createChannel(
       {required CreateChannel createChannelInfo}) async {
     var request = http.MultipartRequest(
-        'POST', Uri.parse('http://localhost:5001/api/channel'))
+        'POST', Uri.parse('http://$URL/api/channel'))
       ..fields.addAll({
         "name": createChannelInfo.Name,
         "description": createChannelInfo.Description
@@ -135,7 +135,7 @@ class ChannelPorvider implements IChannelProvider {
       {required CreateChannel editChannelInfo,
       required String ChannelID}) async {
     var request = http.MultipartRequest(
-        'POST', Uri.parse('http://localhost:5001/api/channel/$ChannelID'))
+        'POST', Uri.parse('http://$URL/api/channel/$ChannelID'))
       ..fields.addAll({
         "name": editChannelInfo.Name,
         "description": editChannelInfo.Description
@@ -157,6 +157,6 @@ class ChannelPorvider implements IChannelProvider {
           jsonDecode(await response.stream.bytesToString()));
     } else {
       return null;
-    }  
+    }
   }
 }

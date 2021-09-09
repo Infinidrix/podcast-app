@@ -9,7 +9,7 @@ import 'package:podcast_app/models/Podcast.dart';
 class CreatePodcastProvider extends ICreatePodcastProvider {
   @override
   Future<Podcast?> createPodcast(String filePath, String podcastTitle,
-      String podcastDescription, String channelId, String userId) async {
+      String podcastDescription, String channelId, String? userId) async {
     var request = MultipartRequest(
       'POST',
       Uri.parse('$URL/api/$userId/audios'),

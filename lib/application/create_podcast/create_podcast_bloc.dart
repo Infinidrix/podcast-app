@@ -52,7 +52,7 @@ class CreatePodcastBloc extends Bloc<CreatePodcastEvent, CreatePodcastState> {
         event.podcastTitle,
         event.podcastDescription,
         event.channelId,
-        (LoginProvider.SESSION.getString("userId"))!,
+        LoginProvider.SESSION.getString("user"),
       );
 
       if (isPodcastCreated) {

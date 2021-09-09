@@ -39,7 +39,7 @@ class ChannelRepository implements IChannelRepository {
         
 
     return await channelProvider.createChannel(
-        createChannelInfo: channel.toJson());
+        createChannelInfo: channel);
   }
 
   Future<Channel?> editChannel(
@@ -52,6 +52,6 @@ class ChannelRepository implements IChannelRepository {
         
 
     return await channelProvider.editChannel(
-        editChannelInfo: channel.toJson(), ChannelID: ChannelID);
+        editChannelInfo: channel, ChannelID: ChannelID);
   }
 }

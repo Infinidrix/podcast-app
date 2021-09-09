@@ -1,3 +1,4 @@
+import 'package:http/http.dart';
 import 'package:podcast_app/data_provider/Ichannel_provider.dart';
 import 'package:podcast_app/models/channel/Channel.dart';
 import 'dart:convert';
@@ -81,18 +82,36 @@ class ChannelPorvider implements IChannelProvider {
 
   @override
   Future<Channel?> createChannel(
-      {required Map<String, dynamic> createChannelInfo}) async {
-      
-    // return right(Channel(
-    //     Name: "this",
-    //     ImageUrl: "is",
-    //     Subscribers: 0,
-    //     Id: "Id",
-    //     Description: "Description"));
+      {required CreateChannel createChannelInfo}) async {
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('http://localhost:5001/api/channel'))
+      ..fields.addAll({
+        "name": createChannelInfo.Name,
+        "description": createChannelInfo.Description
+      })
+      ..files.add(
+        await http.MultipartFile.fromPath("imagefile", createChannelInfo.Url),
+      );
+
+    StreamedResponse? response;
+
+    try {
+      response = await request.send();
+    } catch (e) {
+      return null;
+    }
+
+    if (response.statusCode == 200) {
+      return Channel.fromJson(
+          jsonDecode(await response.stream.bytesToString()));
+    } else {
+      return null;
+    }
   }
 
-  Future<Channel?> editChannel({required Map<String, dynamic> editChannelInfo, required String ChannelID}) async {
-       
+  Future<Channel?> editChannel(
+      {required CreateChannel editChannelInfo,
+      required String ChannelID}) async {
     // return right(Channel(
     //     Name: "this",
     //     ImageUrl: "is",

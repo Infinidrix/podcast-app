@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:podcast_app/application/channel_description/channel_description_bloc.dart';
+import 'package:podcast_app/application/edit_channel/edit_channel_bloc.dart';
+import 'package:podcast_app/application/edit_channel/edit_channel_event.dart';
 import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:podcast_app/presentation/pages/edit_channel2/edit_channel_page.dart';
@@ -15,11 +17,15 @@ class YourChannelTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final channelBloc = BlocProvider.of<ChannelDescriptionBloc>(context);
+    final editBloc = BlocProvider.of<EditChannelBloc>(context);
+
     return InkWell(
       onTap: () {
-        channelBloc.add(LoadInitialEvent(channel: channel));
-        context.router.push(ChannelDetailRoute());
+        print("inkweLL");
+        editBloc.add(LoadIntialEditChannelEvent(channel: channel));
+        print("2 iNKWEELL");
+        context.router.push(EditChannelRoute());
+        print("3 INKWELL");
       },
       child: Container(
         padding: EdgeInsets.all(10),
@@ -63,7 +69,10 @@ class YourChannelTile extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.edit_outlined),
                   onPressed: () {
-                    context.router.push(EditChannelDetailRoute(Name: channel.Name, Description: channel.Description, Image: channel.ImageUrl));
+                    context.router.push(EditChannelDetailRoute(
+                        Name: channel.Name,
+                        Description: channel.Description,
+                        Image: channel.ImageUrl));
                   },
                   color: Colors.white,
                 )

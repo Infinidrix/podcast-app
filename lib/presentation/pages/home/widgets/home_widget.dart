@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:podcast_app/application/home_page/home_page_bloc.dart';
+import 'package:podcast_app/application/home_page/home_page_event.dart';
 import 'package:podcast_app/application/home_page/home_page_state.dart';
 import 'package:podcast_app/presentation/pages/home/widgets/audio_card.dart';
 import 'package:podcast_app/presentation/pages/home/widgets/top_picks.dart';
+import 'package:podcast_app/presentation/routes/router.gr.dart';
+import 'package:auto_route/auto_route.dart';
 
 class HomeWidget extends StatelessWidget {
   const HomeWidget({Key? key}) : super(key: key);
@@ -13,7 +16,13 @@ class HomeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final homePageBloc = BlocProvider.of<HomePageBloc>(context);
 
-    return BlocBuilder<HomePageBloc, HomePageState>(
+    return BlocConsumer<HomePageBloc, HomePageState>(
+      listener: (context, state) {
+        if (state is NavigateToProfileHomeState) {
+          print("REDIRECTING TO EDIT");
+          context.router.push(EditProfileRoute(user: state.user));
+        }
+      },
       builder: (context, homePageState) {
         if (homePageState is LoadingHomePageState) {
           return Center(
@@ -45,7 +54,13 @@ class HomeWidget extends StatelessWidget {
                               padding: const EdgeInsets.all(8.0),
                               child: Align(
                                 alignment: Alignment.centerRight,
-                                child: Icon(Icons.settings_outlined),
+                                child: IconButton(
+                                  icon: Icon(Icons.settings_outlined),
+                                  onPressed: () {
+                                    homePageBloc
+                                        .add(ProfileButtonPressedEvent());
+                                  },
+                                ),
                               ),
                             ),
                             Align(

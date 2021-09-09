@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
+import 'package:podcast_app/application/home/home_bloc.dart';
+import 'package:podcast_app/data_provider/login/login_provider.dart';
 
 import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/models/Podcast.dart';
+import 'package:podcast_app/models/edit_profile/edit_profile.dart';
 import 'package:podcast_app/repository/home_page_repository/IHomePageRepository.dart';
 
 import 'home_page_event.dart';
@@ -11,21 +16,14 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   final IHomePageRepository repository;
   HomePageBloc({required this.repository}) : super(LoadingHomePageState());
 
-  // List<Podcast> trending =
-  //     List.generate(10, (index) => Podcast("Name #$index", index));
-
-  // List<Podcast> recentlyPlayed =
-  //     List.generate(10, (index) => Podcast("Name #$index", index));
-
-  // List<Channel> topPicks = List.generate(
-  //     6,
-  //     (index) => Channel(
-  //         Name: "Name",
-  //         ImageUrl: "ImageUrl",
-  //         Subscribers: 12335245,
-  //         Id: "$index",
-  //         Podcasts:
-  //             List.generate(10, (index) => Podcast("Name #$index", index))));
+  UserEditProfile temp = UserEditProfile(
+    UserName: "UserName",
+    Email: "e@gmail.com",
+    FirsName: "FirstName",
+    LastName: "last",
+    Password: "Password",
+    ProfilePicture: 'assets/images/placeholder.jpg',
+  );
 
   @override
   Stream<HomePageState> mapEventToState(HomePageEvent event) async* {
@@ -46,6 +44,16 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         recentlyPlayed: recentlyPlayed,
         trending: trending,
       );
+    }
+
+    if (event is ProfileButtonPressedEvent) {
+      final userInfo =
+          await LoginProvider.getItemFromLocalStorage(tokenName: "userInfo");
+      UserEditProfile va = userInfo != null
+          ? UserEditProfile.fromJson(jsonDecode(userInfo))
+          : temp;
+      yield NavigateToProfileHomeState(user: va);
+      // yield LoadingHomePageState();
     }
   }
 }

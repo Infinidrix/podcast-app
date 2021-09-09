@@ -8,6 +8,8 @@ import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/presentation/core/bottom_navigation.dart';
 import 'package:podcast_app/presentation/pages/core/bottom_nav.dart';
 import 'package:podcast_app/presentation/pages/your_channels/widgets/your_channels_widgets.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:podcast_app/presentation/routes/router.gr.dart';
 
 class YourChannelsPage extends StatelessWidget {
   const YourChannelsPage({Key? key}) : super(key: key);
@@ -21,7 +23,7 @@ class YourChannelsPage extends StatelessWidget {
           Icons.add,
           color: Colors.white,
         ),
-        onPressed: () => {},
+        onPressed: () => {context.router.push(CreateChannelRoute())},
       ),
       backgroundColor: HexColor("#1A1A1A"),
       body: Container(

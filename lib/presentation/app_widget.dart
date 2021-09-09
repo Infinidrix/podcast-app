@@ -12,44 +12,30 @@ import 'package:podcast_app/application/download/download_events.dart';
 import 'package:podcast_app/application/edit_channel/edit_channel_bloc.dart';
 import 'package:podcast_app/application/edit_channel_detail/edit_channel_detail_bloc.dart';
 import 'package:podcast_app/application/edit_profile/edit_profile_bloc.dart';
-import 'package:podcast_app/application/home_page/home_page_bloc.dart';
-import 'package:podcast_app/application/home_page/home_page_event.dart';
 import 'package:podcast_app/application/library/library_bloc.dart';
 import 'package:podcast_app/application/library/library_events.dart';
 import 'package:podcast_app/application/login/login_bloc.dart';
 import 'package:podcast_app/application/recorder/recorder_application.dart';
-import 'package:podcast_app/application/search/search_bloc.dart';
-import 'package:podcast_app/application/search/search_event.dart';
 import 'package:podcast_app/application/signup/signup_bloc.dart';
 import 'package:podcast_app/application/subscription/subscription_bloc.dart';
 import 'package:podcast_app/application/subscription/subscription_events.dart';
 import 'package:podcast_app/application/wellcome/wellcome_bloc.dart';
-import 'package:podcast_app/application/your_channels/your_channel_bloc.dart';
-import 'package:podcast_app/application/your_channels/your_channel_event.dart';
 import 'package:podcast_app/data_provider/audio_provider/audio_provider.dart';
-import 'package:podcast_app/data_provider/channel_provider.dart';
 import 'package:podcast_app/data_provider/downloaded_audio_provider/downloaded_audio_provider.dart';
 import 'package:podcast_app/data_provider/edit_channel/EditChannelProvider.dart';
 import 'package:podcast_app/data_provider/edit_profile/edit_profile_provider.dart';
-import 'package:podcast_app/data_provider/home_page_provider/Home_provider.dart';
 import 'package:podcast_app/data_provider/library_provider/library_provider.dart';
 import 'package:podcast_app/data_provider/login/login_provider.dart';
-import 'package:podcast_app/data_provider/search_page_provider/Search_provider.dart';
-import 'package:podcast_app/data_provider/search_page_provider/local_search_provider..dart';
 import 'package:podcast_app/data_provider/subscription_provider/SubscriptionProvider.dart';
 import 'package:podcast_app/data_provider/sugnup/signup_provider.dart';
-import 'package:podcast_app/data_provider/your_channel_provider/YourChannel_provider.dart';
-import 'package:podcast_app/presentation/routes/router.gr.dart';
 import 'package:podcast_app/repository/ChannelRepository.dart';
 import 'package:podcast_app/repository/CreatePodcastRepository.dart';
 import 'package:podcast_app/repository/audio_repository/AudioRepository.dart';
 import 'package:podcast_app/repository/downloaded_audio_repository/download_audio_repository.dart';
 import 'package:podcast_app/repository/edit_channel/EditChannelRepository.dart';
 import 'package:podcast_app/repository/edit_profile_repository/edit_profile_repository.dart';
-import 'package:podcast_app/repository/home_page_repository/HomePageRepository.dart';
 import 'package:podcast_app/repository/library_repository/library_repository.dart';
 import 'package:podcast_app/repository/login_repository.dart';
-import 'package:podcast_app/repository/search_repository/SearchRepository.dart';
 import 'package:podcast_app/repository/signup%20repository/SignupRepository.dart';
 import 'package:podcast_app/repository/subscription_repository/SubscriptionRepository.dart';
 import 'package:podcast_app/repository/your_channel_repository/YourChannelRepository.dart';
@@ -66,7 +52,8 @@ class MyApp extends StatelessWidget {
         apiDataProvider: SearchProvider(),
         localDataProvider: LocalSearchProvider());
 
-    final homePageRepository = HomePageRepository(dataProvider: HomeProvider());
+    final homePageRepository = HomePageRepository(
+        dataProvider: HomeProvider(httpClient: http.Client()));
 
     final loginRepository = LoginRepository(
       loginDataProvider: LoginProvider(

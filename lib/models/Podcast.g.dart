@@ -10,7 +10,7 @@ Podcast _$PodcastFromJson(Map<String, dynamic> json) {
   return Podcast(
     name: json['name'].toString(),
     url: json['url'].toString(),
-    imageUrl: json['imageUrl'] as String?,
+    imageUrl: json['imageUrl']?.toString(),
     id: json['id'].toString(),
     numberOfListeners: json['numberOfListeners'] as int?,
     channelName: json['channelName'].toString(),

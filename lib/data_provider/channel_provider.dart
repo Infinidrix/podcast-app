@@ -1,3 +1,4 @@
+import 'package:http/http.dart';
 import 'package:podcast_app/data_provider/Ichannel_provider.dart';
 import 'package:podcast_app/models/channel/Channel.dart';
 import 'dart:convert';
@@ -62,8 +63,13 @@ class ChannelPorvider implements IChannelProvider {
   bool isSubscribedValue = true;
   @override
   Future<bool> isSubscribed(String userId, String channelId) async {
-    Future.delayed(Duration(seconds: 2));
-    return isSubscribedValue;
+    final response = await httpClient.get(Uri.parse(
+        'http://$URL/api/users/b7d27747-e66f-403d-8bcb-2125656ccb53/Subscriptions/9830371b-97f7-4655-8ebc-d9837be8edf7'));
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @override
@@ -75,72 +81,82 @@ class ChannelPorvider implements IChannelProvider {
   @override
   Future<bool> setSubscription(
       String userId, String channelId, bool subscriptionStatus) async {
-    isSubscribedValue = subscriptionStatus;
-    return isSubscribedValue;
+    if (subscriptionStatus) {
+      final response = await httpClient.put(Uri.parse(
+          'http://$URL/api/users/b7d27747-e66f-403d-8bcb-2125656ccb53/Subscriptions/9830371b-97f7-4655-8ebc-d9837be8edf7'));
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        throw SocketException("Response Code: ${response.statusCode}");
+      }
+    } else {
+      final response = await httpClient.delete(Uri.parse(
+          'http://$URL/api/users/b7d27747-e66f-403d-8bcb-2125656ccb53/Subscriptions/9830371b-97f7-4655-8ebc-d9837be8edf7'));
+
+      if (response.statusCode == 200) {
+        return false;
+      } else {
+        throw SocketException("Response Code: ${response.statusCode}");
+      }
+    }
   }
 
   @override
-  Future<Either<String, Channel>> createChannel(
-      {required Map<String, dynamic> createChannelInfo}) async {
-    //   try{
-    //     final response = await httpClient.post(Uri.http(URL, "/api/createChannel"),
-    //     headers: <String, String>{
-    //       'Content-Type': 'application/json; charset=UTF-8',
-    //     },
-    //     body: jsonEncode(createChannelInfo),
-    //     );
-    //     if (response.statusCode == 200) {
-    //     final parsed = json.decode(response.body);
-    //     print(parsed);
-    //     return right(Channel.fromJson(parsed));
-    //   } else if (response.statusCode == 400) {
-    //     final parsed = json.decode(response.body);
-    //     return left(parsed["message"]);
-    //   } else if (response.statusCode == 404) {
-    //     return left("Can not connect to internet");
-    //   }
-    //   return left("Some Error Happened");
-    // } on SocketException catch (e) {
-    //   print(e.message);
-    //   return left("Can not connect to internet ${e.runtimeType}");
-    // }
+  Future<Channel?> createChannel(
+      {required CreateChannel createChannelInfo}) async {
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('http://$URL/api/channel'))
+      ..fields.addAll({
+        "name": createChannelInfo.Name,
+        "description": createChannelInfo.Description
+      })
+      ..files.add(
+        await http.MultipartFile.fromPath("imagefile", createChannelInfo.Url),
+      );
 
-    return right(Channel(
-        Name: "this",
-        ImageUrl: "is",
-        Subscribers: 0,
-        Id: "Id",
-        Description: "Description"));
+    StreamedResponse? response;
+
+    try {
+      response = await request.send();
+    } catch (e) {
+      return null;
+    }
+
+    if (response.statusCode == 200) {
+      return Channel.fromJson(
+          jsonDecode(await response.stream.bytesToString()));
+    } else {
+      return null;
+    }
   }
 
-  Future<Either<String, Channel>> editChannel({required Map<String, dynamic> editChannelInfo}) async {
-      //   try{
-    //     final response = await httpClient.put(Uri.http(URL, "/api/editChannel"),
-    //     headers: <String, String>{
-    //       'Content-Type': 'application/json; charset=UTF-8',
-    //     },
-    //     body: jsonEncode(editChannelInfo),
-    //     );
-    //     if (response.statusCode == 201) {
-    //     final parsed = json.decode(response.body);
-    //     print(parsed);
-    //     return right(Channel.fromJson(parsed));
-    //   } else if (response.statusCode == 400) {
-    //     final parsed = json.decode(response.body);
-    //     return left(parsed["message"]);
-    //   } else if (response.statusCode == 404) {
-    //     return left("Can not connect to internet");
-    //   }
-    //   return left("Some Error Happened");
-    // } on SocketException catch (e) {
-    //   print(e.message);
-    //   return left("Can not connect to internet ${e.runtimeType}");
-    // }
-    return right(Channel(
-        Name: "this",
-        ImageUrl: "is",
-        Subscribers: 0,
-        Id: "Id",
-        Description: "Description"));
+  Future<Channel?> editChannel(
+      {required CreateChannel editChannelInfo,
+      required String ChannelID}) async {
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('http://$URL/api/channel/$ChannelID'))
+      ..fields.addAll({
+        "name": editChannelInfo.Name,
+        "description": editChannelInfo.Description
+      })
+      ..files.add(
+        await http.MultipartFile.fromPath("imagefile", editChannelInfo.Url),
+      );
+
+    StreamedResponse? response;
+
+    try {
+      response = await request.send();
+    } catch (e) {
+      return null;
+    }
+
+    if (response.statusCode == 200) {
+      return Channel.fromJson(
+          jsonDecode(await response.stream.bytesToString()));
+    } else {
+      return null;
+    }
   }
 }

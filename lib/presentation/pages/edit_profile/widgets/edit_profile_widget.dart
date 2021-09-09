@@ -83,7 +83,7 @@ class EditProfileWidget extends StatelessWidget {
       );
     }
 
-    Widget _saveButton(EditProfileState state) {
+    Widget _saveButton(EditProfileState state, BottomNavigationBloc navBloc) {
       return DecoratedBox(
         decoration: buttonDecoration,
         child: ElevatedButton(
@@ -92,6 +92,8 @@ class EditProfileWidget extends StatelessWidget {
             // checking if the form submitted is valid
             if (_formKey.currentState!.validate()) {
               print("Successfully cancelled");
+              navBloc.add(CheckRoleEvent());
+
               SaveButtonPressedEditProfileEvent ev =
                   SaveButtonPressedEditProfileEvent(
                       UserName: _userName,
@@ -100,6 +102,7 @@ class EditProfileWidget extends StatelessWidget {
                       ProfilePicture: 'assets/images/placeholder.jpg',
                       isChekced: isChecked);
               editBloc.add(ev);
+              navBloc.add(CheckRoleEvent());
             }
           },
           child: Padding(
@@ -300,7 +303,7 @@ class EditProfileWidget extends StatelessWidget {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 30.0),
-                              child: _saveButton(state),
+                              child: _saveButton(state, navBloc),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 30.0),

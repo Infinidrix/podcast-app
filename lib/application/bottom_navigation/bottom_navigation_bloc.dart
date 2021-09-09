@@ -27,7 +27,7 @@ class BottomNavigationBloc
     if (event is CheckRoleEvent) {
       roles = jsonEncode(await LoginProvider.SESSION.getString("roles"));
       print(roles);
-      print("roles roles roles \n\n\n $roles[0]");
+      print("roles if roles roles \n\n\n $roles[0]");
 
       if (roles.contains("Creator")) {
         yield UserNavigationState();

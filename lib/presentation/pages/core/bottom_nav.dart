@@ -25,13 +25,15 @@ Widget getBottomNavBar(BuildContext context) {
     listener: (context, state) {
       // TODO: implement listener
       if (state is UserNavigationState) {
+        print("in user nav state");
         routes = [
           HomeRoute(),
           SearchRoute(),
           LibraryDownloadSubTabMenuRoute(),
         ];
-      }
-      if (state is CreatorNavigationState) {
+      } else if (state is CreatorNavigationState) {
+        print("in creator nav state");
+
         routes = [
           HomeRoute(),
           SearchRoute(),
@@ -42,6 +44,7 @@ Widget getBottomNavBar(BuildContext context) {
     },
     builder: (context, state) {
 // navBloc.add(CheckRoleEvent());
+
       return CurvedNavigationBar(
         index: currentIndex,
         height: 60.0,

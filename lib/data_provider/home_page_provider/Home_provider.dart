@@ -2,7 +2,17 @@ import 'package:podcast_app/data_provider/home_page_provider/IHome_provider.dart
 import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/models/Podcast.dart';
 
+import 'dart:convert';
+import 'dart:io';
+import 'package:http/http.dart' as http;
+
+import '../constants.dart';
+
 class HomeProvider implements IHomeProvider {
+	final http.Client httpClient;
+	
+	HomeProvider({required this.httpClient});
+	
   List<Podcast> podcasts = List.generate(
       5,
       (index) => Podcast(
@@ -37,7 +47,15 @@ class HomeProvider implements IHomeProvider {
 
   @override
   Future<List<Podcast>> getRecentlyPlayed() async {
-    return podcasts;
+    final response = await httpClient
+        .get(Uri.parse('http://$URL/api/users/b7d27747-e66f-403d-8bcb-2125656ccb53/Audios/Recents'));
+	if (response.statusCode == 200){
+		Iterable parsed = json.decode(response.body);
+		List<Podcast> podcasts = List<Podcast>.from(parsed.map((e) => Podcast.fromJson(e)));
+		return podcasts;
+	} else {
+		throw SocketException("Response Code: ${response.statusCode}");
+	}
   }
 
   @override
@@ -47,6 +65,14 @@ class HomeProvider implements IHomeProvider {
 
   @override
   Future<List<Podcast>> getTrending() async {
-    return podcasts;
+    final response = await httpClient
+        .get(Uri.parse('http://$URL/api/users/b7d27747-e66f-403d-8bcb-2125656ccb53/Audios/Trending'));
+	if (response.statusCode == 200){
+		Iterable parsed = json.decode(response.body);
+		List<Podcast> podcasts = List<Podcast>.from(parsed.map((e) => Podcast.fromJson(e)));
+		return podcasts;
+	} else {
+		throw SocketException("Response Code: ${response.statusCode}");
+	}
   }
 }

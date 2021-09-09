@@ -21,7 +21,7 @@ class DownloadCard extends StatefulWidget {
 
 class _DownloadCardState extends State<DownloadCard> {
   int index;
-  _DownloadCardState(this.index): super();
+  _DownloadCardState(this.index) : super();
 
   @override
   Widget build(BuildContext context) {
@@ -29,31 +29,53 @@ class _DownloadCardState extends State<DownloadCard> {
     final audioPlayerBloc = BlocProvider.of<AudioPlayerBloc>(context);
 
     return BlocBuilder<DownloadBloc, DownloadState>(
-      builder: (context, state) => (state is LoadedDownloadState) ? Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[ Card(
-          margin: EdgeInsets.all(0),
-          child: Container(
-    
-            color: mainBackGroundColor,
-            child: ListTile(
-              leading: CircleAvatar(
-                backgroundImage:AssetImage('assets/images/placeholder.jpg'),
-              ),
-              title: Text('${state.podcasts.elementAt(index).name}',style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.bold),),
-              subtitle: Text('${state.podcasts.elementAt(index).channelName}',style: TextStyle(color:Color(0xffb3b3b3),fontSize:11,fontWeight: FontWeight.bold ),),
-              trailing: (state.index == index) ?
-                          CircularProgressIndicator() :
-                          (state.index < index) ? 
-                            Icon(Icons.hourglass_empty) :
-                            GestureDetector(child: Icon(Icons.play_circle_filled_rounded), onTap: (){
-                              audioPlayerBloc.add(InitializePlayerEvent(podcasts: ListQueue.from([state.podcasts.elementAt(index)])));
-                              context.router.push(PlayerRoute());
-                            },),
-            ),
-          ),
-        ),],
-      ) : CircularProgressIndicator(),
+      builder: (context, state) => (state is LoadedDownloadState)
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Card(
+                  margin: EdgeInsets.all(0),
+                  child: Container(
+                    color: mainBackGroundColor,
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundImage:
+                            AssetImage('assets/images/placeholder.jpg'),
+                      ),
+                      title: Text(
+                        '${state.podcasts.elementAt(index).name}',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                        '${state.podcasts.elementAt(index).channelName}',
+                        style: TextStyle(
+                            color: Color(0xffb3b3b3),
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      trailing: (state.index == index)
+                          ? CircularProgressIndicator()
+                          : (state.index < index)
+                              ? Icon(Icons.hourglass_empty)
+                              : GestureDetector(
+                                  child: Icon(Icons.play_circle_filled_rounded),
+                                  onTap: () {
+                                    audioPlayerBloc.add(InitializePlayerEvent(
+                                        podcasts: ListQueue.from([
+                                      state.podcasts.elementAt(index)
+                                    ])));
+                                    context.router.push(PlayerRoute());
+                                  },
+                                ),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          : CircularProgressIndicator(),
     );
   }
 }

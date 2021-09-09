@@ -26,8 +26,8 @@ class EditChannelSliverAppBar extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              GestureDetector(onTap: () => context.router.push(EditChannelDetailRoute(Name: "Hanan", Description: "Description", Image: "")),
-                child: Icon(Icons.edit_outlined)),
+              GestureDetector(
+                  onTap: () => {}, child: Icon(Icons.edit_outlined)),
             ],
           ),
         ),

@@ -14,7 +14,6 @@ class EditChannelPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: HexColor("#1A1A1A"),
       body: EditChannel(),
-      bottomNavigationBar: getBottomNavBar(context),
     );
   }
 }

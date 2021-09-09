@@ -107,7 +107,8 @@ class EditChannel extends StatelessWidget {
               return SliverList(
                   delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
-                  return RecentlyUploadedPodcast(podcast: podcasts![index]);
+                  return RecentlyUploadedPodcast(
+                      podcast: podcasts![index], channel: state.channel);
                 },
                 childCount: podcasts!.length,
               ));

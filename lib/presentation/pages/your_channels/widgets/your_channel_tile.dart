@@ -6,7 +6,7 @@ import 'package:podcast_app/application/edit_channel/edit_channel_bloc.dart';
 import 'package:podcast_app/application/edit_channel/edit_channel_event.dart';
 import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:podcast_app/presentation/pages/edit_channel/edit_channel_page.dart';
+import 'package:podcast_app/presentation/pages/edit_channel2/edit_channel_page.dart';
 
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 
@@ -69,8 +69,10 @@ class YourChannelTile extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.edit_outlined),
                   onPressed: () {
-                    // TOOD
-                    context.router.push(EditChannelRoute());
+                    context.router.push(EditChannelDetailRoute(
+                        Name: channel.Name,
+                        Description: channel.Description,
+                        Image: channel.ImageUrl));
                   },
                   color: Colors.white,
                 )

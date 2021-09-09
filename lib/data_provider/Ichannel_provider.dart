@@ -10,4 +10,6 @@ abstract class IChannelProvider {
       String userId, String channelId, bool subscriptionStatus);
   Future<Either<String, Channel>> createChannel(
       {required Map<String, dynamic> createChannelInfo});
+      Future<Either<String, Channel>> editChannel(
+      {required Map<String, dynamic> editChannelInfo});
 }

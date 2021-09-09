@@ -1,11 +1,9 @@
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
-import 'package:podcast_app/application/home/home_bloc.dart';
 import 'package:podcast_app/data_provider/login/login_provider.dart';
-
-import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/models/Podcast.dart';
+import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/models/edit_profile/edit_profile.dart';
 import 'package:podcast_app/repository/home_page_repository/IHomePageRepository.dart';
 
@@ -17,6 +15,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   HomePageBloc({required this.repository}) : super(LoadingHomePageState());
 
   UserEditProfile temp = UserEditProfile(
+    isCreator: false,
     UserName: "UserName",
     Email: "e@gmail.com",
     FirsName: "FirstName",

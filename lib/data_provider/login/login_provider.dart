@@ -40,9 +40,16 @@ class LoginProvider implements ILoginProvider {
         await setItemToLocalStrage(
             tokenName: "userCred", dataToStore: jsonEncode(userCred.toJson()));
         print("this is the thing i want ${parsed}");
+
         await setItemToLocalStrage(
             tokenName: "roles",
             dataToStore: jsonEncode(parsed['user']['roles']));
+        final roles = parsed['user']['roles'];
+        print("this the role in login ${roles}");
+        bool isCreator = false;
+        if (roles.contains("Creator")) {
+          isCreator = true;
+        }
         await setItemToLocalStrage(
             tokenName: "user", dataToStore: response.body);
         await setItemToLocalStrage(
@@ -53,11 +60,11 @@ class LoginProvider implements ILoginProvider {
             Email: parsed['user']['email'],
             Password: "",
             FirsName: parsed['user']["firstName"],
-            LastName: parsed['user']["lastName"]);
+            LastName: parsed['user']["lastName"],
+            isCreator: isCreator);
         userInfo.Password = userCred.Password;
         await setItemToLocalStrage(
             tokenName: "userInfo", dataToStore: jsonEncode(userInfo.toJson()));
-
         return right(LoginDtoModel.fromJson(parsed));
       } else if (response.statusCode == 400) {
         final parsed = json.decode(response.body);

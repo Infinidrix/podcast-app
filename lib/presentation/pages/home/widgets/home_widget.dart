@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -7,7 +8,6 @@ import 'package:podcast_app/application/home_page/home_page_state.dart';
 import 'package:podcast_app/presentation/pages/home/widgets/audio_card.dart';
 import 'package:podcast_app/presentation/pages/home/widgets/top_picks.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
-import 'package:auto_route/auto_route.dart';
 
 class HomeWidget extends StatelessWidget {
   const HomeWidget({Key? key}) : super(key: key);
@@ -34,7 +34,6 @@ class HomeWidget extends StatelessWidget {
           var trending = homePageState.trending;
           var recently = homePageState.recentlyPlayed;
           var topPicks = homePageState.topPicks;
-
           return ListView(children: [
             Column(
               children: [

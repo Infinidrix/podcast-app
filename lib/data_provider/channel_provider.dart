@@ -134,11 +134,29 @@ class ChannelPorvider implements IChannelProvider {
   Future<Channel?> editChannel(
       {required CreateChannel editChannelInfo,
       required String ChannelID}) async {
-    // return right(Channel(
-    //     Name: "this",
-    //     ImageUrl: "is",
-    //     Subscribers: 0,
-    //     Id: "Id",
-    //     Description: "Description"));
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('http://localhost:5001/api/channel/$ChannelID'))
+      ..fields.addAll({
+        "name": editChannelInfo.Name,
+        "description": editChannelInfo.Description
+      })
+      ..files.add(
+        await http.MultipartFile.fromPath("imagefile", editChannelInfo.Url),
+      );
+
+    StreamedResponse? response;
+
+    try {
+      response = await request.send();
+    } catch (e) {
+      return null;
+    }
+
+    if (response.statusCode == 200) {
+      return Channel.fromJson(
+          jsonDecode(await response.stream.bytesToString()));
+    } else {
+      return null;
+    }  
   }
 }

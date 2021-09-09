@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class FirstRowLibrary extends StatelessWidget {
-
   FirstRowLibrary();
 
   @override
@@ -11,8 +10,9 @@ class FirstRowLibrary extends StatelessWidget {
       child: Container(
         child: Text(
           // TODO: When
-          'Yesterday',
-          style: TextStyle(fontWeight: FontWeight.bold,
+          'Sorted by uploaded time',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
             fontSize: 11,
             color: Color(0xffB3B3B3),
           ),

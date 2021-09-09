@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:podcast_app/application/subscription/subscription_bloc.dart';
+import 'package:podcast_app/application/subscription/subscription_events.dart';
 import 'package:podcast_app/application/subscription/subscription_states.dart';
 
 import '../Constants.dart';
@@ -16,6 +17,8 @@ class Subscribed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SubscriptionBloc subscriptionBloc =
+        BlocProvider.of<SubscriptionBloc>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
@@ -28,21 +31,55 @@ class Subscribed extends StatelessWidget {
                     builder: (context, state) {
                   if (state is InitialSubscriptionState) {
                     if (state.channels.length == 0) {
-                      return Center(
-                          child: Text("You have no subscribed channels"));
+                      return RefreshIndicator(
+                        onRefresh: () async {
+                          subscriptionBloc.add(LoadInitialSubscriptionEvent());
+                        },
+                        child: Center(
+                            child: ListView(
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                children: [
+                              Center(
+                                  child: Text(
+                                "You have no subscribed channels",
+                                style: TextStyle(color: Colors.grey),
+                              ))
+                            ])),
+                      );
                     }
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                            flex: 15,
-                            child: ListView.builder(
-                              itemBuilder: (context, index) => SubscribedCard(
-                                channel: state.channels[index],
-                              ),
-                              itemCount: state.channels.length,
+                    return RefreshIndicator(
+                      onRefresh: () async {
+                        subscriptionBloc.add(LoadInitialSubscriptionEvent());
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(
+                              flex: 15,
+                              child: ListView.builder(
+                                itemBuilder: (context, index) => SubscribedCard(
+                                  channel: state.channels[index],
+                                ),
+                                itemCount: state.channels.length,
+                              ))
+                        ],
+                      ),
+                    );
+                  } else if (state is FailedSubscriptionState) {
+                    return RefreshIndicator(
+                      onRefresh: () async {
+                        subscriptionBloc.add(LoadInitialSubscriptionEvent());
+                      },
+                      child: Center(
+                          child: ListView(
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              children: [
+                            Center(
+                                child: Text(
+                              "Internet Error. Please Try again",
+                              style: TextStyle(color: Colors.grey),
                             ))
-                      ],
+                          ])),
                     );
                   } else {
                     return Center(

@@ -80,67 +80,24 @@ class ChannelPorvider implements IChannelProvider {
   }
 
   @override
-  Future<Either<String, Channel>> createChannel(
+  Future<Channel?> createChannel(
       {required Map<String, dynamic> createChannelInfo}) async {
-    //   try{
-    //     final response = await httpClient.post(Uri.http(URL, "/api/createChannel"),
-    //     headers: <String, String>{
-    //       'Content-Type': 'application/json; charset=UTF-8',
-    //     },
-    //     body: jsonEncode(createChannelInfo),
-    //     );
-    //     if (response.statusCode == 200) {
-    //     final parsed = json.decode(response.body);
-    //     print(parsed);
-    //     return right(Channel.fromJson(parsed));
-    //   } else if (response.statusCode == 400) {
-    //     final parsed = json.decode(response.body);
-    //     return left(parsed["message"]);
-    //   } else if (response.statusCode == 404) {
-    //     return left("Can not connect to internet");
-    //   }
-    //   return left("Some Error Happened");
-    // } on SocketException catch (e) {
-    //   print(e.message);
-    //   return left("Can not connect to internet ${e.runtimeType}");
-    // }
-
-    return right(Channel(
-        Name: "this",
-        ImageUrl: "is",
-        Subscribers: 0,
-        Id: "Id",
-        Description: "Description"));
+      
+    // return right(Channel(
+    //     Name: "this",
+    //     ImageUrl: "is",
+    //     Subscribers: 0,
+    //     Id: "Id",
+    //     Description: "Description"));
   }
 
-  Future<Either<String, Channel>> editChannel({required Map<String, dynamic> editChannelInfo, required String ChannelID}) async {
-      //   try{
-    //     final response = await httpClient.put(Uri.http(URL, "/api/editChannel"),
-    //     headers: <String, String>{
-    //       'Content-Type': 'application/json; charset=UTF-8',
-    //     },
-    //     body: jsonEncode(editChannelInfo),
-    //     );
-    //     if (response.statusCode == 201) {
-    //     final parsed = json.decode(response.body);
-    //     print(parsed);
-    //     return right(Channel.fromJson(parsed));
-    //   } else if (response.statusCode == 400) {
-    //     final parsed = json.decode(response.body);
-    //     return left(parsed["message"]);
-    //   } else if (response.statusCode == 404) {
-    //     return left("Can not connect to internet");
-    //   }
-    //   return left("Some Error Happened");
-    // } on SocketException catch (e) {
-    //   print(e.message);
-    //   return left("Can not connect to internet ${e.runtimeType}");
-    // }
-    return right(Channel(
-        Name: "this",
-        ImageUrl: "is",
-        Subscribers: 0,
-        Id: "Id",
-        Description: "Description"));
+  Future<Channel?> editChannel({required Map<String, dynamic> editChannelInfo, required String ChannelID}) async {
+       
+    // return right(Channel(
+    //     Name: "this",
+    //     ImageUrl: "is",
+    //     Subscribers: 0,
+    //     Id: "Id",
+    //     Description: "Description"));
   }
 }

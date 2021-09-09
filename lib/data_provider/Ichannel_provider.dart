@@ -8,8 +8,8 @@ abstract class IChannelProvider {
   Future<bool> isSubscribed(String userId, String channelId);
   Future<bool> setSubscription(
       String userId, String channelId, bool subscriptionStatus);
-  Future<Either<String, Channel>> createChannel(
+  Future<Channel?> createChannel(
       {required Map<String, dynamic> createChannelInfo});
-      Future<Either<String, Channel>> editChannel(
+      Future<Channel?> editChannel(
       {required Map<String, dynamic> editChannelInfo,required String ChannelID});
 }

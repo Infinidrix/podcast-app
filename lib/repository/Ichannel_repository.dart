@@ -3,11 +3,11 @@ import 'package:podcast_app/models/channel/Channel.dart';
 
 abstract class IChannelRepository {
   Future<Channel> getChannel(String channelId);
-  Future<Either<String, Channel>> createChannel(
+  Future<Channel?> createChannel(
       {required String Name,
       required String Description,
       required dynamic ImageURL});
-  Future<Either<String, Channel>> editChannel(
+  Future<Channel?> editChannel(
       {required String Name,
       required String Description,
       required dynamic ImageURL,

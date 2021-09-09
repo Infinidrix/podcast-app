@@ -23,12 +23,6 @@ class EditChannelDetailBloc
             Description: event.Description,
             ImageURL: event.Image,
             ChannelID: event.ChannelID);
-        print(ChannelOrError);
-        yield* ChannelOrError.fold((ErrorMessage) async* {
-          yield EditChannelDetailFailedState(ErrorMessage: ErrorMessage);
-        }, (channel) async* {
-          yield EditChannelDetailSuccessState();
-        });
       } catch (e) {
         print("object");
       }

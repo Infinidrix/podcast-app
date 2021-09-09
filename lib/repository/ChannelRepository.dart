@@ -30,7 +30,7 @@ class ChannelRepository implements IChannelRepository {
   }
 
   @override
-  Future<Either<String, Channel>> createChannel(
+  Future<Channel?> createChannel(
       {required String Name,
       required String Description,
       required dynamic ImageURL}) async {
@@ -42,7 +42,7 @@ class ChannelRepository implements IChannelRepository {
         createChannelInfo: channel.toJson());
   }
 
-  Future<Either<String, Channel>> editChannel(
+  Future<Channel?> editChannel(
       {required String Name,
       required String Description,
       required dynamic ImageURL,

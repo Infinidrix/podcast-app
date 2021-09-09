@@ -1,11 +1,25 @@
 import 'dart:io';
 
+import 'package:podcast_app/data_provider/create_podcast_provider/create_podcast_provider.dart';
+import 'package:podcast_app/models/Podcast.dart';
+
 class CreatePodcastRepository {
-  Future<void> savePodcast(
-      File? file, String podcastTitle, String podcastDescription) async {
-    print(file?.path.toString());
-    print(podcastTitle);
-    print(podcastDescription);
-    await Future.delayed(Duration(seconds: 3));
+  final CreatePodcastProvider createPodcastProvider;
+
+  CreatePodcastRepository(this.createPodcastProvider);
+
+  Future<bool> savePodcast(File? file, String podcastTitle,
+      String podcastDescription, String channelId, String userId) async {
+    Podcast? createdPodcast = await createPodcastProvider.createPodcast(
+        file!.path.toString(),
+        podcastTitle,
+        podcastDescription,
+        channelId,
+        userId);
+    if (createdPodcast == null) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

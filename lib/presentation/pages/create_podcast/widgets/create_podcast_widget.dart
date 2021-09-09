@@ -10,6 +10,10 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 
 class CreatePodcastWidget extends StatelessWidget {
+  final String channelId;
+
+  const CreatePodcastWidget({required this.channelId});
+
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
@@ -63,6 +67,7 @@ class CreatePodcastWidget extends StatelessWidget {
                   fileUploadingChoices =
                       FileEntry(filename: file!.path.split('/').last);
                 }
+
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -142,6 +147,7 @@ class CreatePodcastWidget extends StatelessWidget {
                                 file: file,
                                 podcastDescription: podcastDescription.text,
                                 podcastTitle: podcastTitle.text,
+                                channelId: this.channelId,
                               ),
                             );
                           },
@@ -163,6 +169,11 @@ class CreatePodcastWidget extends StatelessWidget {
                 if (createPodcastState is RecordState) {
                   context.router.push(RecorderRoute());
                 }
+
+                if (createPodcastState is SavingError) {
+                  print("Error Ocurred");
+                }
+
                 if (createPodcastState is Saved) {
                   context.router.pop();
                 }

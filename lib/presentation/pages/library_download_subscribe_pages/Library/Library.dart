@@ -15,6 +15,7 @@ class LibraryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final libraryBloc = BlocProvider.of<LibraryBloc>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
@@ -33,15 +34,33 @@ class LibraryPage extends StatelessWidget {
                             builder: (_, state) {
                           if (state is InitialLibraryState) {
                             if (state.podcasts.length == 0) {
-                              return Center(
-                                child: Text(
-                                    "You have no podcasts in your library"),
+                              return RefreshIndicator(
+                                onRefresh: () async {
+                                  libraryBloc.add(LoadLibraryEvent());
+                                },
+                                child: Center(
+                                    child: ListView(
+                                        physics:
+                                            const AlwaysScrollableScrollPhysics(),
+                                        children: [
+                                      Center(
+                                          child: Text(
+                                        "You have no subscribed channels",
+                                        style: TextStyle(color: Colors.grey),
+                                      )),
+                                    ])),
                               );
                             }
-                            return ListView.builder(
-                              itemBuilder: (_, i) =>
-                                  LibraryCard(podcast: state.podcasts[i]),
-                              itemCount: state.podcasts.length,
+                            return RefreshIndicator(
+                              onRefresh: () async {
+                                libraryBloc.add(LoadLibraryEvent());
+                              },
+                              child: ListView.builder(
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                itemBuilder: (_, i) =>
+                                    LibraryCard(podcast: state.podcasts[i]),
+                                itemCount: state.podcasts.length,
+                              ),
                             );
                           } else {
                             return Center(child: CircularProgressIndicator());

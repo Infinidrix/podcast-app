@@ -11,7 +11,7 @@ class CreatePodcastProvider extends ICreatePodcastProvider {
       String podcastDescription, String channelId, String userId) async {
     var request = MultipartRequest(
       'POST',
-      Uri.parse('http://localhost:5001/api/${userId}/audios'),
+      Uri.parse('${URL}/api/${userId}/audios'),
     )
       ..fields.addAll({
         "Title": podcastTitle,

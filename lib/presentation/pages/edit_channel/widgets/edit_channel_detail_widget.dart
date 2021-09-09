@@ -3,25 +3,19 @@ import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:podcast_app/application/create_channel/create_channel_bloc.dart';
-import 'package:podcast_app/application/create_channel/create_channel_event.dart';
-import 'package:podcast_app/application/create_channel/create_channel_state.dart';
 import 'package:podcast_app/application/edit_channel_detail/edit_channel_detail_bloc.dart';
 import 'package:podcast_app/application/edit_channel_detail/edit_channel_detail_event.dart';
 import 'package:podcast_app/application/edit_channel_detail/edit_channel_detail_state.dart';
+import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class EditChannelDetailWidget extends StatelessWidget {
-  final String Name;
-  final String Description;
-  dynamic ChannelImage;
+  final Channel channel;
 
   EditChannelDetailWidget(
-      {required this.Name,
-      required this.Description,
-      required this.ChannelImage});
+      {required this.channel});
 
   final _formKey = GlobalKey<FormState>();
   var nameTextController = TextEditingController();
@@ -72,8 +66,8 @@ class EditChannelDetailWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final channelBloc = BlocProvider.of<EditChannelDetailBloc>(context);
-    nameTextController.text = Name;
-    descriptionTextController.text = Description;
+    nameTextController.text = channel.Name;
+    descriptionTextController.text = channel.Description;
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -128,7 +122,7 @@ class EditChannelDetailWidget extends StatelessWidget {
                                   )
                                 : CircleAvatar(
                                     radius: 500,
-                                    backgroundImage: AssetImage(ChannelImage));
+                                    backgroundImage: AssetImage(channel.ImageUrl));
                           },
                         ),
                       ),
@@ -196,6 +190,7 @@ class EditChannelDetailWidget extends StatelessWidget {
               editChannelBloc.add(EditChannelDetailSaveEvent(
                   Name: nameTextController.text,
                   Description: descriptionTextController.text,
+                  ChannelID: channel.Id,
                   Image: editChannelState is EditChannelDetailImageUploadedState
                       ? editChannelState.Image
                       : ""));

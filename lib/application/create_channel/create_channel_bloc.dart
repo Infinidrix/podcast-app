@@ -36,12 +36,6 @@ class CreateChannelBloc extends Bloc<CreateChannelEvent, CreateChannelState> {
             Name: event.Name,
             Description: event.Description,
             ImageURL: event.ImageURL);
-        print(ChannelOrError);
-        yield* ChannelOrError.fold((ErrorMessage) async* {
-          yield CreateChannelFailedState(ErrorMessage: ErrorMessage);
-        }, (channel) async* {
-          yield CreateChannelSuccessState();
-        });
       } catch (e) {
         print("object");
       }

@@ -21,13 +21,8 @@ class EditChannelDetailBloc
         final ChannelOrError = await channelRepository.editChannel(
             Name: event.Name,
             Description: event.Description,
-            ImageURL: event.Image);
-        print(ChannelOrError);
-        yield* ChannelOrError.fold((ErrorMessage) async* {
-          yield EditChannelDetailFailedState(ErrorMessage: ErrorMessage);
-        }, (channel) async* {
-          yield EditChannelDetailSuccessState();
-        });
+            ImageURL: event.Image,
+            ChannelID: event.ChannelID);
       } catch (e) {
         print("object");
       }

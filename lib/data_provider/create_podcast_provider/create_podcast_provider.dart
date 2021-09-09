@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:http/http.dart';
 import 'package:podcast_app/data_provider/create_podcast_provider/I_create_podcast_provider.dart';
+import 'package:podcast_app/data_provider/constants.dart';
 import 'package:podcast_app/models/Podcast.dart';
 
 class CreatePodcastProvider extends ICreatePodcastProvider {
@@ -11,7 +12,7 @@ class CreatePodcastProvider extends ICreatePodcastProvider {
       String podcastDescription, String channelId, String userId) async {
     var request = MultipartRequest(
       'POST',
-      Uri.parse('${URL}/api/${userId}/audios'),
+      Uri.parse('$URL/api/$userId/audios'),
     )
       ..fields.addAll({
         "Title": podcastTitle,

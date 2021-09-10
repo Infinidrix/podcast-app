@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:podcast_app/application/create_podcast/create_podcast_application.dart';
 import 'package:podcast_app/application/create_podcast/create_podcast_bloc.dart';
+import 'package:podcast_app/data_provider/create_podcast_provider/create_podcast_provider.dart';
 import 'package:podcast_app/presentation/pages/create_podcast/widgets/create_podcast_widget.dart';
 import 'package:podcast_app/repository/CreatePodcastRepository.dart';
 
@@ -12,9 +13,9 @@ void main() {
     await tester.pumpWidget(
       BlocProvider(
         create: (context) => CreatePodcastBloc(
-            CreatePodcastInitialState(), CreatePodcastRepository()),
+            CreatePodcastInitialState(), CreatePodcastRepository(CreatePodcastProvider())),
         child: MaterialApp(
-          home: CreatePodcastWidget(),
+          home: CreatePodcastWidget(channelId: "",),
         ),
       ),
     );

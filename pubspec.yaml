@@ -57,6 +57,7 @@ dependencies:
   sqlite3_flutter_libs: ^0.5.0
   path: ^1.8.0
   dio:
+  cached_network_image: ^3.1.0
 
 
 

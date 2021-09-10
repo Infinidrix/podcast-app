@@ -54,6 +54,8 @@ class YourChannelsPage extends StatelessWidget {
                     );
                   } else if (state is LoadedYourChannel) {
                     List<Channel> channels = state.channels;
+                    // print("yourchaneels page: => \n ");
+                    // channels.forEach((e) => print(e.toJson()));
 
                     return RefreshIndicator(
                       onRefresh: () async {

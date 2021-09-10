@@ -20,7 +20,9 @@ class EditChannelProvider extends IEditChannelProvider {
     http.Response response1;
     try {
       String? userId = await LoginProvider.SESSION.getString('userId');
-
+      print("BEFORE");
+      print(userId);
+      print(podcast.id);
       response1 = await httpClient.delete(
           Uri.parse("http://$URL/api/Users/$userId/Audios/${podcast.id}"));
       // TODO:
@@ -29,6 +31,8 @@ class EditChannelProvider extends IEditChannelProvider {
     } catch (e) {
       return left('Error');
     }
+    print("REsponse 1 ${response1.statusCode}");
+    print("REsponse ${response.statusCode}");
     if (response.statusCode == 200) {
       final parsed = json.decode(response.body);
       print(parsed);
@@ -46,10 +50,10 @@ class EditChannelProvider extends IEditChannelProvider {
     try {
       String? userId = await LoginProvider.SESSION.getString('userId');
       print("I've got the fucking userId $userId");
+      print("\n\nPodcast id ${podcast.id}");
       response1 = await httpClient.patch(
           Uri.parse("http://$URL/api/Users/$userId/Audios/${podcast.id}"),
-          body: jsonEncode(
-              {"Title": podcast.name, "Description": podcast.description}));
+          body: {"Title": podcast.name, "Description": podcast.description});
       response = await httpClient.get(
           Uri.parse("http://$URL/api/Users/$userId/channel/${channel.Id}"));
     } catch (e) {
@@ -65,7 +69,7 @@ class EditChannelProvider extends IEditChannelProvider {
       return Right(Channel.fromJson(parsed));
     } else {
       print("KEFT");
-      return Left("Error");
+      return left("Error");
     }
   }
 }

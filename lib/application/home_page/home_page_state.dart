@@ -6,6 +6,12 @@ abstract class HomePageState {}
 
 class LoadingHomePageState extends HomePageState {}
 
+class FailedHomePageState extends HomePageState {
+  String errorMessage;
+
+  FailedHomePageState(this.errorMessage);
+}
+
 class LoadedHomePageState extends HomePageState {
   List<Channel> topPicks;
   List<Podcast> trending;

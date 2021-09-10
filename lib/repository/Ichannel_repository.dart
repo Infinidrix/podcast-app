@@ -12,6 +12,7 @@ abstract class IChannelRepository {
       required String Description,
       required dynamic ImageURL,
       required String ChannelID});
-  Future<bool> isSubscribed(String channelId);
-  Future<bool> setSubscription(String channelId, bool subscriptionStatus);
+  Future<bool> isSubscribed(String userId, String channelId);
+  Future<bool> setSubscription(
+      String userId, String channelId, bool subscriptionStatus);
 }

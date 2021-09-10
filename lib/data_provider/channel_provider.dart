@@ -12,6 +12,8 @@ import 'constants.dart';
 import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/models/Podcast.dart';
 
+import 'login/login_provider.dart';
+
 class ChannelPorvider implements IChannelProvider {
   final http.Client httpClient;
 
@@ -60,12 +62,13 @@ class ChannelPorvider implements IChannelProvider {
                     imageUrl: "",
                     id: "$index",
                   ))));
-
-  bool isSubscribedValue = true;
   @override
   Future<bool> isSubscribed(String userId, String channelId) async {
-    final response = await httpClient.get(Uri.parse(
-        'http://$URL/api/users/b7d27747-e66f-403d-8bcb-2125656ccb53/Subscriptions/9830371b-97f7-4655-8ebc-d9837be8edf7'));
+    final response = await httpClient
+        .get(
+            Uri.parse('http://$URL/api/users/$userId/Subscriptions/$channelId'))
+        .timeout(Duration(seconds: 7));
+    print("This is subscribe ${response.body}");
     if (response.statusCode == 200) {
       return true;
     } else {
@@ -75,15 +78,24 @@ class ChannelPorvider implements IChannelProvider {
 
   @override
   Future<Channel> getChannel(String id) async {
-    final response =
-        await httpClient.get(Uri.parse("http://$URL/api/channel/$id"));
+    final user = json.decode(LoginProvider.SESSION.getString("user")!)
+        as Map<String, dynamic>;
+    String token = user["token"] as String;
+    // TODO: Change this to actual user id
+    print("Got here");
+    final response = await httpClient.get(
+        Uri.parse(
+            'http://$URL/api/users/${LoginProvider.SESSION.getString('userId')}/channel/$id'),
+        headers: {
+          'Authorization': 'Bearer ${token}',
+        }).timeout(Duration(seconds: 7));
     if (response.statusCode == 200) {
-      final parsed = json.decode(response.body);
-      print(parsed);
-      return Channel.fromJson(parsed);
+      var parsed = json.decode(response.body);
+      Channel channel = Channel.fromJson(parsed);
+      return channel;
     } else {
-      print("Some error");
-      throw Exception();
+      print(response.body);
+      throw SocketException("Response Code: ${response.statusCode}");
     }
   }
 
@@ -91,19 +103,20 @@ class ChannelPorvider implements IChannelProvider {
   Future<bool> setSubscription(
       String userId, String channelId, bool subscriptionStatus) async {
     if (subscriptionStatus) {
-      final response = await httpClient.put(Uri.parse(
-          'http://$URL/api/users/b7d27747-e66f-403d-8bcb-2125656ccb53/Subscriptions/9830371b-97f7-4655-8ebc-d9837be8edf7'));
+      final response = await httpClient.put(
+          Uri.parse('http://$URL/api/users/$userId/Subscriptions/$channelId'));
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 202) {
         return true;
       } else {
+        print(response.body);
         throw SocketException("Response Code: ${response.statusCode}");
       }
     } else {
-      final response = await httpClient.delete(Uri.parse(
-          'http://$URL/api/users/b7d27747-e66f-403d-8bcb-2125656ccb53/Subscriptions/9830371b-97f7-4655-8ebc-d9837be8edf7'));
+      final response = await httpClient.delete(
+          Uri.parse('http://$URL/api/users/$userId/Subscriptions/$channelId'));
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 202) {
         return false;
       } else {
         throw SocketException("Response Code: ${response.statusCode}");

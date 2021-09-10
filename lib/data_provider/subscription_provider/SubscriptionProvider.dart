@@ -15,8 +15,7 @@ class OnlineSubscriptionProvider extends ISubscriptionProvider {
   @override
   Future<List<Channel>> getSubscribedChannels(String userId) async {
     final response = await httpClient
-        .get(Uri.parse(
-            'http://$URL/api/users/b7d27747-e66f-403d-8bcb-2125656ccb53/Subscriptions'))
+        .get(Uri.parse('http://$URL/api/users/$userId/Subscriptions'))
         .timeout(Duration(seconds: 5));
 
     if (response.statusCode == 200) {

@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:podcast_app/application/subscription/subscription_events.dart';
 import 'package:podcast_app/application/subscription/subscription_states.dart';
+import 'package:podcast_app/data_provider/login/login_provider.dart';
 import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/repository/library_repository/library_repository.dart';
 import 'package:podcast_app/repository/subscription_repository/ISubscriptionRepository.dart';
@@ -39,8 +40,8 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
     if (event is LoadInitialSubscriptionEvent) {
       yield LoadingSubscriptionState();
       try {
-        List<Channel> subscriptionChannels =
-            await subscriptionRepository.getSubscribedChannels("userId");
+        List<Channel> subscriptionChannels = await subscriptionRepository
+            .getSubscribedChannels(LoginProvider.SESSION.getString('userId')!);
         yield InitialSubscriptionState(subscriptionChannels);
       } catch (e) {
         yield FailedSubscriptionState(e.toString());

@@ -48,8 +48,15 @@ class HomeProvider implements IHomeProvider {
 
   @override
   Future<List<Podcast>> getRecentlyPlayed() async {
-    final response = await httpClient.get(Uri.parse(
-        "http://$URL/api/users/${await LoginProvider.SESSION.getString('userId')}/Audios/Recents"));
+    final user = json.decode(LoginProvider.SESSION.getString("user")!)
+        as Map<String, dynamic>;
+    String token = user["token"] as String;
+    final response = await httpClient.get(
+        Uri.parse(
+            "http://$URL/api/users/${await LoginProvider.SESSION.getString('userId')}/Audios/Recents"),
+        headers: {
+          'Authorization': 'Bearer ${token}',
+        }).timeout(Duration(seconds: 5));
     if (response.statusCode == 200) {
       Iterable parsed = json.decode(response.body);
       List<Podcast> podcasts =
@@ -62,13 +69,37 @@ class HomeProvider implements IHomeProvider {
 
   @override
   Future<List<Channel>> getTopPicks() async {
-    return channels;
+    // return channels;
+    final user = json.decode(LoginProvider.SESSION.getString("user")!)
+        as Map<String, dynamic>;
+    String token = user["token"] as String;
+    final response = await httpClient.get(
+        Uri.parse(
+            "http://$URL/api/users/${await LoginProvider.SESSION.getString('userId')}/channel"),
+        headers: {
+          'Authorization': 'Bearer ${token}',
+        }).timeout(Duration(seconds: 7));
+    if (response.statusCode == 200) {
+      Iterable parsed = json.decode(response.body);
+      List<Channel> channels =
+          List<Channel>.from(parsed.map((e) => Channel.fromJson(e)));
+      return channels;
+    } else {
+      throw SocketException("Response Code: ${response.statusCode}");
+    }
   }
 
   @override
   Future<List<Podcast>> getTrending() async {
-    final response = await httpClient.get(Uri.parse(
-        "http://$URL/api/users/${await LoginProvider.SESSION.getString('userId')}/Audios/Recents"));
+    final user = json.decode(LoginProvider.SESSION.getString("user")!)
+        as Map<String, dynamic>;
+    String token = user["token"] as String;
+    final response = await httpClient.get(
+        Uri.parse(
+            "http://$URL/api/users/${await LoginProvider.SESSION.getString('userId')}/Audios/Recents"),
+        headers: {
+          'Authorization': 'Bearer ${token}',
+        }).timeout(Duration(seconds: 5));
     if (response.statusCode == 200) {
       Iterable parsed = json.decode(response.body);
       List<Podcast> podcasts =

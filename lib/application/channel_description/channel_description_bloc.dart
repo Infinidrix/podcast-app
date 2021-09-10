@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
+import 'package:podcast_app/data_provider/login/login_provider.dart';
 import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/repository/Ichannel_repository.dart';
 
@@ -21,20 +23,24 @@ class ChannelDescriptionBloc
   @override
   Stream<ChannelDescriptionState> mapEventToState(
       ChannelDescriptionEvent event) async* {
-    if (event is SubscriptionEvent) {
-      yield LoadingChannelDescriptionState();
-      Future.delayed(Duration(seconds: 1), () {
-        print("Sending request to the internet");
-      });
-      channelRepository.setSubscription(event.channelId, event.isSubscribing);
-      yield InitialChannelDescriptionState(channel, event.isSubscribing);
-    } else if (event is LoadInitialEvent) {
-      channel = event.channel;
-      isSubscribed = await channelRepository.isSubscribed(channel.Id);
+    try {
+      final userId = LoginProvider.SESSION.getString("userId")!;
+      if (event is SubscriptionEvent) {
+        yield LoadingChannelDescriptionState();
+        channelRepository.setSubscription(
+            userId, channel.Id, event.isSubscribing);
+        yield InitialChannelDescriptionState(channel, event.isSubscribing);
+      } else if (event is LoadInitialEvent) {
+        yield LoadingChannelDescriptionState();
+        channel = event.channel;
+        channel = await channelRepository.getChannel(channel.Id);
+        isSubscribed = await channelRepository.isSubscribed(userId, channel.Id);
 
-      yield LoadingChannelDescriptionState();
-      await Future.delayed(Duration(seconds: 3), () {});
-      yield InitialChannelDescriptionState(channel, isSubscribed);
+        yield InitialChannelDescriptionState(channel, isSubscribed);
+      }
+    } catch (e) {
+      print(e);
+      yield FailedChannelDescriptionState(e.toString(), channel);
     }
   }
 }

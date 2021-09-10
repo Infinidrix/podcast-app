@@ -100,10 +100,10 @@ class MyApp extends StatelessWidget {
         httpClient: http.Client(),
       ),
     );
-    final audioRepository = AudioRepository(AudioProvider());
+    final audioRepository =
+        AudioRepository(AudioProvider(httpClient: http.Client()));
     final yourChannelRepository = YourChannelRepository(
         dataProvider: YourChannelProvider(httpClient: http.Client()));
-
     final editProfilRepository = EditProfileRepository(
         editProfileProvider: EditProfileProvider(httpClient: http.Client()));
 

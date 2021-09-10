@@ -1,8 +1,17 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:dartz/dartz.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:podcast_app/data_provider/search_page_provider/ISearch_provider.dart';
 import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/models/Podcast.dart';
 
 class SearchProvider extends ISearchProvider {
+  final http.Client httpClient;
+
+  SearchProvider({required this.httpClient});
+
   List<Podcast> podcasts = List.generate(
       5,
       (index) => Podcast(
@@ -34,9 +43,36 @@ class SearchProvider extends ISearchProvider {
                     imageUrl: "assets/images/placeholder.jpg",
                     id: "$index",
                   ))));
-  Future<List<Channel>> searchChannel(String search) async {
-    Future.delayed(Duration(seconds: 2));
-    return channels;
+
+  Future<Either<String, List<Channel>>> searchChannel(String search) async {
+    http.Response? response;
+
+    try {
+      response = await httpClient
+          .get(Uri.parse(
+              'http://192.168.0.131:44343/api/channel/search/$search'))
+          .timeout(Duration(seconds: 5));
+    } catch (e) {
+      // final parsed = json.decode(response.body);
+      print("ERROR");
+      return left(e.toString());
+    }
+    if (response.statusCode == 401) {
+      return left("UnAuthorized");
+    }
+
+    if (response.statusCode == 200) {
+      Iterable parsed = json.decode(response.body);
+      List<Channel> channels =
+          List<Channel>.from(parsed.map((e) => Channel.fromJson(e)));
+      print("PRINT C");
+      print(channels);
+      return Right(channels);
+    } else {
+      // final parsed = json.decode(response.body);
+      // print(parsed);
+      return left('parsed.toString()');
+    }
   }
 
   @override

@@ -16,7 +16,15 @@ class EditChannel extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
-        BlocBuilder<EditChannelBloc, EditChannelState>(
+        BlocConsumer<EditChannelBloc, EditChannelState>(
+          listener: (context, state) {
+            if (state is ErrorEditChannelState) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(state.error),
+                duration: Duration(seconds: 4),
+              ));
+            }
+          },
           builder: (context, state) {
             return SliverAppBar(
               pinned: true,

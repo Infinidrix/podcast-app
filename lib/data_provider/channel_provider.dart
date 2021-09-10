@@ -74,8 +74,16 @@ class ChannelPorvider implements IChannelProvider {
 
   @override
   Future<Channel> getChannel(String id) async {
-    Future.delayed(Duration(seconds: 2));
-    return channels[0];
+    final response =
+        await httpClient.get(Uri.parse("http://$URL/api/channel/$id"));
+    if (response.statusCode == 200) {
+      final parsed = json.decode(response.body);
+      print(parsed);
+      return Channel.fromJson(parsed);
+    } else {
+      print("Some error");
+      throw Exception();
+    }
   }
 
   @override

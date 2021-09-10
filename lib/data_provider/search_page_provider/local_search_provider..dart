@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:podcast_app/data_provider/search_page_provider/ISearch_provider.dart';
 import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/models/Podcast.dart';
@@ -48,7 +49,7 @@ class LocalSearchProvider extends ISearchProvider {
   }
 
   @override
-  Future<List<Channel>> searchChannel(String search) {
+  Future<Either<String, List<Channel>>> searchChannel(String search) {
     // TODO: implement searchChannel
     throw UnimplementedError();
   }

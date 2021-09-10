@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
         channelProvider: ChannelPorvider(httpClient: http.Client()));
 
     final searchRepository = SearchRepository(
-        apiDataProvider: SearchProvider(),
+        apiDataProvider: SearchProvider(httpClient: http.Client()),
         localDataProvider: LocalSearchProvider());
 
     final homePageRepository = HomePageRepository(
@@ -84,15 +84,15 @@ class MyApp extends StatelessWidget {
       ),
     );
     final audioRepository = AudioRepository(AudioProvider());
-    final yourChannelRepository =
-        YourChannelRepository(dataProvider: YourChannelProvider());
+    final yourChannelRepository = YourChannelRepository(
+        dataProvider: YourChannelProvider(httpClient: http.Client()));
     final editProfilRepository =
         EditProfileRepository(editProfileProvider: EditProfileProvider());
     final downloadedAudioRepository =
         DownloadedAudioRepository(DownloadedAudioProvider());
 
-    final editChannelRepository =
-        EditChannelRepository(apidataProvider: EditChannelProvider());
+    final editChannelRepository = EditChannelRepository(
+        apidataProvider: EditChannelProvider(httpClient: http.Client()));
     return MultiBlocProvider(
       providers: [
         BlocProvider<CreatePodcastBloc>(

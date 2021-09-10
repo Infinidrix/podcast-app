@@ -159,7 +159,7 @@ class EditProfileWidget extends StatelessWidget {
         if (state is SuccesEditProfileState) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text("success"),
-            duration: Duration(seconds: 3),
+            duration: Duration(seconds: 4),
           ));
         }
         if (state is ErrorStateEditProfileState) {

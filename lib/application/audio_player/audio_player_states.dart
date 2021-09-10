@@ -35,6 +35,8 @@ class AudioPlayerStatus {
   bool isPlaying;
   Podcast currentPodcast;
   int currentIndex;
+  bool finishedQueue;
 
-  AudioPlayerStatus(this.isPlaying, this.currentIndex, this.currentPodcast);
+  AudioPlayerStatus(this.isPlaying, this.currentIndex, this.currentPodcast,
+      this.finishedQueue);
 }

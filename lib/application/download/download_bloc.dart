@@ -44,8 +44,12 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
         } else if (currentState.core == null) {
           final core = await downloadEpisode(event.podcast);
           currentState.podcasts.add(event.podcast);
-          yield InitialDownloadState(currentState.podcasts, event.podcast,
-              currentState.podcasts.length - 1, DownloadProgress(0, false),
+          yield InformationalLoadedDownloadState(
+              "Added to Download Queue",
+              currentState.podcasts,
+              event.podcast,
+              currentState.podcasts.length - 1,
+              DownloadProgress(0, false),
               core: core);
         }
       } else {

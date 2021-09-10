@@ -20,7 +20,7 @@ class _DownloadPageState extends State<DownloadPage> {
   @override
   Widget build(BuildContext context) {
     final downloadBloc = BlocProvider.of<DownloadBloc>(context);
-    return BlocConsumer<DownloadBloc, DownloadState>(
+    return BlocBuilder<DownloadBloc, DownloadState>(
       builder: (context, state) {
         if (state is LoadedDownloadState) {
           return Column(
@@ -49,20 +49,6 @@ class _DownloadPageState extends State<DownloadPage> {
         return Center(
           child: CircularProgressIndicator(),
         );
-      },
-      listener: (context, state) {
-        if (state is FailedDownloadState) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("${state.errorMessage}"),
-            duration: Duration(seconds: 2),
-          ));
-        } else if (state is FailedLoadedDownloadState) {
-          // TODO: Find a better way for this
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("${state.errorMessage}"),
-            duration: Duration(seconds: 2),
-          ));
-        }
       },
     );
   }

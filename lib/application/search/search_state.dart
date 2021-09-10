@@ -1,5 +1,5 @@
-import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/models/Podcast.dart';
+import 'package:podcast_app/models/channel/Channel.dart';
 
 abstract class SearchState {}
 
@@ -22,5 +22,12 @@ class SearchResult extends SearchState {
   SearchResult({
     required this.podcastResult,
     required this.channelResult,
+  });
+}
+
+class SearchError extends SearchState {
+  String error;
+  SearchError({
+    required this.error,
   });
 }

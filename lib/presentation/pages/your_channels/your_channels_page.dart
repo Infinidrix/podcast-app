@@ -36,7 +36,15 @@ class YourChannelsPage extends StatelessWidget {
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.8,
-              child: BlocBuilder<YourChannelBloc, YourChannelState>(
+              child: BlocConsumer<YourChannelBloc, YourChannelState>(
+                listener: (context, state) {
+                  if (state is YourChannelError) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(state.error),
+                      duration: Duration(milliseconds: 5500),
+                    ));
+                  }
+                },
                 builder: (context, state) {
                   if (state is LoadingYourChannel) {
                     return Center(

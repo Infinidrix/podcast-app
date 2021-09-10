@@ -46,7 +46,7 @@ void main() {
   });
   testWidgets("Testing the TextFormField.", (WidgetTester tester) async {
     await tester.pumpWidget(
-     MultiBlocProvider(
+      MultiBlocProvider(
         providers: [
           BlocProvider(
             create: (context) => LoginBloc(
@@ -69,4 +69,62 @@ void main() {
 
     expect(emailfield, findsOneWidget);
   });
+
+  testWidgets("Testing the signin page has some widgets.",
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => LoginBloc(
+                loginRepository: LoginRepository(
+              loginDataProvider: LoginProvider(
+                httpClient: http.Client(),
+              ),
+            )),
+          ),
+          BlocProvider(
+              create: (context) =>
+                  HomePageBloc(repository: homePageRepository)),
+        ],
+        child: MaterialApp(
+          home: SigninWidget(),
+        ),
+      ),
+    );
+    var noOfContainer = find.byType(Container);
+    WidgetPredicate widgetSelectedPredicate = (Widget widget) =>
+        widget is GestureDetector &&
+        widget.child ==
+            Icon(
+              Icons.remove_red_eye_outlined,
+            );
+    expect(noOfContainer, findsNWidgets(2));
+    expect(find.byWidgetPredicate(widgetSelectedPredicate), findsNothing);
+    expect(_getPasswordTextFormField(), findsOneWidget);
+    expect(_getElevatedButton(), findsNothing);
+  });
+}
+
+Finder _getPasswordTextFormField() {
+  WidgetPredicate widgetSelectedPredicate = (Widget widget) =>
+      widget is TextFormField && widget.key == Key("password_field");
+
+  return find.byWidgetPredicate(widgetSelectedPredicate);
+}
+
+Finder _getElevatedButton() {
+  WidgetPredicate widgetSelectedPredicate = (Widget widget) =>
+      widget is ElevatedButton &&
+      widget.style ==
+          ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.transparent),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+            ),
+          );
+
+  return find.byWidgetPredicate(widgetSelectedPredicate);
 }

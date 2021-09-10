@@ -23,9 +23,7 @@ class PlayerPage extends StatelessWidget {
             PlayerAppBar(),
             BlocBuilder<AudioPlayerBloc, AudioPlayerState>(
               builder: (_, state) => Container(
-                child: state.status.currentPodcast.imageUrl != null
-                    ? Image.network(state.status.currentPodcast.imageUrl!)
-                    : Image.asset("assets/images/1by1.png"),
+                child: Image.asset("assets/images/1by1.png"),
               ),
             ),
             BlocConsumer<DownloadBloc, DownloadState>(

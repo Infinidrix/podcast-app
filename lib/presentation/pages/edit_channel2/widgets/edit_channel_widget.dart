@@ -48,18 +48,23 @@ class EditChannel extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          state.channel.Name,
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
+                                        Container(
+                                          width: 120,
+                                          child: Text(
+                                            state.channel.Name,
+                                            overflow: TextOverflow.fade,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          ),
                                         ),
                                         GestureDetector(
                                           onTap: () {
-                                            context.router.push(CreatePodcastRoute(
-                                                channelId:
-                                                    state.channel.Id ));
+                                            context.router.push(
+                                                CreatePodcastRoute(
+                                                    channelId:
+                                                        state.channel.Id));
                                           },
                                           child: Icon(
                                             Icons.add,

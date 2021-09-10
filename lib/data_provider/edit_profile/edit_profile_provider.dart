@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:podcast_app/data_provider/edit_profile/i_edit_profile_provider.dart';
 import 'package:podcast_app/data_provider/login/login_provider.dart';
@@ -120,5 +121,30 @@ class EditProfileProvider implements IEditProfileProvider {
       return left("there is no internet connection ${e.runtimeType}");
     }
     return left("there is no internet connection  here");
+  }
+
+  @override
+  Future<Either<String, bool>> uploadProfile(dynamic profile) async {
+    final id = await LoginProvider.SESSION.getString("userId");
+
+    String url = "http://$URL/api/update/profile/$id";
+
+    try {
+      String filename = profile.path.split('/').last;
+      FormData formData = FormData.fromMap({
+        "image": await MultipartFile.fromFile(
+          profile.path,
+          filename: filename,
+        ),
+      });
+      var response = await Dio().post(
+        '$url',
+        data: formData,
+        options: Options(
+          headers: {"accept": "/", "Content-Type": "multipart/form-data"},
+        ),
+      );
+    } catch (e) {}
+    return left("som");
   }
 }

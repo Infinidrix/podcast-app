@@ -7,6 +7,7 @@
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
 
+import '../../models/channel/Channel.dart' as _i19;
 import '../../models/edit_profile/edit_profile.dart' as _i18;
 import '../pages/channel_detail/channel_detail_page.dart' as _i7;
 import '../pages/create_channel/create_channel_page.dart' as _i8;
@@ -99,10 +100,7 @@ class RootRouter extends _i1.RootStackRouter {
         routeData: routeData,
         builder: (data) {
           final args = data.argsAs<EditChannelDetailRouteArgs>();
-          return _i14.EditChannelDetailPage(
-              Name: args.Name,
-              Description: args.Description,
-              Image: args.Image);
+          return _i14.EditChannelDetailPage(channel: args.channel);
         }),
     EditChannelRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
@@ -253,27 +251,18 @@ class RecorderRoute extends _i1.PageRouteInfo {
 
 class EditChannelDetailRoute
     extends _i1.PageRouteInfo<EditChannelDetailRouteArgs> {
-  EditChannelDetailRoute(
-      {required String Name,
-      required String Description,
-      required dynamic Image})
+  EditChannelDetailRoute({required _i19.Channel channel})
       : super(name,
             path: '/edit_channel_detail_page',
-            args: EditChannelDetailRouteArgs(
-                Name: Name, Description: Description, Image: Image));
+            args: EditChannelDetailRouteArgs(channel: channel));
 
   static const String name = 'EditChannelDetailRoute';
 }
 
 class EditChannelDetailRouteArgs {
-  const EditChannelDetailRouteArgs(
-      {required this.Name, required this.Description, required this.Image});
+  const EditChannelDetailRouteArgs({required this.channel});
 
-  final String Name;
-
-  final String Description;
-
-  final dynamic Image;
+  final _i19.Channel channel;
 }
 
 class EditChannelRoute extends _i1.PageRouteInfo {

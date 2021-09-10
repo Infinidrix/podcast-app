@@ -9,26 +9,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
+import 'package:podcast_app/application/home_page/home_page_bloc.dart';
 import 'package:podcast_app/application/login/login_bloc.dart';
-import 'package:podcast_app/application/sign_in/sign_in_bloc.dart';
-import 'package:podcast_app/application/signup/signup_bloc.dart';
+import 'package:podcast_app/data_provider/home_page_provider/Home_provider.dart';
 import 'package:podcast_app/data_provider/login/login_provider.dart';
-
-import 'package:podcast_app/main.dart';
-import 'package:podcast_app/presentation/app_widget.dart';
 import 'package:podcast_app/presentation/pages/signin/widgets/signin_page_widget.dart';
+import 'package:podcast_app/repository/home_page_repository/HomePageRepository.dart';
 import 'package:podcast_app/repository/login_repository.dart';
 
 void main() {
+  final homePageRepository =
+      HomePageRepository(dataProvider: HomeProvider(httpClient: http.Client()));
   testWidgets("Testing the button of signin.", (WidgetTester tester) async {
     await tester.pumpWidget(
-      BlocProvider(
-        create: (context) => LoginBloc(
-            loginRepository: LoginRepository(
-          loginDataProvider: LoginProvider(
-            httpClient: http.Client(),
+      MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => LoginBloc(
+                loginRepository: LoginRepository(
+              loginDataProvider: LoginProvider(
+                httpClient: http.Client(),
+              ),
+            )),
           ),
-        )),
+          BlocProvider(
+              create: (context) =>
+                  HomePageBloc(repository: homePageRepository)),
+        ],
         child: MaterialApp(
           home: SigninWidget(),
         ),
@@ -39,13 +46,20 @@ void main() {
   });
   testWidgets("Testing the TextFormField.", (WidgetTester tester) async {
     await tester.pumpWidget(
-      BlocProvider(
-        create: (context) => LoginBloc(
-            loginRepository: LoginRepository(
-          loginDataProvider: LoginProvider(
-            httpClient: http.Client(),
+     MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => LoginBloc(
+                loginRepository: LoginRepository(
+              loginDataProvider: LoginProvider(
+                httpClient: http.Client(),
+              ),
+            )),
           ),
-        )),
+          BlocProvider(
+              create: (context) =>
+                  HomePageBloc(repository: homePageRepository)),
+        ],
         child: MaterialApp(
           home: SigninWidget(),
         ),

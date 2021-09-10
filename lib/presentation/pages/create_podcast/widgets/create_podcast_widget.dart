@@ -171,7 +171,10 @@ class CreatePodcastWidget extends StatelessWidget {
                 }
 
                 if (createPodcastState is SavingError) {
-                  print("Error Ocurred");
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text("Connection Error Occured"),
+                    duration: Duration(seconds: 3)
+                  ));
                 }
 
                 if (createPodcastState is Saved) {

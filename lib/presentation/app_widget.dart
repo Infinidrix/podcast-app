@@ -106,6 +106,7 @@ class MyApp extends StatelessWidget {
 
     final editProfilRepository = EditProfileRepository(
         editProfileProvider: EditProfileProvider(httpClient: http.Client()));
+
     final downloadedAudioRepository =
         DownloadedAudioRepository(DownloadedAudioProvider());
 

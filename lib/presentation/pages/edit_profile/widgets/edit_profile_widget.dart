@@ -8,6 +8,7 @@ import 'package:podcast_app/application/bottom_navigation/bottom_navigation_bloc
 import 'package:podcast_app/application/edit_profile/edit_profile_bloc.dart';
 import 'package:podcast_app/application/home_page/home_page_bloc.dart';
 import 'package:podcast_app/application/home_page/home_page_event.dart';
+import 'package:podcast_app/data_provider/constants.dart';
 import 'package:podcast_app/models/edit_profile/edit_profile.dart';
 import 'package:podcast_app/presentation/core/constants.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
@@ -29,6 +30,7 @@ class EditProfileWidget extends StatelessWidget {
     TextEditingController _userNameController =
         TextEditingController(text: "Set My Text Here");
 
+    final bottomNavBloc = BlocProvider.of<BottomNavigationBloc>(context);
     final editProfileBloc = BlocProvider.of<EditProfileBloc>(context);
     editProfileBloc.add(IntitalEditProfileEvent());
     final _formKey = GlobalKey<FormState>();
@@ -208,6 +210,7 @@ class EditProfileWidget extends StatelessWidget {
           editProfileBloc.add(IntitalEditProfileEvent());
         }
         if (state is SuccesEditProfileState) {
+          bottomNavBloc.add(CheckRoleEvent());
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text("success"),
             duration: Duration(seconds: 3),
@@ -374,7 +377,7 @@ class EditProfileWidget extends StatelessWidget {
             child: CircleAvatar(
               radius: 60,
               backgroundImage: NetworkImage(
-                  'http://192.168.0.131:44343/api/update /profile/0dd7361e-a131-4614-82c7-08e02a1c4445'),
+                  'http://$URL:44343/api/update /profile/0dd7361e-a131-4614-82c7-08e02a1c4445'),
               // AssetImage(state.user.ProfilePicture),
               // backgroundImage: (state is InitialEditProfileState)
               //     ? AssetImage(state.user.ProfilePicture)

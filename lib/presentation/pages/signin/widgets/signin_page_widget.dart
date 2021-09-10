@@ -2,6 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:podcast_app/application/home_page/home_page_bloc.dart';
+import 'package:podcast_app/application/home_page/home_page_event.dart';
 import 'package:podcast_app/application/login/login_bloc.dart';
 import 'package:podcast_app/presentation/core/constants.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
@@ -13,6 +15,8 @@ class SigninWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
+    final homeBloc = BlocProvider.of<HomePageBloc>(context);
+
     final loginBloc = BlocProvider.of<LoginBloc>(context);
     // the input field widget
     // Widget emailInput = Padding(
@@ -113,7 +117,15 @@ class SigninWidget extends StatelessWidget {
               duration: Duration(seconds: 3),
             ));
           }
+          // final delete = UserEditProfile(
+          //     ProfilePicture: "ProfilePicture",
+          //     UserName: "UserName",
+          //     Email: "Email",
+          //     Password: "Password",
+          //     FirsName: "FirsName",
+          //     LastName: "LastName");
           if (loginState is LoginSuccessState) {
+            homeBloc.add(LoadIntialHomeEvent());
             context.router.replace(HomeRoute());
           }
         },

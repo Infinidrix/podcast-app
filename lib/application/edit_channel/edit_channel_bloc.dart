@@ -19,5 +19,27 @@ class EditChannelBloc extends Bloc<EditChannelEvent, EditChannelState> {
       await Future.delayed(Duration(seconds: 3));
       yield LoadedEditChannelState(channel: event.channel);
     }
+    // Edit Podcast Event
+    else if (event is EditPodcastEvent) {
+      print("GELL");
+      yield LoadingEditChannelState();
+      // TODO
+      // final channel = await editChannelRepository.getChannel(event.channel.Id);
+
+      print("ARE YOU THERE");
+      var res = await editChannelRepository.editPodcast(event.podcast);
+
+      yield LoadedEditChannelState(channel: event.channel);
+    }
+
+    // Delete Podcast Event
+    else if (event is DeletePodcastEvent) {
+      yield LoadingEditChannelState();
+
+      var res = await editChannelRepository.deletePodcast(event.podcast);
+      // final channel = await editChannelRepository.getChannel(event.channel.Id);
+
+      yield LoadedEditChannelState(channel: event.channel);
+    }
   }
 }

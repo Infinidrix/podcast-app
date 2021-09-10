@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:podcast_app/application/download/download_bloc.dart';
+import 'package:podcast_app/application/download/download_events.dart';
 import 'package:podcast_app/application/download/download_states.dart';
 
 import '../Constants.dart';
@@ -18,7 +19,8 @@ class DownloadPage extends StatefulWidget {
 class _DownloadPageState extends State<DownloadPage> {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<DownloadBloc, DownloadState>(
+    final downloadBloc = BlocProvider.of<DownloadBloc>(context);
+    return BlocBuilder<DownloadBloc, DownloadState>(
       builder: (context, state) {
         if (state is LoadedDownloadState) {
           return Column(
@@ -27,13 +29,18 @@ class _DownloadPageState extends State<DownloadPage> {
               ToggleRow(),
               Expanded(
                   flex: 15,
-                  child: Container(
-                    color: mainBackGroundColor,
-                    child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        return DownloadCard(index);
-                      },
-                      itemCount: state.podcasts.length,
+                  child: RefreshIndicator(
+                    onRefresh: () async {
+                      downloadBloc.add(LoadInitialDownloadEvent());
+                    },
+                    child: Container(
+                      color: mainBackGroundColor,
+                      child: ListView.builder(
+                        itemBuilder: (context, index) {
+                          return DownloadCard(index);
+                        },
+                        itemCount: state.podcasts.length,
+                      ),
                     ),
                   )),
             ],
@@ -42,20 +49,6 @@ class _DownloadPageState extends State<DownloadPage> {
         return Center(
           child: CircularProgressIndicator(),
         );
-      },
-      listener: (context, state) {
-        if (state is FailedDownloadState) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("${state.errorMessage}"),
-            duration: Duration(seconds: 2),
-          ));
-        } else if (state is FailedLoadedDownloadState) {
-          // TODO: Find a better way for this
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("${state.errorMessage}"),
-            duration: Duration(seconds: 2),
-          ));
-        }
       },
     );
   }

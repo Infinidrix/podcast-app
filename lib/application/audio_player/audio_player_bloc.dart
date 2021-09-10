@@ -36,7 +36,8 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
                     channelName: "",
                     description: "",
                     url: "https://luan.xyz/files/audio/nasa_on_a_mission.mp3",
-                    id: "ayyyyyyD")))) {
+                    id: "ayyyyyyD"),
+                true))) {
     AudioPlayer.logEnabled = false;
     audioPlayer.onPlayerError.listen((event) {
       this.add(AudioPlayerFailedEvent(event));
@@ -59,6 +60,7 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
       this.state.podcasts = event.podcasts;
       this.state.status.currentIndex = 0;
       this.state.status.currentPodcast = event.podcasts.first;
+      this.state.status.finishedQueue = false;
       this.add(PlayAudioEvent());
     } else if (event is PlayAudioEvent) {
       yield LoadingAudioPlayerState(
@@ -93,6 +95,7 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
       await this.state.player.seek(event.newPosition);
     } else if (event is PlayNextEvent) {
       if (this.state.status.currentIndex + 1 >= this.state.podcasts.length) {
+        this.state.status.finishedQueue = true;
         yield AudioPlayerFailedState(this.state.player, this.state.podcasts,
             "Queue Finished", this.state.status);
       } else {

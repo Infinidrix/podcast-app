@@ -40,6 +40,14 @@ class FailedLoadedDownloadState extends LoadedDownloadState {
       : super(podcasts, currentPodcast, index, progress, core: core);
 }
 
+class InformationalLoadedDownloadState extends LoadedDownloadState {
+  final String message;
+  InformationalLoadedDownloadState(this.message, ListQueue<Podcast> podcasts,
+      Podcast? currentPodcast, int index, DownloadProgress progress,
+      {DownloaderCore? core})
+      : super(podcasts, currentPodcast, index, progress, core: core);
+}
+
 class DownloadProgress {
   double progress;
   bool isPaused;

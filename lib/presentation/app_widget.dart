@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:podcast_app/application/audio_player/audio_player_bloc.dart';
+import 'package:podcast_app/application/bottom_navigation/bottom_navigation_bloc.dart';
 import 'package:podcast_app/application/channel_description/channel_description_bloc.dart';
 import 'package:podcast_app/application/create_channel/create_channel_bloc.dart';
 import 'package:podcast_app/application/edit_channel_detail/edit_channel_detail_bloc.dart';
@@ -13,6 +14,7 @@ import 'package:podcast_app/application/search/search_event.dart';
 import 'package:podcast_app/application/your_channels/your_channel_bloc.dart';
 import 'package:podcast_app/application/your_channels/your_channel_event.dart';
 import 'package:podcast_app/data_provider/channel_provider.dart';
+import 'package:podcast_app/data_provider/create_podcast_provider/create_podcast_provider.dart';
 import 'package:podcast_app/data_provider/home_page_provider/Home_provider.dart';
 import 'package:podcast_app/data_provider/search_page_provider/Search_provider.dart';
 import 'package:podcast_app/data_provider/search_page_provider/local_search_provider..dart';
@@ -24,6 +26,7 @@ import 'package:podcast_app/application/create_podcast/create_podcast_applicatio
 import 'package:podcast_app/application/download/download_bloc.dart';
 import 'package:podcast_app/application/download/download_events.dart';
 import 'package:podcast_app/application/edit_channel/edit_channel_bloc.dart';
+import 'package:podcast_app/application/edit_channel_detail/edit_channel_detail_bloc.dart';
 import 'package:podcast_app/application/edit_profile/edit_profile_bloc.dart';
 import 'package:podcast_app/application/home_page/home_page_bloc.dart';
 import 'package:podcast_app/application/home_page/home_page_event.dart';
@@ -79,7 +82,8 @@ class MyApp extends StatelessWidget {
         apiDataProvider: SearchProvider(),
         localDataProvider: LocalSearchProvider());
 
-    final homePageRepository = HomePageRepository(dataProvider: HomeProvider(httpClient: http.Client()));
+    final homePageRepository = HomePageRepository(
+        dataProvider: HomeProvider(httpClient: http.Client()));
 
     final loginRepository = LoginRepository(
       loginDataProvider: LoginProvider(
@@ -96,11 +100,12 @@ class MyApp extends StatelessWidget {
         httpClient: http.Client(),
       ),
     );
-    final audioRepository = AudioRepository(AudioProvider());
+    final audioRepository =
+        AudioRepository(AudioProvider(httpClient: http.Client()));
     final yourChannelRepository =
         YourChannelRepository(dataProvider: YourChannelProvider());
-    final editProfilRepository =
-        EditProfileRepository(editProfileProvider: EditProfileProvider());
+    final editProfilRepository = EditProfileRepository(
+        editProfileProvider: EditProfileProvider(httpClient: http.Client()));
     final downloadedAudioRepository =
         DownloadedAudioRepository(DownloadedAudioProvider());
 
@@ -110,7 +115,11 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<CreatePodcastBloc>(
           create: (context) => CreatePodcastBloc(
-              CreatePodcastInitialState(), CreatePodcastRepository()),
+            CreatePodcastInitialState(),
+            CreatePodcastRepository(
+              CreatePodcastProvider(),
+            ),
+          ),
         ),
         BlocProvider<RecorderBloc>(
             create: (context) => RecorderBloc(RecorderInitialState())),
@@ -163,6 +172,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) =>
               EditChannelBloc(editChannelRepository: editChannelRepository),
+        ),
+        BlocProvider(
+          create: (_) => BottomNavigationBloc(),
         ),
       ],
       child: MaterialApp.router(

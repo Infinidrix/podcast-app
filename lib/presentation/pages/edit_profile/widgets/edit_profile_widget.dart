@@ -1,14 +1,16 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:podcast_app/application/bottom_navigation/bottom_navigation_bloc.dart';
 import 'package:podcast_app/application/edit_profile/edit_profile_bloc.dart';
 import 'package:podcast_app/application/home_page/home_page_bloc.dart';
 import 'package:podcast_app/application/home_page/home_page_event.dart';
+import 'package:podcast_app/data_provider/constants.dart';
 import 'package:podcast_app/models/edit_profile/edit_profile.dart';
 import 'package:podcast_app/presentation/core/constants.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 
 // class EditProfileWidget extends StatefulWidget {
@@ -21,11 +23,14 @@ import 'package:podcast_app/presentation/routes/router.gr.dart';
 class EditProfileWidget extends StatelessWidget {
   EditProfileWidget({Key? key, required this.user}) : super(key: key);
   UserEditProfile user;
+  bool isChecked = false;
+
   @override
   Widget build(BuildContext context) {
     TextEditingController _userNameController =
         TextEditingController(text: "Set My Text Here");
 
+    final bottomNavBloc = BlocProvider.of<BottomNavigationBloc>(context);
     final editProfileBloc = BlocProvider.of<EditProfileBloc>(context);
     editProfileBloc.add(IntitalEditProfileEvent());
     final _formKey = GlobalKey<FormState>();
@@ -80,7 +85,7 @@ class EditProfileWidget extends StatelessWidget {
       );
     }
 
-    Widget _saveButton(EditProfileState state) {
+    Widget _saveButton(EditProfileState state, BottomNavigationBloc navBloc) {
       return DecoratedBox(
         decoration: buttonDecoration,
         child: ElevatedButton(
@@ -89,20 +94,67 @@ class EditProfileWidget extends StatelessWidget {
             // checking if the form submitted is valid
             if (_formKey.currentState!.validate()) {
               print("Successfully cancelled");
+              navBloc.add(CheckRoleEvent());
+
               SaveButtonPressedEditProfileEvent ev =
                   SaveButtonPressedEditProfileEvent(
-                UserName: _userName,
-                Email: _email,
-                Password: _password,
-                ProfilePicture: 'assets/images/placeholder.jpg',
-              );
+                      UserName: _userName,
+                      Email: _email,
+                      Password: _password,
+                      ProfilePicture: 'assets/images/placeholder.jpg',
+                      isChekced: isChecked);
               editBloc.add(ev);
+              navBloc.add(CheckRoleEvent());
             }
           },
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Container(
               child: Text("Save"),
+            ),
+          ),
+        ),
+      );
+    }
+
+    Widget _deleteButton(EditProfileState state) {
+      return DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [HexColor("#880808"), HexColor("#D70040")]),
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: ElevatedButton(
+          style: buttonStyle,
+          onPressed: () {
+            // checking if the form submitted is valid
+            editProfileBloc.add(DeleteUserButtonPressed());
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              child: Text("Delete Account"),
+            ),
+          ),
+        ),
+      );
+    }
+
+    Widget _logoutButton(EditProfileState state) {
+      return DecoratedBox(
+        decoration: buttonDecoration,
+        child: ElevatedButton(
+          style: buttonStyle,
+          onPressed: () {
+            // checking if the form submitted is valid
+            editProfileBloc.add(LogOutButtonPressed());
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              child: Text("Logout"),
             ),
           ),
         ),
@@ -148,8 +200,9 @@ class EditProfileWidget extends StatelessWidget {
     }
 
     editProfileBloc.add(IntitalEditProfileEvent());
+    isChecked = user.isCreator;
+    print(isChecked);
     final homePageBloc = BlocProvider.of<HomePageBloc>(context);
-
     return BlocConsumer<EditProfileBloc, EditProfileState>(
       listener: (context, state) {
         // TODO: implement listener
@@ -157,6 +210,7 @@ class EditProfileWidget extends StatelessWidget {
           editProfileBloc.add(IntitalEditProfileEvent());
         }
         if (state is SuccesEditProfileState) {
+          bottomNavBloc.add(CheckRoleEvent());
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text("success"),
             duration: Duration(seconds: 3),
@@ -171,6 +225,12 @@ class EditProfileWidget extends StatelessWidget {
         if (state is RequestToChangeProfileImageState) {
           _showImageSourceActionSheet(context);
         }
+        if (state is NavigateToWellcomePageState) {
+          // context.router.popUntil((route) => route != WelcomeRoute);
+          // context.router.pushAndRemoveUntil()
+          // context.router.removeUntil((route) => false);
+          context.router.push(WelcomeRoute());
+        }
       },
       builder: (context, state) {
         if (state is InitialEditProfileState) {
@@ -179,6 +239,7 @@ class EditProfileWidget extends StatelessWidget {
           _password = state.user.Password;
         }
         print(_userName);
+        final navBloc = BlocProvider.of<BottomNavigationBloc>(context);
 
         return SafeArea(
           child: Column(
@@ -187,6 +248,7 @@ class EditProfileWidget extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: IconButton(
                     onPressed: () {
+                      navBloc.add(CheckRoleEvent());
                       homePageBloc.add(LoadIntialHomeEvent());
                       context.router.push(HomeRoute());
                     },
@@ -222,12 +284,37 @@ class EditProfileWidget extends StatelessWidget {
                               style: TextStyle(color: Colors.grey),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(bottom: 10.0),
+                              padding: const EdgeInsets.only(bottom: 0),
                               child: _passwordInput(state),
                             ),
                             Padding(
+                              padding: const EdgeInsets.only(bottom: 30),
+                              child: ListTile(
+                                leading: Checkbox(
+                                  onChanged: (value) {
+                                    isChecked = value!;
+                                    print(isChecked);
+                                    print(value);
+                                    editProfileBloc.add(CreatorBoxPressedEvent(
+                                        isChecked: isChecked));
+                                  },
+                                  value: isChecked,
+                                ),
+                                title: Text(
+                                    'If You want Be creator check the box'),
+                              ),
+                            ),
+                            Padding(
                               padding: const EdgeInsets.only(bottom: 30.0),
-                              child: _saveButton(state),
+                              child: _saveButton(state, navBloc),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 30.0),
+                              child: _logoutButton(state),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 30.0),
+                              child: _deleteButton(state),
                             ),
                           ],
                         )),
@@ -289,7 +376,9 @@ class EditProfileWidget extends StatelessWidget {
           child: Center(
             child: CircleAvatar(
               radius: 60,
-              backgroundImage: AssetImage(state.user.ProfilePicture),
+              backgroundImage: NetworkImage(
+                  'http://$URL:44343/api/update /profile/0dd7361e-a131-4614-82c7-08e02a1c4445'),
+              // AssetImage(state.user.ProfilePicture),
               // backgroundImage: (state is InitialEditProfileState)
               //     ? AssetImage(state.user.ProfilePicture)
               //     : AssetImage("assets/images/welcome.png"),

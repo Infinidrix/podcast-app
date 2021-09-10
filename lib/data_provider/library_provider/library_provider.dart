@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 import 'package:podcast_app/data_provider/library_provider/Ilibrary_provider.dart';
+import 'package:podcast_app/data_provider/login/login_provider.dart';
 import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/models/Podcast.dart';
 
@@ -15,11 +16,16 @@ class LibraryProviderOnline extends ILibraryProvider {
 
   @override
   Future<List<Podcast>> getRecentPodcasts(String userId) async {
-    print("Getting to the recent podcast API call");
-	// TODO: Change this to actual user id
-    final response = await httpClient
-        .get(Uri.parse('http://$URL/api/users/b7d27747-e66f-403d-8bcb-2125656ccb53/Audios/Subscribed'));
-    print("Result from recent podcasts API call: ${response.statusCode}");
+    final user = json.decode(LoginProvider.SESSION.getString("user")!)
+        as Map<String, dynamic>;
+    String token = user["token"] as String;
+    // TODO: Change this to actual user id
+    final response = await httpClient.get(
+        Uri.parse(
+            'http://$URL/api/users/${await LoginProvider.SESSION.getString('userId')}/Audios/Subscribed'),
+        headers: {
+          'Authorization': 'Bearer ${token}',
+        }).timeout(Duration(seconds: 5));
     if (response.statusCode == 200) {
       Iterable parsed = json.decode(response.body);
       List<Podcast> podcasts =

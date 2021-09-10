@@ -87,9 +87,8 @@ class RootRouter extends _i1.RootStackRouter {
     CreatePodcastRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (data) {
-          final args = data.argsAs<CreatePodcastRouteArgs>(
-              orElse: () => const CreatePodcastRouteArgs());
-          return _i12.CreatePodcastPage(key: args.key);
+          final args = data.argsAs<CreatePodcastRouteArgs>();
+          return _i12.CreatePodcastPage(channelId: args.channelId);
         }),
     RecorderRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
@@ -123,7 +122,7 @@ class RootRouter extends _i1.RootStackRouter {
   @override
   List<_i1.RouteConfig> get routes => [
         _i1.RouteConfig('/#redirect',
-            path: '/', redirectTo: '/your_channels', fullMatch: true),
+            path: '/', redirectTo: '/welcome', fullMatch: true),
         _i1.RouteConfig(WelcomeRoute.name, path: '/welcome'),
         _i1.RouteConfig(SigninRoute.name, path: '/signin'),
         _i1.RouteConfig(SignupRoute.name, path: '/signup'),
@@ -230,17 +229,18 @@ class EditProfileRouteArgs {
 }
 
 class CreatePodcastRoute extends _i1.PageRouteInfo<CreatePodcastRouteArgs> {
-  CreatePodcastRoute({_i2.Key? key})
+  CreatePodcastRoute({required String channelId})
       : super(name,
-            path: '/add_podcast', args: CreatePodcastRouteArgs(key: key));
+            path: '/add_podcast',
+            args: CreatePodcastRouteArgs(channelId: channelId));
 
   static const String name = 'CreatePodcastRoute';
 }
 
 class CreatePodcastRouteArgs {
-  const CreatePodcastRouteArgs({this.key});
+  const CreatePodcastRouteArgs({required this.channelId});
 
-  final _i2.Key? key;
+  final String channelId;
 }
 
 class RecorderRoute extends _i1.PageRouteInfo {

@@ -5,8 +5,6 @@ import 'package:podcast_app/models/channel/CreateChannel.dart';
 import 'package:podcast_app/repository/Ichannel_repository.dart';
 
 class ChannelRepository implements IChannelRepository {
-  final userId = "1";
-  // final  channelId = "1";
   final IChannelProvider channelProvider;
 
   ChannelRepository({required this.channelProvider});
@@ -17,13 +15,14 @@ class ChannelRepository implements IChannelRepository {
   }
 
   @override
-  Future<bool> isSubscribed(String channelId) {
+  Future<bool> isSubscribed(String userId, String channelId) {
     // TODO: implement isSubscribed
     return channelProvider.isSubscribed(userId, channelId);
   }
 
   @override
-  Future<bool> setSubscription(String channelId, bool subscriptionStatus) {
+  Future<bool> setSubscription(
+      String userId, String channelId, bool subscriptionStatus) {
     // TODO: implement setSubscription
     return channelProvider.setSubscription(
         userId, channelId, subscriptionStatus);
@@ -36,10 +35,8 @@ class ChannelRepository implements IChannelRepository {
       required dynamic ImageURL}) async {
     final channel =
         CreateChannel(Description: Description, Name: Name, Url: ImageURL);
-        
 
-    return await channelProvider.createChannel(
-        createChannelInfo: channel);
+    return await channelProvider.createChannel(createChannelInfo: channel);
   }
 
   Future<Channel?> editChannel(
@@ -49,7 +46,6 @@ class ChannelRepository implements IChannelRepository {
       required String ChannelID}) async {
     final channel =
         CreateChannel(Description: Description, Name: Name, Url: ImageURL);
-        
 
     return await channelProvider.editChannel(
         editChannelInfo: channel, ChannelID: ChannelID);

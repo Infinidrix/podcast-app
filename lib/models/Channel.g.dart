@@ -8,11 +8,11 @@ part of 'Channel.dart';
 
 Channel _$ChannelFromJson(Map<String, dynamic> json) {
   return Channel(
-    Name: json['Name'] as String,
-    ImageUrl: json['ImageUrl'] as String,
+    Name: json['Name'].toString(),
+    ImageUrl: json['ImageUrl'].toString(),
     Subscribers: json['Subscribers'] as int,
-    Id: json['Id'] as String,
-    Desctiption: json['Desctiption'] as String,
+    Id: json['Id'].toString(),
+    Desctiption: json['Desctiption'].toString(),
     Podcasts: (json['Podcasts'] as List<dynamic>)
         .map((e) => Podcast.fromJson(e as Map<String, dynamic>))
         .toList(),

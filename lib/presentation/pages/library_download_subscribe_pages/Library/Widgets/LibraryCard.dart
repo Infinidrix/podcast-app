@@ -6,12 +6,12 @@ import 'package:podcast_app/application/audio_player/audio_player_bloc.dart';
 import 'package:podcast_app/application/audio_player/audio_player_events.dart';
 import 'package:podcast_app/application/download/download_bloc.dart';
 import 'package:podcast_app/application/download/download_events.dart';
+import 'package:podcast_app/application/download/download_states.dart';
 import 'package:podcast_app/models/Podcast.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 
 import '../../Constants.dart';
-
 
 class LibraryCard extends StatelessWidget {
   final Podcast podcast;
@@ -25,7 +25,6 @@ class LibraryCard extends StatelessWidget {
 
     return Card(
       margin: EdgeInsets.fromLTRB(0, 0, 0, 24),
-
       child: Container(
         color: mainBackGroundColor,
         child: Container(
@@ -49,7 +48,8 @@ class LibraryCard extends StatelessWidget {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               image: DecorationImage(
-                                  image: AssetImage('assets/images/placeholder.jpg'),
+                                  image: AssetImage(
+                                      'assets/images/placeholder.jpg'),
                                   fit: BoxFit.cover)),
                         )),
                     Expanded(
@@ -75,7 +75,7 @@ class LibraryCard extends StatelessWidget {
                 margin: EdgeInsets.fromLTRB(0, 12, 0, 0),
                 child: Text(
                   '${podcast.description}',
-                  style:descriptioin_SubtitleTextStyle,
+                  style: descriptioin_SubtitleTextStyle,
                 ),
               ),
               Container(
@@ -92,7 +92,7 @@ class LibraryCard extends StatelessWidget {
                             style: whenTextStyle,
                           ),
                           Text(
-                            'Takes a hile',
+                            'Takes time',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xffb3b3b3),
@@ -114,7 +114,8 @@ class LibraryCard extends StatelessWidget {
                                 size: 18,
                               ),
                               onTap: () {
-                                audioBloc.add(InitializePlayerEvent(podcasts: ListQueue.from([podcast])));
+                                audioBloc.add(InitializePlayerEvent(
+                                    podcasts: ListQueue.from([podcast])));
                                 context.router.push(PlayerRoute());
                               },
                             ),
@@ -122,15 +123,15 @@ class LibraryCard extends StatelessWidget {
                           Container(
                             margin: EdgeInsets.fromLTRB(26, 0, 10, 0),
                             child: GestureDetector(
-                              child: Icon(
-                                Icons.download_rounded,
-                                color: Colors.white,
-                                size: 15,
-                              ),
-                              onTap: () {
-                                downloadBloc.add(AddToDownloadQueueEvent(podcast));
-                              }
-                            ),
+                                child: Icon(
+                                  Icons.download_rounded,
+                                  color: Colors.white,
+                                  size: 15,
+                                ),
+                                onTap: () {
+                                  downloadBloc
+                                      .add(AddToDownloadQueueEvent(podcast));
+                                }),
                           ),
                         ],
                       ),

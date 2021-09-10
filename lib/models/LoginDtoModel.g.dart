@@ -8,9 +8,9 @@ part of 'LoginDtoModel.dart';
 
 LoginDtoModel _$LoginDtoModelFromJson(Map<String, dynamic> json) {
   return LoginDtoModel(
-    Token: json['Token'] as String,
+    Token: json['Token'].toString(),
     user: User.fromJson(json['user'] as Map<String, dynamic>),
-    expiration: json['expiration'] as String,
+    expiration: json['expiration'].toString(),
   );
 }
 

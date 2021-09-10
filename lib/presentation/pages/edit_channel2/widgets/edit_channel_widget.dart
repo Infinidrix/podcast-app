@@ -7,6 +7,9 @@ import 'package:podcast_app/presentation/core/loading_list_widget.dart';
 import 'package:podcast_app/presentation/core/loading_skeleton_text.dart';
 // import 'package:podcast_app/presentation/pages/edit_channel/widgets/edit_channel_sliver_app_bar.dart';
 import 'package:podcast_app/presentation/pages/edit_channel2/widgets/recently_uploaded_podcast_tile.dart';
+import 'package:podcast_app/presentation/routes/router.gr.dart';
+import 'package:auto_route/auto_route.dart';
+
 // import 'package:podcast_app/presentation/pages/edit_channel/widgets/recently_uploaded_podcasts_list.dart';
 
 // import '../../edit_channel/widgets/edit_page_description_and_number_of_listeners_tile.dart';
@@ -33,12 +36,29 @@ class EditChannel extends StatelessWidget {
                                   child: LoadingSkeletonText(),
                                 )
                               : (state is LoadedEditChannelState)
-                                  ? Text(
-                                      state.channel.Name,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
+                                  ? Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          state.channel.Name,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            context.router.push(CreatePodcastRoute(
+                                                channelId:
+                                                    "176684b8-461c-41b0-b414-fc0bf49bd8fc"));
+                                          },
+                                          child: Icon(
+                                            Icons.add,
+                                            size: 30,
+                                          ),
+                                        )
+                                      ],
                                     )
                                   : Text("impossible")),
                     ],
@@ -107,7 +127,8 @@ class EditChannel extends StatelessWidget {
               return SliverList(
                   delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
-                  return RecentlyUploadedPodcast(podcast: podcasts![index]);
+                  return RecentlyUploadedPodcast(
+                      podcast: podcasts![index], channel: state.channel);
                 },
                 childCount: podcasts!.length,
               ));

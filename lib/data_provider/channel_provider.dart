@@ -11,6 +11,8 @@ import 'constants.dart';
 import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/models/Podcast.dart';
 
+import 'login/login_provider.dart';
+
 class ChannelPorvider implements IChannelProvider {
   final http.Client httpClient;
 
@@ -59,12 +61,13 @@ class ChannelPorvider implements IChannelProvider {
                     imageUrl: "",
                     id: "$index",
                   ))));
-
-  bool isSubscribedValue = true;
   @override
   Future<bool> isSubscribed(String userId, String channelId) async {
-    final response = await httpClient.get(Uri.parse(
-        'http://$URL/api/users/b7d27747-e66f-403d-8bcb-2125656ccb53/Subscriptions/9830371b-97f7-4655-8ebc-d9837be8edf7'));
+    final response = await httpClient
+        .get(
+            Uri.parse('http://$URL/api/users/$userId/Subscriptions/$channelId'))
+        .timeout(Duration(seconds: 7));
+    print("This is subscribe ${response.body}");
     if (response.statusCode == 200) {
       return true;
     } else {
@@ -74,27 +77,45 @@ class ChannelPorvider implements IChannelProvider {
 
   @override
   Future<Channel> getChannel(String id) async {
-    Future.delayed(Duration(seconds: 2));
-    return channels[0];
+    final user = json.decode(LoginProvider.SESSION.getString("user")!)
+        as Map<String, dynamic>;
+    String token = user["token"] as String;
+    // TODO: Change this to actual user id
+    print("Got here");
+    final response = await httpClient.get(
+        Uri.parse(
+            'http://$URL/api/users/${LoginProvider.SESSION.getString('userId')}/channel/$id'),
+        headers: {
+          'Authorization': 'Bearer ${token}',
+        }).timeout(Duration(seconds: 7));
+    if (response.statusCode == 200) {
+      var parsed = json.decode(response.body);
+      Channel channel = Channel.fromJson(parsed);
+      return channel;
+    } else {
+      print(response.body);
+      throw SocketException("Response Code: ${response.statusCode}");
+    }
   }
 
   @override
   Future<bool> setSubscription(
       String userId, String channelId, bool subscriptionStatus) async {
     if (subscriptionStatus) {
-      final response = await httpClient.put(Uri.parse(
-          'http://$URL/api/users/b7d27747-e66f-403d-8bcb-2125656ccb53/Subscriptions/9830371b-97f7-4655-8ebc-d9837be8edf7'));
+      final response = await httpClient.put(
+          Uri.parse('http://$URL/api/users/$userId/Subscriptions/$channelId'));
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 202) {
         return true;
       } else {
+        print(response.body);
         throw SocketException("Response Code: ${response.statusCode}");
       }
     } else {
-      final response = await httpClient.delete(Uri.parse(
-          'http://$URL/api/users/b7d27747-e66f-403d-8bcb-2125656ccb53/Subscriptions/9830371b-97f7-4655-8ebc-d9837be8edf7'));
+      final response = await httpClient.delete(
+          Uri.parse('http://$URL/api/users/$userId/Subscriptions/$channelId'));
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 202) {
         return false;
       } else {
         throw SocketException("Response Code: ${response.statusCode}");
@@ -106,7 +127,7 @@ class ChannelPorvider implements IChannelProvider {
   Future<Channel?> createChannel(
       {required CreateChannel createChannelInfo}) async {
     var request = http.MultipartRequest(
-        'POST', Uri.parse('http://localhost:5001/api/channel'))
+        'POST', Uri.parse('http://$URL/api/channel'))
       ..fields.addAll({
         "name": createChannelInfo.Name,
         "description": createChannelInfo.Description
@@ -135,7 +156,7 @@ class ChannelPorvider implements IChannelProvider {
       {required CreateChannel editChannelInfo,
       required String ChannelID}) async {
     var request = http.MultipartRequest(
-        'POST', Uri.parse('http://localhost:5001/api/channel/$ChannelID'))
+        'POST', Uri.parse('http://$URL/api/channel/$ChannelID'))
       ..fields.addAll({
         "name": editChannelInfo.Name,
         "description": editChannelInfo.Description
@@ -157,6 +178,6 @@ class ChannelPorvider implements IChannelProvider {
           jsonDecode(await response.stream.bytesToString()));
     } else {
       return null;
-    }  
+    }
   }
 }

@@ -20,9 +20,9 @@ class BottomNavigationBloc
     var roles = jsonEncode(await LoginProvider.SESSION.getString("roles"));
     print("roles roles roles \n\n\n ${roles}");
     if (roles.contains("Creator")) {
-      yield UserNavigationState();
-    } else {
       yield CreatorNavigationState();
+    } else {
+      yield UserNavigationState();
     }
     if (event is CheckRoleEvent) {
       roles = jsonEncode(await LoginProvider.SESSION.getString("roles"));
@@ -30,9 +30,9 @@ class BottomNavigationBloc
       print("roles if roles roles \n\n\n $roles[0]");
 
       if (roles.contains("Creator")) {
-        yield UserNavigationState();
-      } else {
         yield CreatorNavigationState();
+      } else {
+        yield UserNavigationState();
       }
     }
   }

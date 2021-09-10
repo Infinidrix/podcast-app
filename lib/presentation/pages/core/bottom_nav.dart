@@ -21,6 +21,7 @@ Widget getBottomNavBar(BuildContext context) {
     HomeRoute(),
     SearchRoute(),
     LibraryDownloadSubTabMenuRoute(),
+    YourChannelsRoute()
   ];
   String routeName = context.routeData.path;
   print(routeName);

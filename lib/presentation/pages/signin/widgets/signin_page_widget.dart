@@ -150,6 +150,7 @@ class SigninWidget extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 45.0),
                       child: TextFormField(
+                        key: Key("email_field"),
                         style: TextStyle(color: Colors.white),
                         decoration: textfieldDecoration,
                         validator: (value) {
@@ -174,6 +175,7 @@ class SigninWidget extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: TextFormField(
+                        key: Key("password_field"),
                         obscureText: isPasswordObsecure,
                         style: TextStyle(color: Colors.white),
                         decoration: textfieldDecoration.copyWith(

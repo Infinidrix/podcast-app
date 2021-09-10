@@ -6,6 +6,7 @@ import 'package:podcast_app/data_provider/your_channel_provider/IYourChannel_pro
 import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/models/Podcast.dart';
 import 'package:http/http.dart' as http;
+import 'package:podcast_app/data_provider/constants.dart';
 
 class YourChannelProvider extends IYourChannelProvider {
   final http.Client httpClient;
@@ -37,9 +38,10 @@ class YourChannelProvider extends IYourChannelProvider {
     try {
       // final userId = await LoginProvider.SESSION.getString("userId");
       print("YOUR CHANNEL REQUEST");
+
+      String? userId = await LoginProvider.SESSION.getString('userId');
       response = await httpClient
-          .get(Uri.parse(
-              'http://192.168.0.131:44343/api/channel/yourchannel/176684b8-461c-41b0-b414-fc0bf49bd8fc'))
+          .get(Uri.parse('http://$URL/api/users/$userId/channel/yourchannel'))
           .timeout(Duration(seconds: 5));
     } catch (e) {
       print("ERROR ${e.toString()}");

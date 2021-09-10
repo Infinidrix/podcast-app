@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
+import 'package:podcast_app/data_provider/login/login_provider.dart';
 
 import 'package:podcast_app/data_provider/search_page_provider/ISearch_provider.dart';
 import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/models/Podcast.dart';
+import 'package:podcast_app/data_provider/constants.dart';
 
 class SearchProvider extends ISearchProvider {
   final http.Client httpClient;
@@ -48,9 +50,10 @@ class SearchProvider extends ISearchProvider {
     http.Response? response;
 
     try {
+      String? userId = await LoginProvider.SESSION.getString("userId");
       response = await httpClient
-          .get(Uri.parse(
-              'http://192.168.0.131:44343/api/channel/search/$search'))
+          .get(
+              Uri.parse('http://$URL/api/Users/$userId/channel/search/$search'))
           .timeout(Duration(seconds: 5));
     } catch (e) {
       // final parsed = json.decode(response.body);
@@ -71,6 +74,7 @@ class SearchProvider extends ISearchProvider {
     } else {
       // final parsed = json.decode(response.body);
       // print(parsed);
+      print(response.statusCode);
       return left('parsed.toString()');
     }
   }

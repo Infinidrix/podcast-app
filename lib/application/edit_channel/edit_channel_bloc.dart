@@ -29,9 +29,13 @@ class EditChannelBloc extends Bloc<EditChannelEvent, EditChannelState> {
           await editChannelRepository.editPodcast(event.podcast, event.channel);
 
       res.fold((l) async* {
+        print("folding 1");
         yield ErrorEditChannelState(error: l);
+        print("folding 2");
         yield LoadedEditChannelState(channel: event.channel);
+        print("folding 3");
       }, (r) async* {
+        print("REFT");
         yield LoadedEditChannelState(channel: r);
       });
       // yield LoadedEditChannelState(channel: event.channel);
@@ -46,8 +50,10 @@ class EditChannelBloc extends Bloc<EditChannelEvent, EditChannelState> {
       // var channel = await editChannelRepository.getChannel(event.channel.Id);
 
       res.fold((l) async* {
+        print("FOLDING?");
         yield ErrorEditChannelState(error: l);
         yield LoadedEditChannelState(channel: event.channel);
+        print("FOLDING?");
       }, (r) async* {
         yield LoadedEditChannelState(channel: r);
       });

@@ -59,7 +59,7 @@ class EditChannel extends StatelessWidget {
                                           onTap: () {
                                             context.router.push(CreatePodcastRoute(
                                                 channelId:
-                                                    "176684b8-461c-41b0-b414-fc0bf49bd8fc"));
+                                                    state.channel.Id ));
                                           },
                                           child: Icon(
                                             Icons.add,

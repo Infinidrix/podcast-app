@@ -1,9 +1,9 @@
-import 'package:podcast_app/presentation/pages/edit_channel/edit_channel.dart';
-import 'package:podcast_app/presentation/pages/edit_channel2/edit_channel_page.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:podcast_app/presentation/pages/channel_detail/channel_detail_page.dart';
 import 'package:podcast_app/presentation/pages/create_channel/create_channel_page.dart';
 import 'package:podcast_app/presentation/pages/create_podcast/create_podcast.dart';
+import 'package:podcast_app/presentation/pages/edit_channel/edit_channel.dart';
+import 'package:podcast_app/presentation/pages/edit_channel2/edit_channel_page.dart';
 // import 'package:podcast_app/presentation/pages/edit_channel/edit_channel_page.dart';
 import 'package:podcast_app/presentation/pages/edit_profile/profile_page.dart';
 import 'package:podcast_app/presentation/pages/home/home_page.dart';

@@ -33,27 +33,38 @@ class LoginProvider implements ILoginProvider {
         body: jsonEncode(userCred.toJson()),
       );
       print(response.statusCode);
+
       if (response.statusCode == 200) {
         final parsed = json.decode(response.body);
         await getSharedPrefernce();
         await setItemToLocalStrage(
             tokenName: "userCred", dataToStore: jsonEncode(userCred.toJson()));
+        print("this is the thing i want ${parsed}");
+
+        await setItemToLocalStrage(
+            tokenName: "roles",
+            dataToStore: jsonEncode(parsed['user']['roles']));
+        final roles = parsed['user']['roles'];
+        print("this the role in login ${roles}");
+        bool isCreator = false;
+        if (roles.contains("Creator")) {
+          isCreator = true;
+        }
         await setItemToLocalStrage(
             tokenName: "user", dataToStore: response.body);
+        await setItemToLocalStrage(
+            tokenName: "userId", dataToStore: parsed['user']['id']);
         final userInfo = UserEditProfile(
             ProfilePicture: parsed['user']["profilePicture"],
             UserName: parsed['user']["userName"],
             Email: parsed['user']['email'],
             Password: "",
             FirsName: parsed['user']["firstName"],
-            LastName: parsed['user']["lastName"]);
+            LastName: parsed['user']["lastName"],
+            isCreator: isCreator);
         userInfo.Password = userCred.Password;
         await setItemToLocalStrage(
             tokenName: "userInfo", dataToStore: jsonEncode(userInfo.toJson()));
-
-        print(userInfo.Email);
-        print("userInfo ${userInfo.toJson()}");
-
         return right(LoginDtoModel.fromJson(parsed));
       } else if (response.statusCode == 400) {
         final parsed = json.decode(response.body);

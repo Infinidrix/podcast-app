@@ -8,12 +8,12 @@ part of 'user_register.dart';
 
 UserRegister _$UserRegisterFromJson(Map<String, dynamic> json) {
   return UserRegister(
-    UserName: json['UserName'].toString(),
-    Email: json['Email'].toString(),
-    FirstName: json['FirstName'].toString(),
-    LastName: json['LastName'].toString(),
-    Password: json['Password'].toString(),
-    ProfilePicture: json['ProfilePicture'].toString(),
+    UserName: json['UserName'] as String,
+    Email: json['Email'] as String,
+    FirstName: json['FirstName'] as String,
+    LastName: json['LastName'] as String,
+    Password: json['Password'] as String,
+    ProfilePicture: json['ProfilePicture'] as String,
   );
 }
 

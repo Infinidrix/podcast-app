@@ -5,6 +5,7 @@ import 'package:podcast_app/application/audio_player/audio_player_events.dart';
 import 'package:podcast_app/application/audio_player/audio_player_states.dart';
 import 'package:podcast_app/application/download/download_bloc.dart';
 import 'package:podcast_app/application/download/download_events.dart';
+import 'package:podcast_app/application/download/download_states.dart';
 
 class PodcastInformation extends StatelessWidget {
   const PodcastInformation({

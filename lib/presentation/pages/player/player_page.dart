@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:podcast_app/application/audio_player/audio_player_bloc.dart';
 import 'package:podcast_app/application/audio_player/audio_player_states.dart';
+import 'package:podcast_app/application/download/download_bloc.dart';
+import 'package:podcast_app/application/download/download_states.dart';
 import 'package:podcast_app/presentation/pages/core/bottom_nav.dart';
 import 'package:podcast_app/presentation/pages/player/widgets/player_widgets.dart';
 
@@ -20,12 +22,51 @@ class PlayerPage extends StatelessWidget {
           children: [
             PlayerAppBar(),
             BlocBuilder<AudioPlayerBloc, AudioPlayerState>(
-              builder: (_, state) =>
-                Container(
-                child: state.status.currentPodcast.imageUrl != null ? Image.network(state.status.currentPodcast.imageUrl!) : Image.asset("assets/images/1by1.png"),
+              builder: (_, state) => Container(
+                child: state.status.currentPodcast.imageUrl != null
+                    ? Image.network(state.status.currentPodcast.imageUrl!)
+                    : Image.asset("assets/images/1by1.png"),
               ),
             ),
-            PodcastInformation(),
+            BlocConsumer<DownloadBloc, DownloadState>(
+              builder: (_, __) => PodcastInformation(),
+              listener: (context, state) {
+                if (state is FailedDownloadState) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Row(children: [
+                      Icon(
+                        Icons.error_outline_outlined,
+                        color: Colors.red,
+                      ),
+                      Text("${state.errorMessage}")
+                    ]),
+                    duration: Duration(seconds: 2),
+                  ));
+                } else if (state is FailedLoadedDownloadState) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Row(children: [
+                      Icon(
+                        Icons.error_outline_outlined,
+                        color: Colors.red,
+                      ),
+                      Text("${state.errorMessage}")
+                    ]),
+                    duration: Duration(seconds: 2),
+                  ));
+                } else if (state is InformationalLoadedDownloadState) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Row(children: [
+                      Icon(
+                        Icons.check_circle_outline,
+                        color: Colors.green,
+                      ),
+                      Text("${state.message}")
+                    ]),
+                    duration: Duration(seconds: 2),
+                  ));
+                }
+              },
+            ),
             TimeSlider(),
             Controls(),
           ],

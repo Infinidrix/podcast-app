@@ -20,9 +20,9 @@ class WelcomeWidget extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is InitialWellcomeState) {
-          return _getWellcomeLoadingPage();
+          return _getWellcomeLoadingPage(wellcomeBloc);
         } else if (state is HaveUserCredWellcomeState) {
-          return _getWellcomeLoadingPage();
+          return _getWellcomeLoadingPage(wellcomeBloc);
         } else if (state is UserCredNotAvilableWellcomState) {
           return _getWellComePage(context);
         }
@@ -34,7 +34,9 @@ class WelcomeWidget extends StatelessWidget {
     );
   }
 
-  Widget _getWellcomeLoadingPage() {
+  Widget _getWellcomeLoadingPage(WellcomeBloc wellcomeBloc) {
+    wellcomeBloc.add(HaveCredLocalWellcomeEvent());
+
     return Center(
       child: CircularProgressIndicator(),
     );

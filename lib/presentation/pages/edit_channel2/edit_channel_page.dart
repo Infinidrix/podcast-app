@@ -15,16 +15,6 @@ class EditChannelPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: HexColor("#1A1A1A"),
       body: EditChannel(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.router.push(CreatePodcastRoute());
-        },
-        backgroundColor: HexColor("#282828"),
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      ),
     );
   }
 }

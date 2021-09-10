@@ -41,3 +41,18 @@ class RequestToChangeProfileImageState extends EditProfileState {
 class FetchingEditProfileState extends EditProfileState {
   FetchingEditProfileState({required user}) : super(user: user);
 }
+
+class ChangeRoleCheckBoxState extends EditProfileState {
+  final bool isChecked;
+
+  ChangeRoleCheckBoxState({required user, required this.isChecked})
+      : super(user: user);
+}
+
+class NavigateToWellcomePageState extends EditProfileState {
+  NavigateToWellcomePageState({required user}) : super(user: user);
+}
+
+class LoadingButtonEditProfileState extends EditProfileState {
+  LoadingButtonEditProfileState({required user}) : super(user: user);
+}

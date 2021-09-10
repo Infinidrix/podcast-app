@@ -1,5 +1,6 @@
 import 'package:http/http.dart';
 import 'package:podcast_app/data_provider/Ichannel_provider.dart';
+import 'package:podcast_app/data_provider/login/login_provider.dart';
 import 'package:podcast_app/models/channel/Channel.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -113,8 +114,12 @@ class ChannelPorvider implements IChannelProvider {
   @override
   Future<Channel?> createChannel(
       {required CreateChannel createChannelInfo}) async {
+    String? userId = await LoginProvider.SESSION.getString('userId');
+
     var request = http.MultipartRequest(
-        'POST', Uri.parse('http://$URL/api/channel'))
+      'POST',
+      Uri.parse('http://$URL/api/users/$userId/channel'),
+    )
       ..fields.addAll({
         "name": createChannelInfo.Name,
         "description": createChannelInfo.Description

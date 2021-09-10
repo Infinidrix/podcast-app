@@ -49,205 +49,233 @@ class ChannelDetailWidget extends StatelessWidget {
       builder: (_, channelState) {
         return Container(
             color: Colors.black,
-            child: CustomScrollView(
-              slivers: <Widget>[
-                SliverAppBar(
-                  leading: IconButton(
-                      onPressed: () {
-                        context.router.pop();
-                      },
-                      icon: Icon(Icons.arrow_back_ios)),
-                  pinned: true,
-                  snap: false,
-                  floating: false,
-                  expandedHeight: 300.0,
-                  flexibleSpace: FlexibleSpaceBar(
-                      title: (channelState is LoadingChannelDescriptionState)
-                          ? SizedBox(
-                              child: SkeletonAnimation(
-                                borderRadius: BorderRadius.circular(10.0),
-                                shimmerColor:
-                                    2 % 2 != 0 ? Colors.grey : Colors.white54,
-                                child: Container(
-                                  height: 15,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.15,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      color: HexColor('#202020')),
+            child: RefreshIndicator(
+              onRefresh: () async {
+                if (channelState is InitialChannelDescriptionState) {
+                  channelBloc
+                      .add(LoadInitialEvent(channel: channelBloc.channel));
+                } else if (channelState is FailedChannelDescriptionState) {
+                  channelBloc
+                      .add(LoadInitialEvent(channel: channelState.channel));
+                }
+              },
+              child: CustomScrollView(
+                slivers: <Widget>[
+                  SliverAppBar(
+                    leading: IconButton(
+                        onPressed: () {
+                          context.router.pop();
+                        },
+                        icon: Icon(Icons.arrow_back_ios)),
+                    pinned: true,
+                    snap: false,
+                    floating: false,
+                    expandedHeight: 300.0,
+                    flexibleSpace: FlexibleSpaceBar(
+                        title: (channelState is LoadingChannelDescriptionState)
+                            ? SizedBox(
+                                child: SkeletonAnimation(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  shimmerColor:
+                                      2 % 2 != 0 ? Colors.grey : Colors.white54,
+                                  child: Container(
+                                    height: 15,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.15,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        color: HexColor('#202020')),
+                                  ),
                                 ),
-                              ),
-                            )
-                          : (channelState is InitialChannelDescriptionState)
-                              ? Text(
-                                  "${channelState.channel.Name}",
-                                )
-                              : Text("impossible"),
-                      background: FlutterLogo(),
-                      stretchModes: [
-                        StretchMode.zoomBackground,
-                        StretchMode.fadeTitle
-                      ],
-                      collapseMode: CollapseMode.parallax),
-                ),
-                SliverToBoxAdapter(
-                  child: SizedBox(
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: EdgeInsets.all(5.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          top: 5.0, bottom: 5.0),
-                                      child: (channelState
-                                              is LoadingChannelDescriptionState)
-                                          ? SizedBox(
-                                              child: SizedBox(
-                                              child: SkeletonAnimation(
-                                                borderRadius:
-                                                    BorderRadius.circular(10.0),
-                                                shimmerColor: 2 % 2 != 0
-                                                    ? Colors.grey
-                                                    : Colors.white54,
-                                                child: Container(
-                                                  height: 15,
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.15,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10.0),
-                                                      color:
-                                                          HexColor('#202020')),
-                                                ),
-                                              ),
-                                            ))
-                                          : (channelState
-                                                  is InitialChannelDescriptionState)
-                                              ? Text(
-                                                  "${channelState.channel.Subscribers} monthly listeners",
-                                                  style: TextStyle(
-                                                      fontSize: 14.0,
-                                                      color: Colors.grey),
-                                                )
-                                              : Text("impossibel"),
-                                    ),
-                                    _getSubscribeButton(
-                                        channelState, channelBloc),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                if (channelState
-                                    is InitialChannelDescriptionState) {
-                                  audioBloc.add(InitializePlayerEvent(
-                                      podcasts: ListQueue.from(
-                                          channelState.channel.Podcasts!)));
-                                  context.router.push(PlayerRoute());
-                                }
-                              },
-                              child: Icon(
-                                Icons.play_arrow,
-                                color: Colors.white,
-                              ),
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all(Colors.blue),
-                                shape: MaterialStateProperty.all(
-                                  CircleBorder(),
-                                ),
-                                minimumSize: MaterialStateProperty.all(
-                                    Size.fromRadius(24.0)),
-                              ),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
+                              )
+                            : (channelState is InitialChannelDescriptionState)
+                                ? Text(
+                                    "${channelState.channel.Name}",
+                                  )
+                                : Text("Error Try Again"),
+                        background: FlutterLogo(),
+                        stretchModes: [
+                          StretchMode.zoomBackground,
+                          StretchMode.fadeTitle
+                        ],
+                        collapseMode: CollapseMode.parallax),
                   ),
-                ),
-                SliverToBoxAdapter(
-                  child: SizedBox(
-                    child: Text(
-                      "Podcasts",
-                      style: TextStyle(fontSize: 21),
-                    ),
-                  ),
-                ),
-                BlocBuilder<ChannelDescriptionBloc, ChannelDescriptionState>(
-                    builder: (_, state) {
-                  if (state is InitialChannelDescriptionState) {
-                    var listOfPodcasts = state.channel.Podcasts;
-                    return SliverFixedExtentList(
-                      itemExtent: 90.0,
-                      delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                          return InkWell(
-                              onTap: () {
-                                context.router
-                                    .push(LibraryDownloadSubTabMenuRoute());
-                              },
-                              child: Card(
-                                  color: Colors.black,
-                                  child: Row(
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.all(5.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding: EdgeInsets.all(10.0),
-                                        child: Text("$index"),
+                                        padding: EdgeInsets.only(
+                                            top: 5.0, bottom: 5.0),
+                                        child: (channelState
+                                                is LoadingChannelDescriptionState)
+                                            ? SizedBox(
+                                                child: SizedBox(
+                                                child: SkeletonAnimation(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                  shimmerColor: 2 % 2 != 0
+                                                      ? Colors.grey
+                                                      : Colors.white54,
+                                                  child: Container(
+                                                    height: 15,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.15,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.0),
+                                                        color: HexColor(
+                                                            '#202020')),
+                                                  ),
+                                                ),
+                                              ))
+                                            : (channelState
+                                                    is InitialChannelDescriptionState)
+                                                ? Text(
+                                                    "${channelState.channel.Subscribers} subscribers",
+                                                    style: TextStyle(
+                                                        fontSize: 14.0,
+                                                        color: Colors.grey),
+                                                  )
+                                                : Text("Error"),
                                       ),
-                                      Padding(
-                                        padding: EdgeInsets.only(right: 17.0),
-                                        child: FlutterLogo(
-                                          size: 35.0,
-                                        ),
-                                      ),
-                                      Expanded(
-                                          child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            "${listOfPodcasts![index]}",
-                                            style: TextStyle(fontSize: 19.0),
-                                          ),
-                                          Padding(
-                                              padding:
-                                                  EdgeInsets.only(bottom: 4.0)),
-                                          Text(
-                                            "23,342,322",
-                                            style: TextStyle(
-                                                fontSize: 10.0,
-                                                color: Colors.grey),
-                                          ),
-                                        ],
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                      )),
-                                      PopupMenuButton(
-                                        itemBuilder: (c) =>
-                                            <PopupMenuEntry<Object?>>[],
-                                      )
+                                      _getSubscribeButton(
+                                          channelState, channelBloc),
                                     ],
-                                  )));
-                        },
-                        childCount: listOfPodcasts!.length,
+                                  ),
+                                ),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  if (channelState
+                                      is InitialChannelDescriptionState) {
+                                    audioBloc.add(InitializePlayerEvent(
+                                        podcasts: ListQueue.from(
+                                            channelState.channel.Podcasts!)));
+                                    context.router.push(PlayerRoute());
+                                  }
+                                },
+                                child: Icon(
+                                  Icons.play_arrow,
+                                  color: Colors.white,
+                                ),
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.blue),
+                                  shape: MaterialStateProperty.all(
+                                    CircleBorder(),
+                                  ),
+                                  minimumSize: MaterialStateProperty.all(
+                                      Size.fromRadius(24.0)),
+                                ),
+                              )
+                            ],
+                          )
+                        ],
                       ),
-                    );
-                  }
-                  return SliverToBoxAdapter(
-                      child: Flexible(child: LoadingList()));
-                })
-              ],
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                      child: Text(
+                        "Podcasts",
+                        style: TextStyle(fontSize: 21),
+                      ),
+                    ),
+                  ),
+                  BlocBuilder<ChannelDescriptionBloc, ChannelDescriptionState>(
+                      builder: (_, state) {
+                    if (state is FailedChannelDescriptionState) {
+                      return SliverFixedExtentList(
+                          itemExtent: 90.0,
+                          delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
+                              return Text(
+                                  "${state.errorMessage}: \nDrag Down to refresh");
+                            },
+                            childCount: 1,
+                          ));
+                    } else if (state is InitialChannelDescriptionState) {
+                      var listOfPodcasts = state.channel.Podcasts;
+                      return SliverFixedExtentList(
+                        itemExtent: 90.0,
+                        delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                            return InkWell(
+                                onTap: () {
+                                  audioBloc.add(InitializePlayerEvent(
+                                      podcasts: ListQueue.from(
+                                          [listOfPodcasts![index]])));
+
+                                  context.router.push(PlayerRoute());
+                                },
+                                child: Card(
+                                    color: Colors.black,
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.all(10.0),
+                                          child: Text("$index"),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 17.0),
+                                          child: FlutterLogo(
+                                            size: 35.0,
+                                          ),
+                                        ),
+                                        Expanded(
+                                            child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "${listOfPodcasts![index].name}",
+                                              style: TextStyle(fontSize: 19.0),
+                                            ),
+                                            Padding(
+                                                padding: EdgeInsets.only(
+                                                    bottom: 4.0)),
+                                            Text(
+                                              "${listOfPodcasts[index].numberOfListeners}",
+                                              style: TextStyle(
+                                                  fontSize: 10.0,
+                                                  color: Colors.grey),
+                                            ),
+                                          ],
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                        )),
+                                        PopupMenuButton(
+                                          itemBuilder: (c) =>
+                                              <PopupMenuEntry<Object?>>[],
+                                        )
+                                      ],
+                                    )));
+                          },
+                          childCount: listOfPodcasts!.length,
+                        ),
+                      );
+                    }
+                    return SliverToBoxAdapter(
+                        child: Flexible(child: LoadingList()));
+                  })
+                ],
+              ),
             ));
       },
     );

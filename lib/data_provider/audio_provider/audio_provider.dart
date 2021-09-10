@@ -1,11 +1,36 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:podcast_app/data_provider/audio_provider/Iaudio_provider.dart';
 
+import 'package:http/http.dart' as http;
+import 'package:podcast_app/data_provider/login/login_provider.dart';
+import 'package:podcast_app/models/Channel.dart';
+
+import '../constants.dart';
+
 class AudioProvider implements IAudioProvider {
+  final http.Client httpClient;
+
+  AudioProvider({required this.httpClient});
+
   @override
   Future<Null> addRecentlyPlayed(String id) async {
-    await Future.delayed(Duration(seconds: 2), () {
-      print("Added to recently played");
-    });
+    final user = json.decode(LoginProvider.SESSION.getString("user")!)
+        as Map<String, dynamic>;
+    String token = user["token"] as String;
+    final response = await httpClient.post(
+        Uri.parse(
+            "http://$URL/api/users/${LoginProvider.SESSION.getString('userId')}/Audios/$id/Played"),
+        headers: {
+          'Authorization': 'Bearer ${token}',
+        }).timeout(Duration(seconds: 7));
+    print(
+        'This is the response that is here: ${response.body} ${response.statusCode}');
+    if (response.statusCode == 200) {
+    } else {
+      throw SocketException("Response Code: ${response.statusCode}");
+    }
   }
 
   // TODO: remove this, it's probably useless

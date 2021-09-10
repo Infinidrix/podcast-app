@@ -29,30 +29,31 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     List<Podcast> trending;
     List<Podcast> recentlyPlayed;
     List<Channel> topPicks;
-    if (event is LoadIntialHomeEvent) {
-      yield LoadingHomePageState();
-      trending = await repository.getTrending();
-      topPicks = await repository.getTopPicks();
-      recentlyPlayed = await repository.getRecentlyPlayed();
+    try {
+      if (event is LoadIntialHomeEvent) {
+        yield LoadingHomePageState();
+        trending = await repository.getTrending();
+        topPicks = await repository.getTopPicks();
+        recentlyPlayed = await repository.getRecentlyPlayed();
 
-      await Future.delayed(Duration(
-        seconds: 2,
-      ));
-      yield LoadedHomePageState(
-        topPicks: topPicks,
-        recentlyPlayed: recentlyPlayed,
-        trending: trending,
-      );
-    }
+        yield LoadedHomePageState(
+          topPicks: topPicks,
+          recentlyPlayed: recentlyPlayed,
+          trending: trending,
+        );
+      }
 
-    if (event is ProfileButtonPressedEvent) {
-      final userInfo =
-          await LoginProvider.getItemFromLocalStorage(tokenName: "userInfo");
-      UserEditProfile va = userInfo != null
-          ? UserEditProfile.fromJson(jsonDecode(userInfo))
-          : temp;
-      yield NavigateToProfileHomeState(user: va);
-      // yield LoadingHomePageState();
+      if (event is ProfileButtonPressedEvent) {
+        final userInfo =
+            await LoginProvider.getItemFromLocalStorage(tokenName: "userInfo");
+        UserEditProfile va = userInfo != null
+            ? UserEditProfile.fromJson(jsonDecode(userInfo))
+            : temp;
+        yield NavigateToProfileHomeState(user: va);
+        // yield LoadingHomePageState();
+      }
+    } catch (e) {
+      yield FailedHomePageState(e.toString());
     }
   }
 }

@@ -34,135 +34,163 @@ class HomeWidget extends StatelessWidget {
           var trending = homePageState.trending;
           var recently = homePageState.recentlyPlayed;
           var topPicks = homePageState.topPicks;
-          return ListView(children: [
-            Column(
-              children: [
-                Container(
-                    color: HexColor("#121212"),
-                    padding: EdgeInsets.only(
-                      left: 4.0,
-                      top: 4.0,
-                    ),
-                    child: Container(
-                      // height: 750,
-                      child: Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Align(
-                                alignment: Alignment.centerRight,
-                                child: IconButton(
-                                  icon: Icon(Icons.settings_outlined),
-                                  onPressed: () {
-                                    homePageBloc
-                                        .add(ProfileButtonPressedEvent());
-                                  },
-                                ),
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "Top Picks",
-                                style: TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 10.0, horizontal: 7.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+          return RefreshIndicator(
+            onRefresh: () async {
+              homePageBloc.add(LoadIntialHomeEvent());
+            },
+            child: ListView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                children: [
+                  Column(
+                    children: [
+                      Container(
+                          color: HexColor("#121212"),
+                          padding: EdgeInsets.only(
+                            left: 4.0,
+                            top: 4.0,
+                          ),
+                          child: Container(
+                            // height: 750,
+                            child: Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  TopPicks(
-                                    channel: topPicks[0],
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Align(
+                                      alignment: Alignment.centerRight,
+                                      child: IconButton(
+                                        icon: Icon(Icons.settings_outlined),
+                                        onPressed: () {
+                                          homePageBloc
+                                              .add(ProfileButtonPressedEvent());
+                                        },
+                                      ),
+                                    ),
                                   ),
-                                  TopPicks(
-                                    channel: topPicks[1],
-                                  )
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      "Top Picks",
+                                      style: TextStyle(
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Container(
+                                    height: 150.0,
+                                    child: GridView.count(
+                                      childAspectRatio: 0.47,
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 4.0,
+                                      mainAxisSpacing: 2.0,
+                                      scrollDirection: Axis.horizontal,
+                                      children: homePageState.topPicks
+                                          .map((channel) =>
+                                              TopPicks(channel: channel))
+                                          .toList(),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 55,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          "Recently Played",
+                                          style: TextStyle(
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.bold),
+                                        )),
+                                  ),
+                                  SizedBox(
+                                    height: 175,
+                                    child: ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: recently.length,
+                                        itemBuilder:
+                                            (BuildContext context, int item) {
+                                          return AudioWithThumbnail(
+                                            podcast: recently[item],
+                                          );
+                                        }),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          "Trending",
+                                          style: TextStyle(
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.bold),
+                                        )),
+                                  ),
+                                  SizedBox(
+                                    height: 170,
+                                    child: ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: trending.length,
+                                        itemBuilder:
+                                            (BuildContext context, int item) {
+                                          return AudioWithThumbnail(
+                                            podcast: trending[item],
+                                          );
+                                        }),
+                                  ),
                                 ],
                               ),
                             ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 5.0, horizontal: 7.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  TopPicks(
-                                    channel: topPicks[2],
-                                  ),
-                                  TopPicks(channel: topPicks[3])
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 55,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    "Recently Played",
-                                    style: TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.bold),
-                                  )),
-                            ),
-                            SizedBox(
-                              height: 175,
-                              child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: recently.length,
-                                  itemBuilder:
-                                      (BuildContext context, int item) {
-                                    return AudioWithThumbnail(
-                                      podcast: recently[item],
-                                    );
-                                  }),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    "Trending",
-                                    style: TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.bold),
-                                  )),
-                            ),
-                            SizedBox(
-                              height: 170,
-                              child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: trending.length,
-                                  itemBuilder:
-                                      (BuildContext context, int item) {
-                                    return AudioWithThumbnail(
-                                      podcast: trending[item],
-                                    );
-                                  }),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )),
-              ],
+                          )),
+                    ],
+                  ),
+                ]),
+          );
+        }
+        if (homePageState is FailedHomePageState) {
+          return RefreshIndicator(
+            onRefresh: () async {
+              homePageBloc.add(LoadIntialHomeEvent());
+            },
+            child: Container(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 70.0),
+                child: ListView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    children: [
+                      Center(
+                          child: Text("${homePageState.errorMessage}",
+                              style: TextStyle(
+                                  fontSize: 13.0, color: Colors.grey))),
+                      Center(child: Text("Drag Down to try again")),
+                    ]),
+              ),
             ),
-          ]);
+          );
         }
 
-        return Container();
+        return RefreshIndicator(
+          onRefresh: () async {
+            homePageBloc.add(LoadIntialHomeEvent());
+          },
+          child: Container(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 70.0),
+              child: ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    Center(
+                        child: Text("Drag Down to see changes",
+                            style: TextStyle(fontSize: 16.0)))
+                  ]),
+            ),
+          ),
+        );
       },
     );
   }

@@ -22,7 +22,8 @@ class TopPicks extends StatelessWidget {
       },
       child: FittedBox(
         child: Container(
-          width: (MediaQuery.of(context).size.width - 40) / 2,
+          height: 120,
+          width: 250,
           decoration: BoxDecoration(
             color: HexColor("#262626"),
             borderRadius: BorderRadius.circular(7.0),
@@ -39,7 +40,8 @@ class TopPicks extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         image: DecorationImage(
-                            image: AssetImage(channel.ImageUrl))),
+                            image: AssetImage(channel.ImageUrl),
+                            fit: BoxFit.cover)),
                   ),
                 ),
               ),

@@ -132,14 +132,11 @@ class ChannelPorvider implements IChannelProvider {
     var request = http.MultipartRequest(
       'POST',
       Uri.parse('http://$URL/api/users/$userId/channel'),
-    )
-      ..fields.addAll({
+    )..fields.addAll({
         "name": createChannelInfo.Name,
-        "description": createChannelInfo.Description
-      })
-      ..files.add(
-        await http.MultipartFile.fromPath("imagefile", createChannelInfo.Url),
-      );
+        "description": createChannelInfo.Description,
+        "ownerId": LoginProvider.SESSION.getString("userId")!.toString()
+      });
 
     StreamedResponse? response;
 
@@ -148,6 +145,8 @@ class ChannelPorvider implements IChannelProvider {
     } catch (e) {
       return null;
     }
+
+    print("Status code: ${response.statusCode}");
 
     if (response.statusCode == 200) {
       return Channel.fromJson(

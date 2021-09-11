@@ -42,7 +42,7 @@ class YourChannelProvider extends IYourChannelProvider {
       String? userId = await LoginProvider.SESSION.getString('userId');
       response = await httpClient
           .get(Uri.parse('http://$URL/api/users/$userId/channel/yourchannel'))
-          .timeout(Duration(seconds: 5));
+          .timeout(Duration(seconds: 20));
     } catch (e) {
       print("ERROR ${e.toString()}");
       return left(e.toString());

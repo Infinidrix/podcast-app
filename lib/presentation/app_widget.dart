@@ -118,7 +118,7 @@ class MyApp extends StatelessWidget {
           create: (context) => CreatePodcastBloc(
             CreatePodcastInitialState(),
             CreatePodcastRepository(
-              CreatePodcastProvider(),
+              CreatePodcastProvider(httpClient: http.Client()),
             ),
           ),
         ),

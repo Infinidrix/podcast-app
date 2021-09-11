@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:podcast_app/models/channel/Channel.dart';
@@ -25,10 +26,10 @@ class EditChannelBloc extends Bloc<EditChannelEvent, EditChannelState> {
       // TODO
       // final channel = await editChannelRepository.getChannel(event.channel.Id);
 
-      var res =
+      Either<String, Channel> res =
           await editChannelRepository.editPodcast(event.podcast, event.channel);
 
-      res.fold((l) async* {
+      yield* res.fold((l) async* {
         print("folding 1");
         yield ErrorEditChannelState(error: l);
         print("folding 2");
@@ -49,7 +50,7 @@ class EditChannelBloc extends Bloc<EditChannelEvent, EditChannelState> {
           event.podcast, event.channel);
       // var channel = await editChannelRepository.getChannel(event.channel.Id);
 
-      res.fold((l) async* {
+      yield* res.fold((l) async* {
         print("FOLDING?");
         yield ErrorEditChannelState(error: l);
         yield LoadedEditChannelState(channel: event.channel);

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:podcast_app/data_provider/edit_channel/IEditChannelProvider.dart';
@@ -26,8 +27,8 @@ class EditChannelProvider extends IEditChannelProvider {
       response1 = await httpClient.delete(
           Uri.parse("http://$URL/api/Users/$userId/Audios/${podcast.id}"));
       // TODO:
-      response = await httpClient.get(Uri.parse(
-          "http://$URL/api/Users/$userId/channel/yourchannel/${channel.Id}"));
+      response = await httpClient.get(
+          Uri.parse("http://$URL/api/Users/$userId/channel/${channel.Id}"));
     } catch (e) {
       return left('Error');
     }
@@ -38,7 +39,7 @@ class EditChannelProvider extends IEditChannelProvider {
       print(parsed);
       return Right(Channel.fromJson(parsed));
     } else {
-      return left("ERROR");
+      return left("ERROR${response.statusCode}");
     }
   }
 
@@ -53,23 +54,50 @@ class EditChannelProvider extends IEditChannelProvider {
       print("\n\nPodcast id ${podcast.id}");
       response1 = await httpClient.patch(
           Uri.parse("http://$URL/api/Users/$userId/Audios/${podcast.id}"),
-          body: {"Title": podcast.name, "Description": podcast.description});
+          body: json.encode(
+              {"Title": podcast.name, "Description": podcast.description}),
+          headers: {
+            "Content-Type": "application/json",
+          });
       response = await httpClient.get(
           Uri.parse("http://$URL/api/Users/$userId/channel/${channel.Id}"));
     } catch (e) {
       print("catch error");
-      return left("Error");
+      return left("Error: ffff");
     }
 
     print("response : ${response.statusCode}");
     print("response1 : ${response1.statusCode}");
-    if (response.statusCode == 200 && response1.statusCode == 200) {
+    if (response.statusCode == 200 && response1.statusCode == 202) {
       final parsed = json.decode(response.body);
       print(parsed);
       return Right(Channel.fromJson(parsed));
     } else {
       print("KEFT");
       return left("Error");
+    }
+  }
+
+  @override
+  Future<Channel> getChannel(String id) async {
+    final user = json.decode(LoginProvider.SESSION.getString("user")!)
+        as Map<String, dynamic>;
+    String token = user["token"].toString();
+    // TODO: Change this to actual user id
+    print("Got here");
+    final response = await httpClient.get(
+        Uri.parse(
+            'http://$URL/api/users/${LoginProvider.SESSION.getString('userId')}/channel/$id'),
+        headers: {
+          'Authorization': 'Bearer ${token}',
+        }).timeout(Duration(seconds: 7));
+    if (response.statusCode == 200) {
+      var parsed = json.decode(response.body);
+      Channel channel = Channel.fromJson(parsed);
+      return channel;
+    } else {
+      print(response.body);
+      throw SocketException("Response Code: ${response.statusCode}");
     }
   }
 }

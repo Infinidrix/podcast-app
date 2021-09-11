@@ -6,4 +6,5 @@ abstract class IEditChannelProvider {
   Future<Either<String, Channel>> editPodcast(Podcast podcast, Channel channel);
   Future<Either<String, Channel>> deletePodcast(
       Podcast podcast, Channel channel);
+  Future<Channel> getChannel(String channelId);
 }

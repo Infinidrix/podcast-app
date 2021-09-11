@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:podcast_app/main.dart' as app;
 
+// flutter drive  --driver=test_driver/integration_test.dart --target=integration_test/app_test.dart
 void main() {
   group('App Test', () {
     IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +33,7 @@ void main() {
       await tester.tap(signUpOnLogin);
       await tester.pumpAndSettle();
 
-      String username = "manmkoanmmkl";
+      String username = "manmkoanmmljkhkl";
       String password = "Bini1234,,";
 
       // signup page test
@@ -66,7 +67,7 @@ void main() {
       // // login test
       var emailField = find.byKey(Key("email_field"));
       var passwordField = find.byKey(Key("password_field"));
-      var loginButton = find.byKey(Key("loginButton"));
+      var loginButton = find.byKey(Key("signinButton"));
 
       await tester.enterText(emailField, username);
       await Future.delayed(Duration(seconds: 1));

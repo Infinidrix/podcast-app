@@ -58,6 +58,9 @@ dependencies:
   path: ^1.8.0
   test: ^1.16.8
   dio:
+  mocktail: ^0.1.4
+  network_image_mock: ^2.0.1
+  
   cached_network_image: ^3.1.0
 
 
@@ -75,6 +78,7 @@ dev_dependencies:
   moor_generator: ^4.4.1
   mockito: ^5.0.15
   bloc_test: ^8.1.0
+  test_core: ^0.3.19
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

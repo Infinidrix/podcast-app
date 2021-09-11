@@ -72,7 +72,7 @@ class WelcomeWidget extends StatelessWidget {
                         padding: const EdgeInsets.all(20.0),
                         child: Text(
                           "This is some discription about our app any thing about our app",
-                          key: Key("wellCome"),
+                          // key: Key("wellCome"),
                           style: TextStyle(
                             color: Colors.grey,
                           ),

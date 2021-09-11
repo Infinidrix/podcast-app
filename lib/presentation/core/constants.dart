@@ -10,7 +10,7 @@ final textfieldDecoration = InputDecoration(
   // labelText: "Email",
   // labelStyle: TextStyle(color: Colors.white),
   helperStyle: TextStyle(color: Colors.white),
-  hintText: 'email',
+  hintText: 'username',
   hintStyle: TextStyle(color: Colors.white),
   // filled: true,
   enabledBorder: UnderlineInputBorder(

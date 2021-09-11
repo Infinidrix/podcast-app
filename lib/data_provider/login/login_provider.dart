@@ -40,7 +40,10 @@ class LoginProvider implements ILoginProvider {
         await setItemToLocalStrage(
             tokenName: "userCred", dataToStore: jsonEncode(userCred.toJson()));
         print("this is the thing i want ${parsed}");
-
+        await setItemToLocalStrage(
+            tokenName: "token", dataToStore: parsed["token"]);
+        print(
+            "this is the  user token ${parsed["token"]} u can get it every where ");
         await setItemToLocalStrage(
             tokenName: "roles",
             dataToStore: jsonEncode(parsed['user']['roles']));
@@ -54,8 +57,12 @@ class LoginProvider implements ILoginProvider {
             tokenName: "user", dataToStore: response.body);
         await setItemToLocalStrage(
             tokenName: "userId", dataToStore: parsed['user']['id']);
+
+        final id = parsed['user']['id'];
+        final image = "http://192.168.0.131:44343/api/update/profile/${id}";
+
         final userInfo = UserEditProfile(
-            ProfilePicture: parsed['user']["profilePicture"],
+            ProfilePicture: image,
             UserName: parsed['user']["userName"],
             Email: parsed['user']['email'],
             Password: "",

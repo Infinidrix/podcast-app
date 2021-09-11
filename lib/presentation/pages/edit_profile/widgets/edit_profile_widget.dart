@@ -376,8 +376,7 @@ class EditProfileWidget extends StatelessWidget {
           child: Center(
             child: CircleAvatar(
               radius: 60,
-              backgroundImage: NetworkImage(
-                  'http://$URL:44343/api/update /profile/0dd7361e-a131-4614-82c7-08e02a1c4445'),
+              backgroundImage: NetworkImage(user.ProfilePicture),
               // AssetImage(state.user.ProfilePicture),
               // backgroundImage: (state is InitialEditProfileState)
               //     ? AssetImage(state.user.ProfilePicture)

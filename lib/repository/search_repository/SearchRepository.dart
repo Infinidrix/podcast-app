@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:podcast_app/data_provider/search_page_provider/ISearch_provider.dart';
 import 'package:podcast_app/models/channel/Channel.dart';
 import 'package:podcast_app/models/Podcast.dart';
@@ -11,7 +12,7 @@ class SearchRepository implements ISearchRepository {
       {required this.apiDataProvider, required this.localDataProvider});
 
   @override
-  Future<List<Channel>> searchChannel(String search) async {
+  Future<Either<String, List<Channel>>> searchChannel(String search) async {
     return apiDataProvider.searchChannel(search);
   }
 

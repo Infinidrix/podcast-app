@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:podcast_app/application/your_channels/your_channel_bloc.dart';
+import 'package:podcast_app/application/your_channels/your_channel_event.dart';
 import 'package:podcast_app/application/your_channels/your_channel_state.dart';
 // import 'package:podcast_app/models/Channel.dart';
 import 'package:podcast_app/models/channel/Channel.dart';
@@ -16,6 +17,7 @@ class YourChannelsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final yourchannelBloc = BlocProvider.of<YourChannelBloc>(context);
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: HexColor("#282828"),
@@ -36,7 +38,15 @@ class YourChannelsPage extends StatelessWidget {
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.8,
-              child: BlocBuilder<YourChannelBloc, YourChannelState>(
+              child: BlocConsumer<YourChannelBloc, YourChannelState>(
+                listener: (context, state) {
+                  if (state is YourChannelError) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(state.error),
+                      duration: Duration(milliseconds: 5500),
+                    ));
+                  }
+                },
                 builder: (context, state) {
                   if (state is LoadingYourChannel) {
                     return Center(
@@ -44,12 +54,19 @@ class YourChannelsPage extends StatelessWidget {
                     );
                   } else if (state is LoadedYourChannel) {
                     List<Channel> channels = state.channels;
+                    // print("yourchaneels page: => \n ");
+                    // channels.forEach((e) => print(e.toJson()));
 
-                    return ListView.builder(
-                      itemCount: channels.length,
-                      itemBuilder: (BuildContext context, int index) =>
-                          YourChannelTile(
-                        channel: channels[index],
+                    return RefreshIndicator(
+                      onRefresh: () async {
+                        yourchannelBloc.add(IntialYourChannelEvent());
+                      },
+                      child: ListView.builder(
+                        itemCount: channels.length,
+                        itemBuilder: (BuildContext context, int index) =>
+                            YourChannelTile(
+                          channel: channels[index],
+                        ),
                       ),
                     );
                   }

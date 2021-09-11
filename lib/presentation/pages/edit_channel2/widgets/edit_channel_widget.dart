@@ -19,7 +19,15 @@ class EditChannel extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
-        BlocBuilder<EditChannelBloc, EditChannelState>(
+        BlocConsumer<EditChannelBloc, EditChannelState>(
+          listener: (context, state) {
+            if (state is ErrorEditChannelState) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(state.error),
+                duration: Duration(seconds: 4),
+              ));
+            }
+          },
           builder: (context, state) {
             return SliverAppBar(
               pinned: true,
@@ -40,18 +48,23 @@ class EditChannel extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          state.channel.Name,
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
+                                        Container(
+                                          width: 120,
+                                          child: Text(
+                                            state.channel.Name,
+                                            overflow: TextOverflow.fade,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          ),
                                         ),
                                         GestureDetector(
                                           onTap: () {
-                                            context.router.push(CreatePodcastRoute(
-                                                channelId:
-                                                    "176684b8-461c-41b0-b414-fc0bf49bd8fc"));
+                                            context.router.push(
+                                                CreatePodcastRoute(
+                                                    channelId:
+                                                        state.channel.Id));
                                           },
                                           child: Icon(
                                             Icons.add,

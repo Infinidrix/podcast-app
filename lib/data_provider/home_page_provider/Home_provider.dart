@@ -50,7 +50,7 @@ class HomeProvider implements IHomeProvider {
   Future<List<Podcast>> getRecentlyPlayed() async {
     final user = json.decode(LoginProvider.SESSION.getString("user")!)
         as Map<String, dynamic>;
-    String token = user["token"] as String;
+    String token = user["token"].toString();
     final response = await httpClient.get(
         Uri.parse(
             "http://$URL/api/users/${await LoginProvider.SESSION.getString('userId')}/Audios/Recents"),
@@ -72,7 +72,7 @@ class HomeProvider implements IHomeProvider {
     // return channels;
     final user = json.decode(LoginProvider.SESSION.getString("user")!)
         as Map<String, dynamic>;
-    String token = user["token"] as String;
+    String token = user["token"].toString();
     final response = await httpClient.get(
         Uri.parse(
             "http://$URL/api/users/${await LoginProvider.SESSION.getString('userId')}/channel"),
@@ -93,7 +93,7 @@ class HomeProvider implements IHomeProvider {
   Future<List<Podcast>> getTrending() async {
     final user = json.decode(LoginProvider.SESSION.getString("user")!)
         as Map<String, dynamic>;
-    String token = user["token"] as String;
+    String token = user["token"].toString();
     final response = await httpClient.get(
         Uri.parse(
             "http://$URL/api/users/${await LoginProvider.SESSION.getString('userId')}/Audios/Recents"),

@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:podcast_app/application/search/search_event.dart';
@@ -31,12 +32,18 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     if (event is SearchingEvent) {
       yield SearchLoadingState();
       resultPodcast = await repository.searchPodcast(event.search);
-      resultChannel = await repository.searchChannel(event.search);
 
-      yield SearchResult(
-        podcastResult: resultPodcast,
-        channelResult: resultChannel,
-      );
+      Either<String, List<Channel>> a =
+          await repository.searchChannel(event.search);
+      yield* a.fold((l) async* {
+        yield SearchError(error: l);
+      }, (r) async* {
+        resultChannel = r;
+        yield SearchResult(
+          podcastResult: resultPodcast,
+          channelResult: resultChannel,
+        );
+      });
     }
   }
 }

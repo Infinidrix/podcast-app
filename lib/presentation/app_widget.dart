@@ -175,7 +175,7 @@ class MyApp extends StatelessWidget {
               EditChannelBloc(editChannelRepository: editChannelRepository),
         ),
         BlocProvider(
-          create: (_) => BottomNavigationBloc(),
+          create: (_) => BottomNavigationBloc()..add(CheckRoleEvent()),
         ),
       ],
       child: MaterialApp.router(

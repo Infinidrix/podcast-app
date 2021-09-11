@@ -22,19 +22,13 @@ import 'package:podcast_app/presentation/pages/signin/widgets/signin_page_widget
 import 'package:podcast_app/repository/home_page_repository/HomePageRepository.dart';
 import 'package:podcast_app/repository/login_repository.dart';
 
+import '../../core_mocks/core_mocks.dart';
 class MockSigninBloc extends MockBloc<LoginEvent, LoginState>
     implements LoginBloc {}
 
 class SigninStateFake extends Fake implements LoginState {}
 
 class SigninEventFake extends Fake implements LoginEvent {}
-
-class MockHomepageBloc extends MockBloc<HomePageEvent, HomePageState>
-    implements HomePageBloc {}
-
-class HomepageStateFake extends Fake implements HomePageState {}
-
-class HomepageEventFake extends Fake implements HomePageEvent {}
 
 void main() {
   final homePageRepository =

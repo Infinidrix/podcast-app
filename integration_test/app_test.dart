@@ -1,12 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:podcast_app/main.dart' as app;
-
-
-
-
-// flutter drive  --driver=test_driver/integration_test.dart --target=integration_test/app_test.dart
 
 void main() {
   group('App Test', () {
@@ -17,6 +13,17 @@ void main() {
       await tester.pumpAndSettle();
       var getStartedButton = find.byKey(Key("getStarted"));
       await Future.delayed(Duration(seconds: 3));
+
+      // Widget token = Text(
+      //   "This is some discription about our app any thing about our app",
+      //   key: Key("wellCome"),
+      //   style: TextStyle(
+      //     color: Colors.grey,
+      //   ),
+      // );
+      // var text = find.byKey(Key("wellCome"));
+      // expect(text, token);
+
       await tester.tap(getStartedButton);
       await tester.pumpAndSettle();
 
@@ -24,6 +31,9 @@ void main() {
       await Future.delayed(Duration(seconds: 3));
       await tester.tap(signUpOnLogin);
       await tester.pumpAndSettle();
+
+      String username = "manmkoanmmkl";
+      String password = "Bini1234,,";
 
       // signup page test
 
@@ -34,34 +44,42 @@ void main() {
 
       await tester.enterText(emailFieldInSignUp, "lop@gmail.com");
       await Future.delayed(Duration(seconds: 2));
-      await tester.enterText(userNameFieldInSignUp, "lopp");
+      await tester.enterText(userNameFieldInSignUp, username);
       await Future.delayed(Duration(seconds: 1));
 
-      await tester.enterText(passwordFieldInSignUp, "Bini1234,,");
+      await tester.enterText(passwordFieldInSignUp, password);
       await Future.delayed(Duration(seconds: 2));
 
       await tester.tap(register);
       await Future.delayed(Duration(seconds: 3));
 
       await tester.pumpAndSettle();
+      await Future.delayed(Duration(seconds: 3));
+      // var signinInSignUp = find.byKey(Key("signin"));
+      await tester.pumpAndSettle();
 
-      String username = "lopp";
-      String password = "Bini1234,,";
+      // await tester.tap(signinInSignUp);
+
+      await tester.pumpAndSettle();
+      await Future.delayed(Duration(seconds: 3));
+
       // // login test
-      // var email_field = find.byKey(Key("email_field"));
-      // var password_field = find.byKey(Key("password_field"));
-      // var loginButton = find.byKey(Key("loginButton"));
+      var emailField = find.byKey(Key("email_field"));
+      var passwordField = find.byKey(Key("password_field"));
+      var loginButton = find.byKey(Key("loginButton"));
 
-      // await tester.enterText(emailFieldInSignUp, "lop@gmail.com");
-      // await Future.delayed(Duration(seconds: 2));
-      // await tester.enterText(userNameFieldInSignUp, username);
-      // await Future.delayed(Duration(seconds: 1));
+      await tester.enterText(emailField, username);
+      await Future.delayed(Duration(seconds: 1));
 
-      // await tester.enterText(emailFieldInSignUp, password);
-      // await Future.delayed(Duration(seconds: 2));
+      await tester.enterText(passwordField, password);
+      await Future.delayed(Duration(seconds: 2));
 
-      // await tester.tap(register);
-      // await Future.delayed(Duration(seconds: 3));
+      await tester.tap(loginButton);
+      await Future.delayed(Duration(seconds: 3));
+
+      await tester.pumpAndSettle();
+
+      await Future.delayed(Duration(seconds: 3));
     });
   });
 }

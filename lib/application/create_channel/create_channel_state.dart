@@ -1,20 +1,42 @@
-abstract class CreateChannelState {}
+import 'package:equatable/equatable.dart';
 
-class CreateChannelLoadingState extends CreateChannelState {}
+abstract class CreateChannelState extends Equatable {}
 
-class CreateChannelInitialState extends CreateChannelState {}
+class CreateChannelLoadingState extends CreateChannelState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}
 
-class CreateChannelSuccessState extends CreateChannelState {}
+class CreateChannelInitialState extends CreateChannelState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}
+
+class CreateChannelSuccessState extends CreateChannelState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}
 
 class CreateChannelFailedState extends CreateChannelState {
   final String ErrorMessage;
 
   CreateChannelFailedState({required this.ErrorMessage});
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [ErrorMessage];
 }
 
 class OnImageUploadedState extends CreateChannelState {
   final dynamic image;
 
   OnImageUploadedState({this.image});
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [image];
   // OnImageUploadedState copyWith({});
 }

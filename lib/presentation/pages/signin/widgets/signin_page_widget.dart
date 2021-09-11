@@ -6,6 +6,7 @@ import 'package:podcast_app/application/home_page/home_page_bloc.dart';
 import 'package:podcast_app/application/home_page/home_page_event.dart';
 import 'package:podcast_app/application/login/login_bloc.dart';
 import 'package:podcast_app/presentation/core/constants.dart';
+import 'package:podcast_app/presentation/pages/core/validator.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 
 class SigninWidget extends StatelessWidget {
@@ -68,7 +69,7 @@ class SigninWidget extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 45.0),
                       child: TextFormField(
-                        key: Key("email_field"),
+                        key: Key('email_field'),
                         style: TextStyle(color: Colors.white),
                         decoration: textfieldDecoration,
                         validator: (value) {
@@ -77,7 +78,6 @@ class SigninWidget extends StatelessWidget {
                           }
                           return null;
                         },
-                        
                         onChanged: (value) {
                           userName = value;
                         },
@@ -94,7 +94,7 @@ class SigninWidget extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: TextFormField(
-                        key: Key("password_field"),
+                        key: Key('password_field'),
                         obscureText: isPasswordObsecure,
                         style: TextStyle(color: Colors.white),
                         decoration: textfieldDecoration.copyWith(
@@ -119,10 +119,7 @@ class SigninWidget extends StatelessWidget {
                           ),
                         ),
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "This field can't be empty";
-                          }
-                          return null;
+                          return isPasswordValid(value!);
                         },
                         onChanged: (value) {
                           password = value;
@@ -146,6 +143,7 @@ class SigninWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20.0),
                         ),
                         child: ElevatedButton(
+                          key: Key("loginButton"),
                           style: ButtonStyle(
                             backgroundColor:
                                 MaterialStateProperty.all(Colors.transparent),
@@ -201,6 +199,7 @@ class SigninWidget extends StatelessWidget {
                             style: TextStyle(color: Colors.grey),
                           ),
                           TextButton(
+                            key: Key("signupButton"),
                             onPressed: () {
                               context.router.push(SignupRoute());
                             },

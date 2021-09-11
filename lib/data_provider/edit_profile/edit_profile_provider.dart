@@ -32,13 +32,23 @@ class EditProfileProvider implements IEditProfileProvider {
       "UserName": "thre",
       "Password": "Bini1234,,"
     };
+    final user = json.decode(LoginProvider.SESSION.getString("user")!)
+        as Map<String, dynamic>;
+    String token = user["token"].toString();
+    print("this is the token i wnat $token");
+
     try {
       await LoginProvider.getSharedPrefernce();
       final id = await LoginProvider.SESSION.getString("userId");
+      final user = json.decode(LoginProvider.SESSION.getString("user")!)
+          as Map<String, dynamic>;
+      String token = user["token"].toString();
+
       final response = await httpClient.put(
         Uri.http(URL, "/api/update /${id}"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ${token}'
         },
         body: jsonEncode(editItems.user.tojson()),
       );
@@ -52,7 +62,9 @@ class EditProfileProvider implements IEditProfileProvider {
       final responseRole = await httpClient
           .post(Uri.http(URL, checked), headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${token}',
       });
+      print(token);
       bool isCreator = false;
       if (responseRole.statusCode == 200) {
         final roles = jsonDecode(responseRole.body);
@@ -93,9 +105,11 @@ class EditProfileProvider implements IEditProfileProvider {
         return left(jsonDecode(response.body)["message"]);
       } else if (response.statusCode == 404) {
         return left("there is no internet connection");
+      } else if (response.statusCode == 401) {
+        print("this is in edit profile ${response.statusCode}");
       }
-    } catch (e) {
-      return left("${e.runtimeType}");
+    } on CastError catch (e) {
+      return left(" ${e.runtimeType} ");
     }
     return left("there is no internet connection");
   }
@@ -107,10 +121,13 @@ class EditProfileProvider implements IEditProfileProvider {
     try {
       await LoginProvider.getSharedPrefernce();
       final id = await LoginProvider.SESSION.getString("userId");
-
+      final user = json.decode(LoginProvider.SESSION.getString("user")!)
+          as Map<String, dynamic>;
+      String token = user["token"].toString();
       final response = await httpClient
           .delete(Uri.http(URL, "/api/user/${id}"), headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${token}'
       });
       if (response.statusCode == 200) {
         return right(true);
@@ -128,6 +145,10 @@ class EditProfileProvider implements IEditProfileProvider {
   @override
   Future<Either<String, bool>> uploadProfile(dynamic profile) async {
     final id = await LoginProvider.SESSION.getString("userId");
+    final user = json.decode(LoginProvider.SESSION.getString("user")!)
+        as Map<String, dynamic>;
+    String token = user["token"].toString();
+    print("this is the token i wnat $token");
 
     String url = "http://$URL/api/update/profile/$id";
 
@@ -143,7 +164,11 @@ class EditProfileProvider implements IEditProfileProvider {
         '$url',
         data: formData,
         options: Options(
-          headers: {"accept": "/", "Content-Type": "multipart/form-data"},
+          headers: {
+            "accept": "/",
+            "Content-Type": "multipart/form-data",
+            'Authorization': 'Bearer ${token}'
+          },
         ),
       );
     } catch (e) {}

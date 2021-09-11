@@ -1,9 +1,11 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:podcast_app/application/signup/signup_bloc.dart';
 import 'package:podcast_app/presentation/core/constants.dart';
+import 'package:podcast_app/presentation/pages/core/validator.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 
 class SignupWidget extends StatelessWidget {
@@ -65,13 +67,13 @@ class SignupWidget extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 45.0),
                       child: TextFormField(
+                        key: Key("emailSignUp"),
                         style: TextStyle(color: Colors.white),
                         decoration: textfieldDecoration,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "This field can't be empty";
-                          } else if (!value.contains("@") ||
-                              !value.contains(".com")) {
+                          } else if (!EmailValidator.validate(value)) {
                             return "Invalid email";
                           }
                           return null;
@@ -90,6 +92,7 @@ class SignupWidget extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 45.0),
                       child: TextFormField(
+                          key: Key("userNameSignup"),
                           style: TextStyle(color: Colors.white),
                           decoration: textfieldDecoration.copyWith(
                             hintText: "John",
@@ -117,6 +120,7 @@ class SignupWidget extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: TextFormField(
+                          key: Key("passwordSignup"),
                           obscureText: _isPasswordShown,
                           style: TextStyle(color: Colors.white),
                           decoration: textfieldDecoration.copyWith(
@@ -142,12 +146,7 @@ class SignupWidget extends StatelessWidget {
                             ),
                           ),
                           validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "This field can't be empty";
-                            } else if (value.length < 8) {
-                              return "Password must have aleast 8 characters!";
-                            }
-                            return null;
+                            return isPasswordValid(value!);
                           },
                           onChanged: (value) {
                             _password = value;
@@ -170,6 +169,7 @@ class SignupWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20.0),
                         ),
                         child: ElevatedButton(
+                          key: Key("register"),
                           style: ButtonStyle(
                             backgroundColor:
                                 MaterialStateProperty.all(Colors.transparent),
@@ -226,6 +226,7 @@ class SignupWidget extends StatelessWidget {
                             style: TextStyle(color: Colors.grey),
                           ),
                           TextButton(
+                            key: Key('signin'),
                             onPressed: () {
                               context.router.push(SigninRoute());
                             },

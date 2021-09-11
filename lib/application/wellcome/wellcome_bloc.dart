@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
@@ -30,6 +31,10 @@ class WellcomeBloc extends Bloc<WellcomeEvent, WellcomeState> {
     // await LoginProvider.SESSION.deleteItem("userCred");
     // await LoginProvider.SESSION.setItem("userCred", "value");
     await LoginProvider.getSharedPrefernce();
+   final user = json.decode(LoginProvider.SESSION.getString("user")!)
+        as Map<String, dynamic>;
+    String token = user["token"].toString();
+    print("this is the token i wnat $token");
     print(
         "this is the UserId from wellcome bloc ${await LoginProvider.SESSION.getString("userId")}");
 

@@ -72,6 +72,7 @@ class WelcomeWidget extends StatelessWidget {
                         padding: const EdgeInsets.all(20.0),
                         child: Text(
                           "This is some discription about our app any thing about our app",
+                          key: Key("wellCome"),
                           style: TextStyle(
                             color: Colors.grey,
                           ),
@@ -91,6 +92,7 @@ class WelcomeWidget extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20.0),
                           ),
                           child: ElevatedButton(
+                            key: Key('getStarted'),
                             style: ButtonStyle(
                               backgroundColor:
                                   MaterialStateProperty.all(Colors.transparent),

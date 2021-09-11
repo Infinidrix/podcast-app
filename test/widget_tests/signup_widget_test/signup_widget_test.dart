@@ -24,7 +24,7 @@ class SignUpStateFake extends Fake implements SignupState {}
 class SignUpEventFake extends Fake implements SignupEvent {}
 
 void main() {
-  group("Signin widget testing", () {
+  group("SignUp widget testing", () {
     setUpAll(() {
       registerFallbackValue<SignupState>(SignUpStateFake());
       registerFallbackValue<SignupEvent>(SignUpEventFake());
@@ -32,7 +32,7 @@ void main() {
       registerFallbackValue<HomePageState>(HomepageStateFake());
     });
 
-    testWidgets("Testing the button of signin.", (WidgetTester tester) async {
+    testWidgets("Testing the some widgets.", (WidgetTester tester) async {
       await tester.runAsync(() async {
         final mockSignUpBloc = MockSignUpBloc();
         final mockHomepageBloc = MockHomepageBloc();

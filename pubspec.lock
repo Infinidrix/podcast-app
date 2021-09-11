@@ -72,7 +72,7 @@ packages:
     source: hosted
     version: "7.1.0"
   bloc_test:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: bloc_test
       url: "https://pub.dartlang.org"
@@ -356,6 +356,11 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.2"
+  flutter_driver:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -575,7 +580,7 @@ packages:
     source: hosted
     version: "5.0.15"
   mocktail:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: mocktail
       url: "https://pub.dartlang.org"

@@ -27,7 +27,7 @@ class AudioProvider implements IAudioProvider {
         }).timeout(Duration(seconds: 7));
     print(
         'This is the response that is here: ${response.body} ${response.statusCode}');
-    if (response.statusCode == 200) {
+    if (response.statusCode == 202) {
     } else {
       throw SocketException("Response Code: ${response.statusCode}");
     }

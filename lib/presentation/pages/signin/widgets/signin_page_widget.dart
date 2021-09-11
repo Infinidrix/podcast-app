@@ -18,93 +18,6 @@ class SigninWidget extends StatelessWidget {
     final homeBloc = BlocProvider.of<HomePageBloc>(context);
 
     final loginBloc = BlocProvider.of<LoginBloc>(context);
-    // the input field widget
-    // Widget emailInput = Padding(
-    //   padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 45.0),
-    //   child: TextFormField(
-    //     style: TextStyle(color: Colors.white),
-    //     decoration: textfieldDecoration,
-    //     validator: (value) {
-    //       if (value == null || value.isEmpty) {
-    //         return "This field can't be empty";
-    //       }
-    //       return null;
-    //     },
-    //   ),
-    // );
-
-    // the password field widget
-    // Widget passwordInput = Padding(
-    //   padding: const EdgeInsets.only(top: 8.0),
-    //   child: TextFormField(
-    //     obscureText: true,
-    //     style: TextStyle(color: Colors.white),
-    //     decoration: textfieldDecoration.copyWith(
-    //       hintText: "............",
-    //       prefixIcon: Icon(
-    //         Icons.lock_outline,
-    //         color: Colors.white,
-    //       ),
-    //       suffixIcon: Icon(
-    //         Icons.remove_red_eye_outlined,
-    //         color: Colors.white,
-    //       ),
-    //     ),
-    //     validator: (value) {
-    //       if (value == null || value.isEmpty) {
-    //         return "This field can't be empty";
-    //       }
-    //       return null;
-    //     },
-    //   ),
-    // );
-
-    // the signin in button
-    // Widget signinButton = Padding(
-    //   padding: const EdgeInsets.only(top: 50.0),
-    //   child: DecoratedBox(
-    //     decoration: BoxDecoration(
-    //       gradient: LinearGradient(
-    //           begin: Alignment.topCenter,
-    //           end: Alignment.bottomCenter,
-    //           colors: [HexColor("#579EB5"), HexColor("#8EB9C7")]),
-    //       borderRadius: BorderRadius.circular(20.0),
-    //     ),
-    //     child: ElevatedButton(
-    //       style: ButtonStyle(
-    //         backgroundColor: MaterialStateProperty.all(Colors.transparent),
-    //         shape: MaterialStateProperty.all(
-    //           RoundedRectangleBorder(
-    //             borderRadius: BorderRadius.circular(20.0),
-    //           ),
-    //         ),
-    //       ),
-    //       onPressed: () {
-    //         // checking if the form submitted is valid
-    //         if (_formKey.currentState!.validate()) {
-    //           print("Successfully signed in!");
-    //           context.router.push(ChannelDetailRoute());
-    //         }
-    //       },
-    //       child: Padding(
-    //         padding: const EdgeInsets.all(10.0),
-    //         child: Container(
-    //           child: Row(
-    //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //             children: [
-    //               Padding(
-    //                 padding: const EdgeInsets.only(left: 50.0),
-    //                 child: Text("Sign In"),
-    //               ),
-    //               Icon(Icons.arrow_forward_sharp),
-    //             ],
-    //           ),
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
-
     return Scaffold(
       backgroundColor: Colors.black,
       body: BlocConsumer<LoginBloc, LoginState>(
@@ -117,13 +30,6 @@ class SigninWidget extends StatelessWidget {
               duration: Duration(seconds: 3),
             ));
           }
-          // final delete = UserEditProfile(
-          //     ProfilePicture: "ProfilePicture",
-          //     UserName: "UserName",
-          //     Email: "Email",
-          //     Password: "Password",
-          //     FirsName: "FirsName",
-          //     LastName: "LastName");
           if (loginState is LoginSuccessState) {
             homeBloc.add(LoadIntialHomeEvent());
             context.router.replace(HomeRoute());
@@ -154,7 +60,7 @@ class SigninWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "Email",
+                      "Username",
                       style: TextStyle(color: Colors.grey),
                     ),
                     // Email Text Field
@@ -171,6 +77,7 @@ class SigninWidget extends StatelessWidget {
                           }
                           return null;
                         },
+                        
                         onChanged: (value) {
                           userName = value;
                         },

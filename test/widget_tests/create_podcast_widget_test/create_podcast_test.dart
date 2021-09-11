@@ -6,6 +6,9 @@ import 'package:network_image_mock/network_image_mock.dart';
 import 'package:podcast_app/application/create_podcast/create_podcast_application.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:bloc_test/bloc_test.dart';
+import 'package:podcast_app/application/edit_channel/edit_channel_bloc.dart';
+import 'package:podcast_app/application/edit_channel/edit_channel_event.dart';
+import 'package:podcast_app/application/edit_channel/edit_channel_state.dart';
 import 'package:podcast_app/presentation/pages/create_podcast/widgets/create_podcast_widget.dart';
 
 class MockCreatePodcastBloc
@@ -16,11 +19,20 @@ class CreatePodcastStateFake extends Fake implements CreatePodcastState {}
 
 class CreatePodcastEventFake extends Fake implements CreatePodcastEvent {}
 
+class MockEditChannel extends MockBloc<EditChannelEvent, EditChannelState>
+    implements EditChannelBloc {}
+
+class EditChannelStateFake extends Fake implements EditChannelState {}
+
+class EditChannelEventFake extends Fake implements EditChannelEvent {}
+
 void main() {
   group("Create Podcast", () {
     setUpAll(() {
       registerFallbackValue<CreatePodcastState>(CreatePodcastStateFake());
       registerFallbackValue<CreatePodcastEvent>(CreatePodcastEventFake());
+      registerFallbackValue<EditChannelState>(EditChannelStateFake());
+      registerFallbackValue<EditChannelEvent>(EditChannelEventFake());
     });
 
     testWidgets("Checking if the form exists", (WidgetTester tester) async {
@@ -29,14 +41,23 @@ void main() {
         when(() => mockCreatePodcastBloc.state).thenReturn(
           CreatePodcastInitialState(),
         );
+        final mockEditChannelBloc = MockEditChannel();
+        when(() => mockEditChannelBloc.state).thenReturn(
+          LoadingEditChannelState(),
+        );
         final widget = CreatePodcastWidget(
           channelId: "h",
         );
 
         await mockNetworkImagesFor(
           () async => await tester.pumpWidget(
-            BlocProvider<CreatePodcastBloc>(
-              create: (context) => mockCreatePodcastBloc,
+            MultiBlocProvider(
+              providers: [
+                BlocProvider<CreatePodcastBloc>(
+                    create: (context) => mockCreatePodcastBloc),
+                BlocProvider<EditChannelBloc>(
+                    create: (context) => mockEditChannelBloc),
+              ],
               child: MaterialApp(
                 home: widget,
               ),
@@ -56,14 +77,23 @@ void main() {
         when(() => mockCreatePodcastBloc.state).thenReturn(
           CreatePodcastInitialState(),
         );
+        final mockEditChannelBloc = MockEditChannel();
+        when(() => mockEditChannelBloc.state).thenReturn(
+          LoadingEditChannelState(),
+        );
         final widget = CreatePodcastWidget(
           channelId: "h",
         );
 
         await mockNetworkImagesFor(
           () async => await tester.pumpWidget(
-            BlocProvider<CreatePodcastBloc>(
-              create: (context) => mockCreatePodcastBloc,
+            MultiBlocProvider(
+              providers: [
+                BlocProvider<CreatePodcastBloc>(
+                    create: (context) => mockCreatePodcastBloc),
+                BlocProvider<EditChannelBloc>(
+                    create: (context) => mockEditChannelBloc),
+              ],
               child: MaterialApp(
                 home: widget,
               ),

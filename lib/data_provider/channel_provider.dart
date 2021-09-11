@@ -160,20 +160,20 @@ class ChannelPorvider implements IChannelProvider {
       {required CreateChannel editChannelInfo,
       required String ChannelID}) async {
     var request = http.MultipartRequest(
-        'POST', Uri.parse('http://$URL/api/channel/$ChannelID'))
+        'PUT',
+        Uri.parse(
+            'http://$URL/api/Users/${await LoginProvider.SESSION.getString("userId")}/channel/$ChannelID'))
       ..fields.addAll({
         "name": editChannelInfo.Name,
-        "description": editChannelInfo.Description
-      })
-      ..files.add(
-        await http.MultipartFile.fromPath("imagefile", editChannelInfo.Url),
-      );
+        "description": editChannelInfo.Description,
+      });
 
     StreamedResponse? response;
 
     try {
       response = await request.send();
     } catch (e) {
+      print("staust code : ${response!.statusCode}");
       return null;
     }
 
@@ -181,6 +181,7 @@ class ChannelPorvider implements IChannelProvider {
       return Channel.fromJson(
           jsonDecode(await response.stream.bytesToString()));
     } else {
+      print("staust code next : ${response.statusCode}");
       return null;
     }
   }

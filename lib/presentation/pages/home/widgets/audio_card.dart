@@ -38,14 +38,15 @@ class AudioWithThumbnail extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               children: [
                 Container(
-                    height: 150,
-                    width: 155,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        image: DecorationImage(
-                            image: AssetImage(
-                          podcast.imageUrl!,
-                        )))),
+                  height: 150,
+                  width: 155,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/placeholder.jpg'),
+                    ),
+                  ),
+                ),
                 Text("${podcast.name}",
                     style: TextStyle(
                       fontSize: 18.0,

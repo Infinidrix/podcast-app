@@ -40,14 +40,20 @@ class TopPicks extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         image: DecorationImage(
-                            image: AssetImage(channel.ImageUrl),
+                            image: AssetImage("assets/images/The_Weeknd.png"),
                             fit: BoxFit.cover)),
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
-                child: Text(channel.Name),
+                child: Container(
+                  width: 150,
+                  child: Text(
+                    channel.Name,
+                    overflow: TextOverflow.fade,
+                  ),
+                ),
               )
             ],
           ),

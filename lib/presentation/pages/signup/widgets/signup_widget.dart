@@ -69,7 +69,34 @@ class SignupWidget extends StatelessWidget {
                       child: TextFormField(
                         key: Key("emailSignUp"),
                         style: TextStyle(color: Colors.white),
-                        decoration: textfieldDecoration,
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          // labelText: "Email",
+                          // labelStyle: TextStyle(color: Colors.white),
+                          helperStyle: TextStyle(color: Colors.white),
+                          hintText: 'Email',
+                          hintStyle: TextStyle(color: Colors.white),
+                          // filled: true,
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          fillColor: Colors.white,
+                          prefixIcon: Icon(
+                            Icons.email_outlined,
+                            color: Colors.white,
+                          ),
+                        ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "This field can't be empty";

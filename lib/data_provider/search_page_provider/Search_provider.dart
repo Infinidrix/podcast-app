@@ -48,13 +48,18 @@ class SearchProvider extends ISearchProvider {
 
   Future<Either<String, List<Channel>>> searchChannel(String search) async {
     http.Response? response;
+    final user = json.decode(LoginProvider.SESSION.getString("user")!)
+        as Map<String, dynamic>;
+    String token = user["token"].toString();
 
     try {
       String? userId = await LoginProvider.SESSION.getString("userId");
-      response = await httpClient
-          .get(
-              Uri.parse('http://$URL/api/Users/$userId/channel/search/$search'))
-          .timeout(Duration(seconds: 5));
+      response = await httpClient.get(
+          Uri.parse('http://$URL/api/Users/$userId/channel/search/$search'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer ${token}'
+          }).timeout(Duration(seconds: 5));
     } catch (e) {
       // final parsed = json.decode(response.body);
       print("ERROR");

@@ -35,14 +35,20 @@ class YourChannelProvider extends IYourChannelProvider {
   @override
   Future<Either<String, List<Channel>>> getMyChannels(String userId) async {
     http.Response? response;
+    final user = json.decode(LoginProvider.SESSION.getString("user")!)
+        as Map<String, dynamic>;
+    String token = user["token"].toString();
     try {
       // final userId = await LoginProvider.SESSION.getString("userId");
       print("YOUR CHANNEL REQUEST");
 
       String? userId = await LoginProvider.SESSION.getString('userId');
-      response = await httpClient
-          .get(Uri.parse('http://$URL/api/users/$userId/channel/yourchannel'))
-          .timeout(Duration(seconds: 20));
+      response = await httpClient.get(
+          Uri.parse('http://$URL/api/users/$userId/channel/yourchannel'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer ${token}'
+          }).timeout(Duration(seconds: 20));
     } catch (e) {
       print("ERROR ${e.toString()}");
       return left(e.toString());

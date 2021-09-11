@@ -106,10 +106,11 @@ class EditProfileProvider implements IEditProfileProvider {
       } else if (response.statusCode == 404) {
         return left("there is no internet connection");
       } else if (response.statusCode == 401) {
+        return left("there is no internet connection 1");
         print("this is in edit profile ${response.statusCode}");
       }
-    } on CastError catch (e) {
-      return left(" ${e.runtimeType} ");
+    } catch (e) {
+      return left("there is no internet connection");
     }
     return left("there is no internet connection");
   }
@@ -117,18 +118,20 @@ class EditProfileProvider implements IEditProfileProvider {
   @override
   Future<Either<String, bool>> deleteUser() async {
     // TODO: implement deleteUser
+    final user = json.decode(LoginProvider.SESSION.getString("user")!)
+        as Map<String, dynamic>;
+    String token = user["token"].toString();
+    print("this is the token i wnat $token");
 
     try {
       await LoginProvider.getSharedPrefernce();
       final id = await LoginProvider.SESSION.getString("userId");
-      final user = json.decode(LoginProvider.SESSION.getString("user")!)
-          as Map<String, dynamic>;
-      String token = user["token"].toString();
-      final response = await httpClient
-          .delete(Uri.http(URL, "/api/user/${id}"), headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ${token}'
-      });
+
+      final response = await httpClient.delete(
+        Uri.http(URL, "/api/user/${id}"),
+      );
+      print("this is the  i ${response.statusCode} wnat $token");
+
       if (response.statusCode == 200) {
         return right(true);
       } else if (response.statusCode == 400) {

@@ -64,10 +64,16 @@ class ChannelPorvider implements IChannelProvider {
                   ))));
   @override
   Future<bool> isSubscribed(String userId, String channelId) async {
-    final response = await httpClient
-        .get(
-            Uri.parse('http://$URL/api/users/$userId/Subscriptions/$channelId'))
-        .timeout(Duration(seconds: 7));
+    final user = json.decode(LoginProvider.SESSION.getString("user")!)
+        as Map<String, dynamic>;
+    String token = user["token"].toString();
+
+    final response = await httpClient.get(
+        Uri.parse('http://$URL/api/users/$userId/Subscriptions/$channelId'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ${token}'
+        }).timeout(Duration(seconds: 7));
     print("This is subscribe ${response.body}");
     if (response.statusCode == 200) {
       return true;
@@ -102,9 +108,17 @@ class ChannelPorvider implements IChannelProvider {
   @override
   Future<bool> setSubscription(
       String userId, String channelId, bool subscriptionStatus) async {
+    final user = json.decode(LoginProvider.SESSION.getString("user")!)
+        as Map<String, dynamic>;
+    String token = user["token"].toString();
+
     if (subscriptionStatus) {
       final response = await httpClient.put(
-          Uri.parse('http://$URL/api/users/$userId/Subscriptions/$channelId'));
+          Uri.parse('http://$URL/api/users/$userId/Subscriptions/$channelId'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer ${token}'
+          });
 
       if (response.statusCode == 202) {
         return true;
@@ -114,7 +128,11 @@ class ChannelPorvider implements IChannelProvider {
       }
     } else {
       final response = await httpClient.delete(
-          Uri.parse('http://$URL/api/users/$userId/Subscriptions/$channelId'));
+          Uri.parse('http://$URL/api/users/$userId/Subscriptions/$channelId'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer ${token}'
+          });
 
       if (response.statusCode == 202) {
         return false;
@@ -128,6 +146,9 @@ class ChannelPorvider implements IChannelProvider {
   Future<Channel?> createChannel(
       {required CreateChannel createChannelInfo}) async {
     String? userId = await LoginProvider.SESSION.getString('userId');
+    final user = json.decode(LoginProvider.SESSION.getString("user")!)
+        as Map<String, dynamic>;
+    String token = user["token"].toString();
 
     var request = http.MultipartRequest(
       'POST',
@@ -137,6 +158,10 @@ class ChannelPorvider implements IChannelProvider {
         "description": createChannelInfo.Description,
         "ownerId": LoginProvider.SESSION.getString("userId")!.toString()
       });
+
+    request.headers.addAll({
+      'Authorization': 'Bearer ${token}',
+    });
 
     StreamedResponse? response;
 
@@ -159,6 +184,10 @@ class ChannelPorvider implements IChannelProvider {
   Future<Channel?> editChannel(
       {required CreateChannel editChannelInfo,
       required String ChannelID}) async {
+    final user = json.decode(LoginProvider.SESSION.getString("user")!)
+        as Map<String, dynamic>;
+    String token = user["token"].toString();
+
     var request = http.MultipartRequest(
         'PUT',
         Uri.parse(
@@ -167,6 +196,10 @@ class ChannelPorvider implements IChannelProvider {
         "name": editChannelInfo.Name,
         "description": editChannelInfo.Description,
       });
+
+    request.headers.addAll({
+      'Authorization': 'Bearer ${token}',
+    });
 
     StreamedResponse? response;
 

@@ -17,6 +17,9 @@ class EditChannelProvider extends IEditChannelProvider {
   @override
   Future<Either<String, Channel>> deletePodcast(
       Podcast podcast, Channel channel) async {
+    final user = json.decode(LoginProvider.SESSION.getString("user")!)
+        as Map<String, dynamic>;
+    String token = user["token"].toString();
     http.Response response;
     http.Response response1;
     try {
@@ -25,10 +28,18 @@ class EditChannelProvider extends IEditChannelProvider {
       print(userId);
       print(podcast.id);
       response1 = await httpClient.delete(
-          Uri.parse("http://$URL/api/Users/$userId/Audios/${podcast.id}"));
+          Uri.parse("http://$URL/api/Users/$userId/Audios/${podcast.id}"),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer ${token}'
+          });
       // TODO:
       response = await httpClient.get(
-          Uri.parse("http://$URL/api/Users/$userId/channel/${channel.Id}"));
+          Uri.parse("http://$URL/api/Users/$userId/channel/${channel.Id}"),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer ${token}'
+          });
     } catch (e) {
       return left('Error');
     }
@@ -46,6 +57,9 @@ class EditChannelProvider extends IEditChannelProvider {
   @override
   Future<Either<String, Channel>> editPodcast(
       Podcast podcast, Channel channel) async {
+    final user = json.decode(LoginProvider.SESSION.getString("user")!)
+        as Map<String, dynamic>;
+    String token = user["token"].toString();
     http.Response response;
     http.Response response1;
     try {
@@ -56,11 +70,16 @@ class EditChannelProvider extends IEditChannelProvider {
           Uri.parse("http://$URL/api/Users/$userId/Audios/${podcast.id}"),
           body: json.encode(
               {"Title": podcast.name, "Description": podcast.description}),
-          headers: {
-            "Content-Type": "application/json",
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer ${token}'
           });
       response = await httpClient.get(
-          Uri.parse("http://$URL/api/Users/$userId/channel/${channel.Id}"));
+          Uri.parse("http://$URL/api/Users/$userId/channel/${channel.Id}"),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer ${token}'
+          });
     } catch (e) {
       print("catch error");
       return left("Error: ffff");

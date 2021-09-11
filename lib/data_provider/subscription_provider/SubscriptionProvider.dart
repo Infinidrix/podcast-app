@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:podcast_app/data_provider/constants.dart';
+import 'package:podcast_app/data_provider/login/login_provider.dart';
 import 'package:podcast_app/data_provider/subscription_provider/ISubscriptionProvider.dart';
 import 'package:podcast_app/models/channel/Channel.dart';
 
@@ -14,9 +15,15 @@ class OnlineSubscriptionProvider extends ISubscriptionProvider {
 
   @override
   Future<List<Channel>> getSubscribedChannels(String userId) async {
-    final response = await httpClient
-        .get(Uri.parse('http://$URL/api/users/$userId/Subscriptions'))
-        .timeout(Duration(seconds: 5));
+    final user = json.decode(LoginProvider.SESSION.getString("user")!)
+        as Map<String, dynamic>;
+    String token = user["token"].toString();
+    final response = await httpClient.get(
+        Uri.parse('http://$URL/api/users/$userId/Subscriptions'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ${token}'
+        }).timeout(Duration(seconds: 5));
 
     if (response.statusCode == 200) {
       Iterable parsed = json.decode(response.body);
@@ -32,7 +39,15 @@ class OnlineSubscriptionProvider extends ISubscriptionProvider {
   //TODO: If you're going to use this endpoint tell Biruk, he didn't fix it.
   @override
   Future<Null> unsubscribe(String channelId, String userId) async {
-    final response = await httpClient.put(Uri.http(
-        URL, "/api/users/$userId/subscribed/channels/$channelId/unsubscribe"));
+    final user = json.decode(LoginProvider.SESSION.getString("user")!)
+        as Map<String, dynamic>;
+    String token = user["token"].toString();
+    final response = await httpClient.put(
+        Uri.http(URL,
+            "/api/users/$userId/subscribed/channels/$channelId/unsubscribe"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ${token}'
+        });
   }
 }

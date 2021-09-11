@@ -16,6 +16,9 @@ class CreatePodcastProvider extends ICreatePodcastProvider {
   @override
   Future<Podcast?> createPodcast(String filePath, String podcastTitle,
       String podcastDescription, String channelId, String? userId) async {
+    final user = json.decode(LoginProvider.SESSION.getString("user")!)
+        as Map<String, dynamic>;
+    String token = user["token"].toString();
     var request = MultipartRequest(
       'POST',
       Uri.parse('http://$URL/api/users/$userId/audios'),
@@ -31,6 +34,10 @@ class CreatePodcastProvider extends ICreatePodcastProvider {
           filePath,
         ),
       );
+
+    request.headers.addAll({
+      'Authorization': 'Bearer ${token}',
+    });
     StreamedResponse? response;
     try {
       response = await request.send();

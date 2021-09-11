@@ -80,7 +80,7 @@ class ChannelPorvider implements IChannelProvider {
   Future<Channel> getChannel(String id) async {
     final user = json.decode(LoginProvider.SESSION.getString("user")!)
         as Map<String, dynamic>;
-    String token = user["token"] as String;
+    String token = user["token"].toString();
     // TODO: Change this to actual user id
     print("Got here");
     final response = await httpClient.get(

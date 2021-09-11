@@ -18,7 +18,7 @@ class LibraryProviderOnline extends ILibraryProvider {
   Future<List<Podcast>> getRecentPodcasts(String userId) async {
     final user = json.decode(LoginProvider.SESSION.getString("user")!)
         as Map<String, dynamic>;
-    String token = user["token"] as String;
+    String token = user["token"].toString();
     // TODO: Change this to actual user id
     final response = await httpClient.get(
         Uri.parse(

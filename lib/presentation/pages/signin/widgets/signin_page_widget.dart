@@ -239,6 +239,7 @@ class SigninWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20.0),
                         ),
                         child: ElevatedButton(
+                          key: Key("signinButton"),
                           style: ButtonStyle(
                             backgroundColor:
                                 MaterialStateProperty.all(Colors.transparent),

@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:podcast_app/application/your_channels/your_channel_event.dart';
 import 'package:podcast_app/application/your_channels/your_channel_state.dart';
@@ -16,8 +17,14 @@ class YourChannelBloc extends Bloc<YourChannelEvent, YourChannelState> {
     if (event is IntialYourChannelEvent) {
       print("INTIAL YOUR CHANNEL");
       yield LoadingYourChannel();
-      channels = await repository.getMyChannels();
-      yield LoadedYourChannel(channels);
+
+      Either<String, List<Channel>> c = await repository.getMyChannels();
+
+      yield* c.fold((errormsg) async* {
+        yield YourChannelError(errormsg);
+      }, (r) async* {
+        yield LoadedYourChannel(r);
+      });
     }
   }
 }

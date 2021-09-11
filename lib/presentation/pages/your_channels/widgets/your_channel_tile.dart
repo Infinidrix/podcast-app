@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -35,8 +36,8 @@ class YourChannelTile extends StatelessWidget {
           children: [
             Row(
               children: [
-                Image.asset(
-                  channel.ImageUrl,
+                 Image.asset(
+                  "assets/images/placeholder.jpg",
                   height: 60,
                 ),
                 Expanded(
@@ -69,7 +70,8 @@ class YourChannelTile extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.edit_outlined),
                   onPressed: () {
-                    context.router.push(EditChannelDetailRoute(channel: channel));
+                    context.router
+                        .push(EditChannelDetailRoute(channel: channel));
                   },
                   color: Colors.white,
                 )

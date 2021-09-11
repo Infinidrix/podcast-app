@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:podcast_app/models/channel/Channel.dart';
+
 abstract class CreatePodcastState {}
 
 class CreatePodcastInitialState extends CreatePodcastState {}
@@ -24,4 +26,7 @@ class Saving extends CreatePodcastState {}
 
 class SavingError extends CreatePodcastState {}
 
-class Saved extends CreatePodcastState {}
+class Saved extends CreatePodcastState {
+  Channel channel;
+  Saved({required this.channel});
+}

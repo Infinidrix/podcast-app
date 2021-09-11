@@ -11,3 +11,9 @@ class LoadedYourChannel extends YourChannelState {
 
   LoadedYourChannel(this.channels);
 }
+
+class YourChannelError extends YourChannelState {
+  final String error;
+
+  YourChannelError(this.error);
+}

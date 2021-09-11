@@ -1,5 +1,6 @@
 import 'package:http/http.dart';
 import 'package:podcast_app/data_provider/Ichannel_provider.dart';
+import 'package:podcast_app/data_provider/login/login_provider.dart';
 import 'package:podcast_app/models/channel/Channel.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -79,7 +80,7 @@ class ChannelPorvider implements IChannelProvider {
   Future<Channel> getChannel(String id) async {
     final user = json.decode(LoginProvider.SESSION.getString("user")!)
         as Map<String, dynamic>;
-    String token = user["token"] as String;
+    String token = user["token"].toString();
     // TODO: Change this to actual user id
     print("Got here");
     final response = await httpClient.get(
@@ -126,15 +127,16 @@ class ChannelPorvider implements IChannelProvider {
   @override
   Future<Channel?> createChannel(
       {required CreateChannel createChannelInfo}) async {
+    String? userId = await LoginProvider.SESSION.getString('userId');
+
     var request = http.MultipartRequest(
-        'POST', Uri.parse('http://$URL/api/channel'))
-      ..fields.addAll({
+      'POST',
+      Uri.parse('http://$URL/api/users/$userId/channel'),
+    )..fields.addAll({
         "name": createChannelInfo.Name,
-        "description": createChannelInfo.Description
-      })
-      ..files.add(
-        await http.MultipartFile.fromPath("imagefile", createChannelInfo.Url),
-      );
+        "description": createChannelInfo.Description,
+        "ownerId": LoginProvider.SESSION.getString("userId")!.toString()
+      });
 
     StreamedResponse? response;
 
@@ -143,6 +145,8 @@ class ChannelPorvider implements IChannelProvider {
     } catch (e) {
       return null;
     }
+
+    print("Status code: ${response.statusCode}");
 
     if (response.statusCode == 200) {
       return Channel.fromJson(
@@ -156,20 +160,20 @@ class ChannelPorvider implements IChannelProvider {
       {required CreateChannel editChannelInfo,
       required String ChannelID}) async {
     var request = http.MultipartRequest(
-        'POST', Uri.parse('http://$URL/api/channel/$ChannelID'))
+        'PUT',
+        Uri.parse(
+            'http://$URL/api/Users/${await LoginProvider.SESSION.getString("userId")}/channel/$ChannelID'))
       ..fields.addAll({
         "name": editChannelInfo.Name,
-        "description": editChannelInfo.Description
-      })
-      ..files.add(
-        await http.MultipartFile.fromPath("imagefile", editChannelInfo.Url),
-      );
+        "description": editChannelInfo.Description,
+      });
 
     StreamedResponse? response;
 
     try {
       response = await request.send();
     } catch (e) {
+      print("staust code : ${response!.statusCode}");
       return null;
     }
 
@@ -177,6 +181,7 @@ class ChannelPorvider implements IChannelProvider {
       return Channel.fromJson(
           jsonDecode(await response.stream.bytesToString()));
     } else {
+      print("staust code next : ${response.statusCode}");
       return null;
     }
   }

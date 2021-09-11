@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:podcast_app/models/channel/Channel.dart';
@@ -21,25 +22,45 @@ class EditChannelBloc extends Bloc<EditChannelEvent, EditChannelState> {
     }
     // Edit Podcast Event
     else if (event is EditPodcastEvent) {
-      print("GELL");
       yield LoadingEditChannelState();
       // TODO
       // final channel = await editChannelRepository.getChannel(event.channel.Id);
 
-      print("ARE YOU THERE");
-      var res = await editChannelRepository.editPodcast(event.podcast);
+      Either<String, Channel> res =
+          await editChannelRepository.editPodcast(event.podcast, event.channel);
 
-      yield LoadedEditChannelState(channel: event.channel);
+      yield* res.fold((l) async* {
+        print("folding 1");
+        yield ErrorEditChannelState(error: l);
+        print("folding 2");
+        yield LoadedEditChannelState(channel: event.channel);
+        print("folding 3");
+      }, (r) async* {
+        print("REFT");
+        yield LoadedEditChannelState(channel: r);
+      });
+      // yield LoadedEditChannelState(channel: event.channel);
     }
 
     // Delete Podcast Event
     else if (event is DeletePodcastEvent) {
       yield LoadingEditChannelState();
 
-      var res = await editChannelRepository.deletePodcast(event.podcast);
+      var res = await editChannelRepository.deletePodcast(
+          event.podcast, event.channel);
+      // var channel = await editChannelRepository.getChannel(event.channel.Id);
+
+      yield* res.fold((l) async* {
+        print("FOLDING?");
+        yield ErrorEditChannelState(error: l);
+        yield LoadedEditChannelState(channel: event.channel);
+        print("FOLDING?");
+      }, (r) async* {
+        yield LoadedEditChannelState(channel: r);
+      });
+
       // final channel = await editChannelRepository.getChannel(event.channel.Id);
 
-      yield LoadedEditChannelState(channel: event.channel);
     }
   }
 }

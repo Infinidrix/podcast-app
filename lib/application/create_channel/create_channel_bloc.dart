@@ -19,9 +19,11 @@ class CreateChannelBloc extends Bloc<CreateChannelEvent, CreateChannelState> {
   @override
   Stream<CreateChannelState> mapEventToState(CreateChannelEvent event) async* {
     if (event is ChangeImageButtonPressedEvent) {
-      yield OnImageUploadedState(image : event.image);
+      yield OnImageUploadedState(image: event.image);
     } else if (event is CreateChannelSaveEvent) {
       yield CreateChannelLoadingState();
+      print(
+          "=========================================Automatic===========================");
       // await Future.delayed(Duration(seconds: 4));
       // if (channel["Name"] == event.Name.trim() &&
       //     channel['Description'] == event.Description.trim() &&
@@ -33,11 +35,12 @@ class CreateChannelBloc extends Bloc<CreateChannelEvent, CreateChannelState> {
       // }
       try {
         final ChannelOrError = await channelRepository.createChannel(
-            Name: event.Name,
-            Description: event.Description,
-            ImageURL: event.ImageURL);
+          Name: event.Name,
+          Description: event.Description,
+          ImageURL: event.ImageURL,
+        );
       } catch (e) {
-        print("object");
+        print("From create channel bloc");
       }
     }
   }

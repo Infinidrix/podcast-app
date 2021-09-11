@@ -8,13 +8,13 @@ part of 'Podcast.dart';
 
 Podcast _$PodcastFromJson(Map<String, dynamic> json) {
   return Podcast(
-    name: json['name'] as String,
-    url: json['url'] as String,
+    name: json['name'].toString(),
+    url: json['url'].toString(),
     imageUrl: json['imageUrl'] as String?,
-    id: json['id'] as String,
+    id: json['id'].toString(),
     numberOfListeners: json['numberOfListeners'] as int?,
-    channelName: json['channelName'] as String,
-    description: json['description'] as String,
+    channelName: json['channelName'].toString(),
+    description: json['description'].toString(),
   );
 }
 

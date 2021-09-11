@@ -7,6 +7,8 @@ import 'package:podcast_app/application/create_podcast/create_podcast_event.dart
 import 'package:podcast_app/application/create_podcast/create_podcast_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:podcast_app/application/edit_channel/edit_channel_bloc.dart';
+import 'package:podcast_app/application/edit_channel/edit_channel_event.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 
 class CreatePodcastWidget extends StatelessWidget {
@@ -20,7 +22,7 @@ class CreatePodcastWidget extends StatelessWidget {
     final podcastTitle = TextEditingController();
     final podcastDescription = TextEditingController();
     File? file;
-
+    final editBloc = BlocProvider.of<EditChannelBloc>(context);
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -172,12 +174,13 @@ class CreatePodcastWidget extends StatelessWidget {
 
                 if (createPodcastState is SavingError) {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("Connection Error Occured"),
-                    duration: Duration(seconds: 3)
-                  ));
+                      content: Text("Connection Error Occured"),
+                      duration: Duration(seconds: 3)));
                 }
 
                 if (createPodcastState is Saved) {
+                  editBloc.add(LoadIntialEditChannelEvent(
+                      channel: createPodcastState.channel));
                   context.router.pop();
                 }
               },

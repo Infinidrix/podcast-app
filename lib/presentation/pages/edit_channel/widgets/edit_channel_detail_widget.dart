@@ -14,8 +14,7 @@ import 'package:hexcolor/hexcolor.dart';
 class EditChannelDetailWidget extends StatelessWidget {
   final Channel channel;
 
-  EditChannelDetailWidget(
-      {required this.channel});
+  EditChannelDetailWidget({required this.channel});
 
   final _formKey = GlobalKey<FormState>();
   var nameTextController = TextEditingController();
@@ -84,6 +83,12 @@ class EditChannelDetailWidget extends StatelessWidget {
           if (editchannelstate is EditChannelDetailSuccessState) {
             context.router.push(YourChannelsRoute());
           }
+          // if(editchannelstate is EditChannelDetailErrorState) {
+          //  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          //       content: Text("Error"),
+          //       duration: Duration(seconds: 5),
+          //     ));
+          // }
         },
         builder: (context, editchannelstate) {
           return Padding(
@@ -96,7 +101,7 @@ class EditChannelDetailWidget extends StatelessWidget {
                   children: [
                     Center(
                       child: Text(
-                        "Create Channel",
+                        "Edit Channel",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 28.0,
@@ -122,7 +127,8 @@ class EditChannelDetailWidget extends StatelessWidget {
                                   )
                                 : CircleAvatar(
                                     radius: 500,
-                                    backgroundImage: AssetImage(channel.ImageUrl));
+                                    backgroundImage:
+                                        AssetImage(channel.ImageUrl));
                           },
                         ),
                       ),
@@ -185,8 +191,6 @@ class EditChannelDetailWidget extends StatelessWidget {
           ),
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-              print("Successfully registered!");
-              print("Entered");
               editChannelBloc.add(EditChannelDetailSaveEvent(
                   Name: nameTextController.text,
                   Description: descriptionTextController.text,
@@ -194,7 +198,6 @@ class EditChannelDetailWidget extends StatelessWidget {
                   Image: editChannelState is EditChannelDetailImageUploadedState
                       ? editChannelState.Image
                       : ""));
-
               context.router.push(YourChannelsRoute());
             } else {
               print("Error");
@@ -231,8 +234,9 @@ class EditChannelDetailWidget extends StatelessWidget {
                         onTap: () async {
                           image = await _image?.pickImage(
                               source: ImageSource.gallery);
-                          BlocProvider.of<EditChannelDetailBloc>(context)
-                              .add(EditChannelChangeImageButtonPressedEvent(Image: image));
+                          BlocProvider.of<EditChannelDetailBloc>(context).add(
+                              EditChannelChangeImageButtonPressedEvent(
+                                  Image: image));
                           Navigator.of(context).pop();
                         }),
                     new ListTile(
@@ -241,8 +245,9 @@ class EditChannelDetailWidget extends StatelessWidget {
                       onTap: () async {
                         image =
                             await _image?.pickImage(source: ImageSource.camera);
-                        BlocProvider.of<EditChannelDetailBloc>(context)
-                            .add(EditChannelChangeImageButtonPressedEvent(Image: image));
+                        BlocProvider.of<EditChannelDetailBloc>(context).add(
+                            EditChannelChangeImageButtonPressedEvent(
+                                Image: image));
                         Navigator.of(context).pop();
                       },
                     ),

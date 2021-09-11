@@ -83,7 +83,13 @@ Widget getBottomNavBar(BuildContext context) {
             blocConsumer,
             Row(children: [
               Expanded(
-                  child: Text('> ${audioState.status.currentPodcast.name}')),
+                child: GestureDetector(
+                  child: Text('> ${audioState.status.currentPodcast.name}'),
+                  onTap: () {
+                    context.router.push(PlayerRoute());
+                  },
+                ),
+              ),
               GestureDetector(
                 child: Icon(
                   (audioState.status.isPlaying)

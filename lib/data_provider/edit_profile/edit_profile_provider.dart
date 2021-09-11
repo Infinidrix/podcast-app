@@ -48,7 +48,7 @@ class EditProfileProvider implements IEditProfileProvider {
       } else {
         checked = "/api/user/${id}/role/delete";
       }
-
+      await LoginProvider.getSharedPrefernce();
       final responseRole = await httpClient
           .post(Uri.http(URL, checked), headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -56,7 +56,9 @@ class EditProfileProvider implements IEditProfileProvider {
       bool isCreator = false;
       if (responseRole.statusCode == 200) {
         final roles = jsonDecode(responseRole.body);
-
+        await LoginProvider.SESSION.setString("roles", responseRole.body);
+        print(
+            "this is in the edit Profile page${await LoginProvider.SESSION.getString("roles")}");
         print("this the role in login ${roles}");
         if (roles.contains("Creator")) {
           isCreator = true;

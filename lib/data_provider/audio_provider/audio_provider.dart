@@ -18,7 +18,7 @@ class AudioProvider implements IAudioProvider {
   Future<Null> addRecentlyPlayed(String id) async {
     final user = json.decode(LoginProvider.SESSION.getString("user")!)
         as Map<String, dynamic>;
-    String token = user["token"] as String;
+    String token = user["token"].toString();
     final response = await httpClient.post(
         Uri.parse(
             "http://$URL/api/users/${LoginProvider.SESSION.getString('userId')}/Audios/$id/Played"),

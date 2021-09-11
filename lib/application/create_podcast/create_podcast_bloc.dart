@@ -56,7 +56,9 @@ class CreatePodcastBloc extends Bloc<CreatePodcastEvent, CreatePodcastState> {
       );
 
       if (isPodcastCreated) {
-        yield Saved();
+        var channel = await createPodcastRepository.getChannel(event.channelId);
+
+        yield Saved(channel: channel);
       } else {
         yield SavingError();
       }

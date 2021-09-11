@@ -60,7 +60,14 @@ class _SearchBarState extends State<SearchBar>
               },
             ),
           ),
-          BlocBuilder<SearchBloc, SearchState>(builder: (context, state) {
+          BlocConsumer<SearchBloc, SearchState>(listener: (context, state) {
+            if (state is SearchError) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(state.error),
+                duration: Duration(milliseconds: 2600),
+              ));
+            }
+          }, builder: (context, state) {
             if (state is SearchLoadingState) {
               return Center(child: CircularProgressIndicator());
             }

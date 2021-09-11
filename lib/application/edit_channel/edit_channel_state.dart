@@ -12,3 +12,9 @@ class LoadedEditChannelState extends EditChannelState {
     required this.channel,
   });
 }
+
+class ErrorEditChannelState extends EditChannelState {
+  final String error;
+
+  ErrorEditChannelState({required this.error});
+}

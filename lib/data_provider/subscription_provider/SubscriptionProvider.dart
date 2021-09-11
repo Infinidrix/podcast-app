@@ -24,6 +24,7 @@ class OnlineSubscriptionProvider extends ISubscriptionProvider {
           List<Channel>.from(parsed.map((e) => Channel.fromJson(e)));
       return channels;
     } else {
+      print("SOCKET EXCEPTION");
       throw SocketException("Response Code: ${response.statusCode}");
     }
   }

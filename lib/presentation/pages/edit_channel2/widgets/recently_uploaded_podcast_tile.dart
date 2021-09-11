@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -21,7 +22,7 @@ class RecentlyUploadedPodcast extends StatelessWidget {
   Widget build(BuildContext context) {
     final editBloc = BlocProvider.of<EditChannelBloc>(context);
     return ListTile(
-        leading: Image.asset(podcast.imageUrl!),
+        leading: Image.asset("assets/images/placeholder.jpg"),
         title: Text(podcast.name),
         subtitle: Text(podcast.description),
         trailing: PopupMenuButton(

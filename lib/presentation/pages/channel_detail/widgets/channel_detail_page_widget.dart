@@ -91,7 +91,7 @@ class ChannelDetailWidget extends StatelessWidget {
                               )
                             : (channelState is InitialChannelDescriptionState)
                                 ? Text(
-                                    "${channelState.channel.Name}",
+                                    "${channelState.channel.name}",
                                   )
                                 : Text("Error Try Again"),
                         background: FlutterLogo(),
@@ -147,7 +147,7 @@ class ChannelDetailWidget extends StatelessWidget {
                                             : (channelState
                                                     is InitialChannelDescriptionState)
                                                 ? Text(
-                                                    "${channelState.channel.Subscribers} subscribers",
+                                                    "${channelState.channel.subscriber} subscribers",
                                                     style: TextStyle(
                                                         fontSize: 14.0,
                                                         color: Colors.grey),
@@ -166,7 +166,7 @@ class ChannelDetailWidget extends StatelessWidget {
                                       is InitialChannelDescriptionState) {
                                     audioBloc.add(InitializePlayerEvent(
                                         podcasts: ListQueue.from(
-                                            channelState.channel.Podcasts!)));
+                                            channelState.channel.podcasts!)));
                                     context.router.push(PlayerRoute());
                                   }
                                 },
@@ -211,7 +211,7 @@ class ChannelDetailWidget extends StatelessWidget {
                             childCount: 1,
                           ));
                     } else if (state is InitialChannelDescriptionState) {
-                      var listOfPodcasts = state.channel.Podcasts;
+                      var listOfPodcasts = state.channel.podcasts;
                       return SliverFixedExtentList(
                         itemExtent: 90.0,
                         delegate: SliverChildBuilderDelegate(

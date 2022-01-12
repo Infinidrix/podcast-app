@@ -19,12 +19,12 @@ class LocalSearchProvider extends ISearchProvider {
   List<Channel> channels = List.generate(
       5,
       (index) => Channel(
-          Name: "Name",
-          ImageUrl: "ImageUrl",
-          Subscribers: 12335245,
-          Id: "$index",
-          Description: "This is Channel Description",
-          Podcasts: List.generate(
+          name: "Name",
+          profile_pic: "ImageUrl",
+          subscriber: 12335245,
+          id: "$index",
+          description: "This is Channel Description",
+          podcasts: List.generate(
               5,
               (index) => Podcast(
                     name: "Podcast $index",

@@ -45,14 +45,14 @@ class SubscribedCard extends StatelessWidget {
                         children: <Widget>[
                           Container(
                             child: Text(
-                              '${channel.Name}',
+                              '${channel.name}',
                               style: titleTextStyle,
                             ),
                           ),
                           Container(
                             margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
                             child: Text(
-                              '${channel.Subscribers}',
+                              '${channel.subscriber}',
                               style: descriptioin_SubtitleTextStyle,
                             ),
                           )

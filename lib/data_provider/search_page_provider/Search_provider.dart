@@ -29,12 +29,12 @@ class SearchProvider extends ISearchProvider {
   List<Channel> channels = List.generate(
       5,
       (index) => Channel(
-          Name: "Name",
-          ImageUrl: "assets/images/placeholder.jpg",
-          Subscribers: 12335245,
-          Id: "$index",
-          Description: "This is Channel Description",
-          Podcasts: List.generate(
+          name: "Name",
+          profile_pic: "assets/images/placeholder.jpg",
+          subscriber: 12335245,
+          id: "$index",
+          description: "This is Channel Description",
+          podcasts: List.generate(
               5,
               (index) => Podcast(
                     name: "Podcast $index",

@@ -15,13 +15,13 @@ class YourChannelProvider extends IYourChannelProvider {
   List<Channel> channels = List.generate(
       5,
       (index) => Channel(
-          Name: "Name",
-          ImageUrl: "assets/images/1by1.png",
-          Subscribers: 12335245,
-          Id: "$index",
-          Description:
+          name: "Name",
+          profile_pic: "assets/images/1by1.png",
+          subscriber: 12335245,
+          id: "$index",
+          description:
               "The Basement Yard is a weekly podcast hosted by Joe Santagato & featuring Danny LoPriore.",
-          Podcasts: List.generate(
+          podcasts: List.generate(
               5,
               (index) => Podcast(
                     name: "Podcast $index",

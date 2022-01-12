@@ -22,12 +22,12 @@ class ChannelPorvider implements IChannelProvider {
   // List<Podcast> podcasts =
   //     List.generate(10, (index) => Podcast("Name #$index", index));
   Channel channel = Channel(
-      Name: "Name",
-      ImageUrl: "ImageUrl",
-      Subscribers: 12335245,
-      Id: "1",
-      Description: "This is some description about the channel",
-      Podcasts: List.generate(
+      name: "Name",
+      profile_pic: "ImageUrl",
+      subscriber: 12335245,
+      id: "1",
+      description: "This is some description about the channel",
+      podcasts: List.generate(
           10,
           (index) => Podcast(
               id: "", channelName: "", description: "", name: "", url: "")));
@@ -46,12 +46,12 @@ class ChannelPorvider implements IChannelProvider {
   List<Channel> channels = List.generate(
       5,
       (index) => Channel(
-          Name: "Name",
-          ImageUrl: "ImageUrl",
-          Subscribers: 12335245,
-          Id: "$index",
-          Description: "This is Channel Description",
-          Podcasts: List.generate(
+          name: "Name",
+          profile_pic: "ImageUrl",
+          subscriber: 12335245,
+          id: "$index",
+          description: "This is Channel Description",
+          podcasts: List.generate(
               5,
               (index) => Podcast(
                     name: "Podcast $index",

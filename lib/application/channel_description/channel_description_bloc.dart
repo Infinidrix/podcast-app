@@ -28,13 +28,13 @@ class ChannelDescriptionBloc
       if (event is SubscriptionEvent) {
         yield LoadingChannelDescriptionState();
         channelRepository.setSubscription(
-            userId, channel.Id, event.isSubscribing);
+            userId, channel.id, event.isSubscribing);
         yield InitialChannelDescriptionState(channel, event.isSubscribing);
       } else if (event is LoadInitialEvent) {
         yield LoadingChannelDescriptionState();
         channel = event.channel;
-        channel = await channelRepository.getChannel(channel.Id);
-        isSubscribed = await channelRepository.isSubscribed(userId, channel.Id);
+        channel = await channelRepository.getChannel(channel.id);
+        isSubscribed = await channelRepository.isSubscribed(userId, channel.id);
 
         yield InitialChannelDescriptionState(channel, isSubscribed);
       }

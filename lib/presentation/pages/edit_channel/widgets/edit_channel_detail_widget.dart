@@ -65,8 +65,8 @@ class EditChannelDetailWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final channelBloc = BlocProvider.of<EditChannelDetailBloc>(context);
-    nameTextController.text = channel.Name;
-    descriptionTextController.text = channel.Description;
+    nameTextController.text = channel.name;
+    descriptionTextController.text = channel.description;
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -128,7 +128,7 @@ class EditChannelDetailWidget extends StatelessWidget {
                                 : CircleAvatar(
                                     radius: 500,
                                     backgroundImage:
-                                        AssetImage(channel.ImageUrl));
+                                        AssetImage(channel.profile_pic));
                           },
                         ),
                       ),
@@ -194,7 +194,7 @@ class EditChannelDetailWidget extends StatelessWidget {
               editChannelBloc.add(EditChannelDetailSaveEvent(
                   Name: nameTextController.text,
                   Description: descriptionTextController.text,
-                  ChannelID: channel.Id,
+                  ChannelID: channel.id,
                   Image: editChannelState is EditChannelDetailImageUploadedState
                       ? editChannelState.Image
                       : ""));

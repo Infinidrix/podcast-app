@@ -50,7 +50,7 @@ class TopPicks extends StatelessWidget {
                 child: Container(
                   width: 150,
                   child: Text(
-                    channel.Name,
+                    channel.name,
                     overflow: TextOverflow.fade,
                   ),
                 ),

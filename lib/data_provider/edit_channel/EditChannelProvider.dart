@@ -35,7 +35,7 @@ class EditChannelProvider extends IEditChannelProvider {
           });
       // TODO:
       response = await httpClient.get(
-          Uri.parse("http://$URL/api/Users/$userId/channel/${channel.Id}"),
+          Uri.parse("http://$URL/api/Users/$userId/channel/${channel.id}"),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'Authorization': 'Bearer ${token}'
@@ -75,7 +75,7 @@ class EditChannelProvider extends IEditChannelProvider {
             'Authorization': 'Bearer ${token}'
           });
       response = await httpClient.get(
-          Uri.parse("http://$URL/api/Users/$userId/channel/${channel.Id}"),
+          Uri.parse("http://$URL/api/Users/$userId/channel/${channel.id}"),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'Authorization': 'Bearer ${token}'

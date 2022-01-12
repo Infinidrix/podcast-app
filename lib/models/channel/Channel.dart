@@ -4,39 +4,39 @@ import 'package:podcast_app/models/Podcast.dart';
 // part 'user.g.dart';
 
 class Channel {
-  final String Id;
-  final String Name;
-  final String ImageUrl;
-  final String Description;
-  final int Subscribers;
-  final List<Podcast>? Podcasts;
+  final String id;
+  final String name;
+  final String profile_pic;
+  final String description;
+  final int subscriber;
+  final List<Podcast>? podcasts;
 
   Channel(
-      {required this.Name,
-      required this.ImageUrl,
-      required this.Subscribers,
-      required this.Id,
-      required this.Description,
-      this.Podcasts});
+      {required this.name,
+      required this.profile_pic,
+      required this.subscriber,
+      required this.id,
+      required this.description,
+      this.podcasts});
 
   //     factory Channel.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   // Map<String, dynamic> toJson() => _$UserToJson(this);
 
   Channel.fromJson(Map<String, dynamic> json)
-      : Id = json['id'],
-        Name = json['name'],
-        ImageUrl = json['url'],
-        Description = json['description'],
-        Subscribers = json['subscribers'],
-        Podcasts = (json['podcasts'] as List<dynamic>)
+      : id = json['id'],
+        name = json['name'],
+        profile_pic = json['profile_pic'],
+        description = json['description'],
+        subscriber = json['subscriber'],
+        podcasts = (json['podcasts'] as List<dynamic>)
             .map((e) => Podcast.fromJson(e as Map<String, dynamic>))
             .toList();
 
   Map<String, dynamic> toJson() => {
-        'Id': Id,
-        'Name': Name,
-        'Description': Description,
-        "Subscribers": Subscribers,
-        "Podcasts": Podcasts
+        'id': id,
+        'name': name,
+        'description': description,
+        "subscriber": subscriber,
+        "podcasts": podcasts
       };
 }

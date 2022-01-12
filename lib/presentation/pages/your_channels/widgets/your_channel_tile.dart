@@ -36,7 +36,7 @@ class YourChannelTile extends StatelessWidget {
           children: [
             Row(
               children: [
-                 Image.asset(
+                Image.asset(
                   "assets/images/placeholder.jpg",
                   height: 60,
                 ),
@@ -47,7 +47,7 @@ class YourChannelTile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          channel.Name,
+                          channel.name,
                           textDirection: TextDirection.ltr,
                           style: TextStyle(
                             color: Colors.white,
@@ -80,7 +80,7 @@ class YourChannelTile extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(vertical: 10),
               child: Text(
-                channel.Description,
+                channel.description,
                 textDirection: TextDirection.ltr,
                 textAlign: TextAlign.start,
                 style: TextStyle(color: Colors.grey),

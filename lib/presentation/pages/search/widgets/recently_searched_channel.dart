@@ -26,11 +26,11 @@ class RecentlyChannel extends StatelessWidget {
         child: ListTile(
           dense: true,
           leading: CircleAvatar(
-            backgroundImage: AssetImage(channel.ImageUrl),
+            backgroundImage: AssetImage(channel.profile_pic),
             radius: 25,
           ),
-          title: CustomText(text: "$channel.Name"),
-          subtitle: CustomText(text: "$channel.Description"),
+          title: CustomText(text: "$channel.name"),
+          subtitle: CustomText(text: "$channel.description"),
           trailing: IconButton(
             onPressed: () {},
             icon: Icon(

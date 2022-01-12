@@ -24,7 +24,7 @@ class EditChannelBloc extends Bloc<EditChannelEvent, EditChannelState> {
     else if (event is EditPodcastEvent) {
       yield LoadingEditChannelState();
       // TODO
-      // final channel = await editChannelRepository.getChannel(event.channel.Id);
+      // final channel = await editChannelRepository.getChannel(event.channel.id);
 
       Either<String, Channel> res =
           await editChannelRepository.editPodcast(event.podcast, event.channel);
@@ -48,7 +48,7 @@ class EditChannelBloc extends Bloc<EditChannelEvent, EditChannelState> {
 
       var res = await editChannelRepository.deletePodcast(
           event.podcast, event.channel);
-      // var channel = await editChannelRepository.getChannel(event.channel.Id);
+      // var channel = await editChannelRepository.getChannel(event.channel.id);
 
       yield* res.fold((l) async* {
         print("FOLDING?");
@@ -59,7 +59,7 @@ class EditChannelBloc extends Bloc<EditChannelEvent, EditChannelState> {
         yield LoadedEditChannelState(channel: r);
       });
 
-      // final channel = await editChannelRepository.getChannel(event.channel.Id);
+      // final channel = await editChannelRepository.getChannel(event.channel.id);
 
     }
   }

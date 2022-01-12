@@ -51,7 +51,7 @@ class EditChannel extends StatelessWidget {
                                         Container(
                                           width: 120,
                                           child: Text(
-                                            state.channel.Name,
+                                            state.channel.name,
                                             overflow: TextOverflow.fade,
                                             style: TextStyle(
                                                 color: Colors.white,
@@ -64,7 +64,7 @@ class EditChannel extends StatelessWidget {
                                             context.router.push(
                                                 CreatePodcastRoute(
                                                     channelId:
-                                                        state.channel.Id));
+                                                        state.channel.id));
                                           },
                                           child: Icon(
                                             Icons.add,
@@ -99,7 +99,7 @@ class EditChannel extends StatelessWidget {
                                     )
                                   : (state is LoadedEditChannelState)
                                       ? Text(
-                                          state.channel.Description,
+                                          state.channel.description,
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 16,
@@ -117,7 +117,7 @@ class EditChannel extends StatelessWidget {
                                     )
                                   : (state is LoadedEditChannelState)
                                       ? Text(
-                                          state.channel.Subscribers.toString(),
+                                          state.channel.subscriber.toString(),
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 16,
@@ -136,7 +136,7 @@ class EditChannel extends StatelessWidget {
         BlocBuilder<EditChannelBloc, EditChannelState>(
           builder: (context, state) {
             if (state is LoadedEditChannelState) {
-              List<Podcast>? podcasts = state.channel.Podcasts;
+              List<Podcast>? podcasts = state.channel.podcasts;
               return SliverList(
                   delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {

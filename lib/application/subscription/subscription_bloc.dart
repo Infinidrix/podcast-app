@@ -10,26 +10,26 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
   final ISubscriptionRepository subscriptionRepository;
   static List<Channel> channels = [
     Channel(
-        Name: "The Nasa Channel",
-        ImageUrl: "https://www.image.com/image.jpg",
-        Subscribers: 200,
-        Id: "Another Unique ID",
-        Description: "",
-        Podcasts: []),
+        name: "The Nasa Channel",
+        profile_pic: "https://www.image.com/image.jpg",
+        subscriber: 200,
+        id: "Another Unique id",
+        description: "",
+        podcasts: []),
     Channel(
-        Name: "Super Awesome",
-        ImageUrl: "https://www.image.com/image.jpg",
-        Subscribers: 300,
-        Id: "Amaze Unique ID",
-        Description: "",
-        Podcasts: []),
+        name: "Super Awesome",
+        profile_pic: "https://www.image.com/image.jpg",
+        subscriber: 300,
+        id: "Amaze Unique id",
+        description: "",
+        podcasts: []),
     Channel(
-        Name: "Wooden Overcoats",
-        ImageUrl: "https://www.image.com/image.jpg",
-        Subscribers: 400,
-        Id: "Super Cool Unique ID",
-        Description: "",
-        Podcasts: []),
+        name: "Wooden Overcoats",
+        profile_pic: "https://www.image.com/image.jpg",
+        subscriber: 400,
+        id: "Super Cool Unique ID",
+        description: "",
+        podcasts: []),
   ];
 
   SubscriptionBloc(this.subscriptionRepository)

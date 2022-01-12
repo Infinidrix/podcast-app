@@ -42,7 +42,7 @@ class ChannelCard extends StatelessWidget {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                             image: DecorationImage(
-                              image: AssetImage(channel.ImageUrl),
+                              image: AssetImage(channel.profile_pic),
                               fit: BoxFit.cover,
                             )),
                         width: 75,
@@ -58,7 +58,7 @@ class ChannelCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "${channel.Name}",
+                            "${channel.name}",
                             style: TextStyle(
                                 fontSize: 19,
                                 fontWeight: FontWeight.bold,
@@ -70,7 +70,7 @@ class ChannelCard extends StatelessWidget {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 10.0),
                               child: Text(
-                                "${channel.Name}",
+                                "${channel.name}",
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.white,
@@ -87,7 +87,7 @@ class ChannelCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(3.0),
                 child: Text(
-                  "${channel.Description}",
+                  "${channel.description}",
                   style: TextStyle(color: Color(0xffb3b3b3), fontSize: 14),
                 ),
               )

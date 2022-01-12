@@ -25,14 +25,13 @@ class LoginProvider implements ILoginProvider {
   @override
   Future<Either<String, LoginDtoModel>> Login(UserLogin userCred) async {
     try {
-      final response = await httpClient
-          .post(
-            Uri.http(URL, "/api/login"),
-            headers: <String, String>{
-              'Content-Type': 'application/json; charset=UTF-8',
-            },
-            body: jsonEncode(userCred.toJson()),
-          )        ;
+      final response = await httpClient.post(
+        Uri.http(URL, "/api/v1/user/login/"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(userCred.toJson()),
+      );
       print(response.statusCode);
 
       if (response.statusCode == 200) {
@@ -70,7 +69,7 @@ class LoginProvider implements ILoginProvider {
             FirsName: parsed['user']["firstName"],
             LastName: parsed['user']["lastName"],
             isCreator: isCreator);
-        userInfo.Password = userCred.Password;
+        userInfo.Password = userCred.password;
         await setItemToLocalStrage(
             tokenName: "userInfo", dataToStore: jsonEncode(userInfo.toJson()));
         return right(LoginDtoModel.fromJson(parsed));

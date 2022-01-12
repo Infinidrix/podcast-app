@@ -8,21 +8,19 @@ part of 'user_register.dart';
 
 UserRegister _$UserRegisterFromJson(Map<String, dynamic> json) {
   return UserRegister(
-    UserName: json['UserName'].toString(),
-    Email: json['Email'].toString(),
-    FirstName: json['FirstName'].toString(),
-    LastName: json['LastName'].toString(),
-    Password: json['Password'].toString(),
-    ProfilePicture: json['ProfilePicture'].toString(),
+    username: json['UserName'].toString(),
+    email: json['Email'].toString(),
+    first_name: json['FirstName'].toString(),
+    last_name: json['LastName'].toString(),
+    password: json['Password'].toString(),
   );
 }
 
 Map<String, dynamic> _$UserRegisterToJson(UserRegister instance) =>
     <String, dynamic>{
-      'Email': instance.Email,
-      'UserName': instance.UserName,
-      'Password': instance.Password,
-      'FirstName': instance.FirstName,
-      'LastName': instance.LastName,
-      'ProfilePicture': instance.ProfilePicture,
+      'email': instance.email,
+      'username': instance.username,
+      'password': instance.password,
+      'first_name': instance.first_name,
+      'last_name': instance.last_name,
     };

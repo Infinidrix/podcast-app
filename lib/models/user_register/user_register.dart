@@ -4,14 +4,13 @@ part 'user_register.g.dart';
 
 @JsonSerializable()
 class UserRegister {
-  String Email, UserName, Password, FirstName, LastName, ProfilePicture;
+  String email, username, password, first_name, last_name;
   UserRegister(
-      {required this.UserName,
-      required this.Email,
-      required this.FirstName,
-      required this.LastName,
-      required this.Password,
-      required this.ProfilePicture});
+      {required this.username,
+      required this.email,
+      required this.first_name,
+      required this.last_name,
+      required this.password});
 
   factory UserRegister.fromJson(Map<String, dynamic> json) =>
       _$UserRegisterFromJson(json);

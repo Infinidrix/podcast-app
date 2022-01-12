@@ -19,14 +19,14 @@ class SignupRepository implements ISignupRepository {
       required String profilePicturePath}) async {
     // TODO: implement signup
     final userRegister = UserRegister(
-        UserName: userName,
-        Email: email,
-        FirstName: firstName,
-        Password: password,
-        LastName: lastName,
-        ProfilePicture: profilePicturePath);
+      username: userName,
+      email: email,
+      first_name: firstName,
+      password: password,
+      last_name: lastName,
+    );
     final userCred = UserLogin(
-        UserName: userRegister.UserName, Password: userRegister.Password);
+        username: userRegister.username, password: userRegister.password);
     return await signupProvider.signUp(
         userRegisterInfo: userRegister.toJson(), userCred: userCred.toJson());
   }

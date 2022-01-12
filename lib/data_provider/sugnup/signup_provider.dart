@@ -20,14 +20,16 @@ class SignupProvider implements ISignupProvider {
     // TODO: implement signUp
     print(userRegisterInfo);
     print(json.encode(userRegisterInfo));
+
     try {
       final response = await httpClient.post(
-        Uri.http(URL, "/api/register"),
+        Uri.http(URL, "/api/v1/user/register/"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(userRegisterInfo),
       );
+
       print(response.statusCode);
       print(response.body);
       if (response.statusCode == 200) {

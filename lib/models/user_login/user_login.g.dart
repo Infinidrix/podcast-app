@@ -8,12 +8,12 @@ part of 'user_login.dart';
 
 UserLogin _$UserLoginFromJson(Map<String, dynamic> json) {
   return UserLogin(
-    username: json['username'].toString(),
+    email: json['email'].toString(),
     password: json['password'].toString(),
   );
 }
 
 Map<String, dynamic> _$UserLoginToJson(UserLogin instance) => <String, dynamic>{
-      'username': instance.username,
+      'email': instance.email,
       'password': instance.password,
     };

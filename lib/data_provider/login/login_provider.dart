@@ -25,6 +25,8 @@ class LoginProvider implements ILoginProvider {
   @override
   Future<Either<String, LoginDtoModel>> Login(UserLogin userCred) async {
     try {
+      print("BEFORE RESPONSE");
+      print(jsonEncode(userCred));
       final response = await httpClient.post(
         Uri.http(URL, "/api/v1/user/login/"),
         headers: <String, String>{
@@ -32,6 +34,7 @@ class LoginProvider implements ILoginProvider {
         },
         body: jsonEncode(userCred.toJson()),
       );
+      print("AFTER RESPONSE");
       print(response.statusCode);
 
       if (response.statusCode == 200) {
@@ -41,18 +44,18 @@ class LoginProvider implements ILoginProvider {
             tokenName: "userCred", dataToStore: jsonEncode(userCred.toJson()));
         print("this is the thing i want ${parsed}");
         await setItemToLocalStrage(
-            tokenName: "token", dataToStore: parsed["token"]);
+            tokenName: "token", dataToStore: parsed["token"]["access"]);
         print(
-            "this is the  user token ${parsed["token"]} u can get it every where ");
+            "this is the  user token ${parsed["token"]["access"]} u can get it every where ");
         await setItemToLocalStrage(
             tokenName: "roles",
             dataToStore: jsonEncode(parsed['user']['roles']));
-        final roles = parsed['user']['roles'];
-        print("this the role in login ${roles}");
-        bool isCreator = false;
-        if (roles.contains("Creator")) {
-          isCreator = true;
-        }
+        // final roles = parsed['user']['roles'];
+        // print("this the role in login ${roles}");
+        bool isCreator = true;
+        // if (roles.contains("Creator")) {
+        //   isCreator = true;
+        // }
         await setItemToLocalStrage(
             tokenName: "user", dataToStore: response.body);
         await setItemToLocalStrage(

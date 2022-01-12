@@ -25,8 +25,8 @@ class SignupRepository implements ISignupRepository {
       password: password,
       last_name: lastName,
     );
-    final userCred = UserLogin(
-        username: userRegister.username, password: userRegister.password);
+    final userCred =
+        UserLogin(email: userRegister.email, password: userRegister.password);
     return await signupProvider.signUp(
         userRegisterInfo: userRegister.toJson(), userCred: userCred.toJson());
   }

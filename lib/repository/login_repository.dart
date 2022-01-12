@@ -16,7 +16,7 @@ class LoginRepository implements ILoginRepository {
   Future<Either<String, LoginDtoModel>> Login(
       String email, String password) async {
     print('in login repo ${email} $password');
-    final userCred = UserLogin(username: email, password: password);
+    final userCred = UserLogin(email: email, password: password);
     return await loginDataProvider.Login(userCred);
     // TODO: implement Login
   }

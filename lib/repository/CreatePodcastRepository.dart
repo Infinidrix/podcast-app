@@ -10,7 +10,7 @@ class CreatePodcastRepository {
   CreatePodcastRepository(this.createPodcastProvider);
 
   Future<bool> savePodcast(File? file, String podcastTitle,
-      String podcastDescription, String channelId, String? userId) async {
+      String podcastDescription, String channelId, String userId) async {
     Podcast? createdPodcast = await createPodcastProvider.createPodcast(
         file!.path.toString(),
         podcastTitle,
@@ -24,7 +24,7 @@ class CreatePodcastRepository {
     }
   }
 
-  Future<Channel> getChannel(String channelId){
-    return  createPodcastProvider.getChannel(channelId);
+  Future<Channel> getChannel(String channelId) {
+    return createPodcastProvider.getChannel(channelId);
   }
 }

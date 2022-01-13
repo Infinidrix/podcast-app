@@ -8,10 +8,10 @@ part of 'Channel.dart';
 
 Channel _$ChannelFromJson(Map<String, dynamic> json) {
   return Channel(
-    Name: json['Name'].toString(),
+    name: json['name'].toString(),
     ImageUrl: json['ImageUrl'].toString(),
     Subscribers: json['Subscribers'] as int,
-    Id: json['Id'].toString(),
+    id: json['id'].toString(),
     Desctiption: json['Desctiption'].toString(),
     Podcasts: (json['Podcasts'] as List<dynamic>)
         .map((e) => Podcast.fromJson(e as Map<String, dynamic>))
@@ -20,8 +20,8 @@ Channel _$ChannelFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$ChannelToJson(Channel instance) => <String, dynamic>{
-      'Id': instance.Id,
-      'Name': instance.Name,
+      'id': instance.id,
+      'name': instance.name,
       'ImageUrl': instance.ImageUrl,
       'Subscribers': instance.Subscribers,
       'Desctiption': instance.Desctiption,

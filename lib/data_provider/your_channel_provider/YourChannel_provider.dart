@@ -29,7 +29,7 @@ class YourChannelProvider extends IYourChannelProvider {
                     url: "",
                     description: "",
                     channelName: "",
-                    imageUrl: "assets/images/1by1.png",
+                    poster: "assets/images/1by1.png",
                     id: "$index",
                   ))));
   @override

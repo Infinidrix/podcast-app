@@ -22,7 +22,7 @@ class SearchProvider extends ISearchProvider {
             url: "",
             description: "",
             channelName: "",
-            imageUrl: "assets/images/placeholder.jpg",
+            poster: "assets/images/placeholder.jpg",
             id: "$index",
           ));
 
@@ -42,7 +42,7 @@ class SearchProvider extends ISearchProvider {
                     description: "",
                     channelName: "",
                     url: "",
-                    imageUrl: "assets/images/placeholder.jpg",
+                    poster: "assets/images/placeholder.jpg",
                     id: "$index",
                   ))));
 

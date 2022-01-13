@@ -32,7 +32,7 @@ class Recently extends StatelessWidget {
         child: ListTile(
           dense: true,
           leading: CircleAvatar(
-            backgroundImage: AssetImage(podcast.imageUrl!),
+            backgroundImage: AssetImage(podcast.poster!),
             radius: 25,
           ),
           title: CustomText(text: "$podcast.name"),

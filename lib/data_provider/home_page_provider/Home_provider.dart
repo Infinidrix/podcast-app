@@ -23,7 +23,7 @@ class HomeProvider implements IHomeProvider {
                 "http://$URL:44343/api/Users/b7d27747-e66f-403d-8bcb-2125656ccb53/Audios/4335478d-dd31-4e00-bdbf-60a2986ad1c0/download.mp3",
             description: "",
             channelName: "",
-            imageUrl: "assets/images/placeholder.jpg",
+            poster: "assets/images/placeholder.jpg",
             id: "$index",
           ));
   List<Channel> channels = List.generate(
@@ -42,7 +42,7 @@ class HomeProvider implements IHomeProvider {
                     url: "",
                     description: "",
                     channelName: "",
-                    imageUrl: "assets/images/placeholder.jpg",
+                    poster: "assets/images/placeholder.jpg",
                     id: "$index",
                   ))));
 

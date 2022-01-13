@@ -6,21 +6,22 @@ part 'Channel.g.dart';
 
 @JsonSerializable()
 class Channel {
-  final String Id;
-  final String Name;
+  final String id;
+  final String name;
   final String ImageUrl;
   final int Subscribers;
   final String Desctiption;
   final List<Podcast> Podcasts;
 
   Channel(
-      {required this.Name,
+      {required this.name,
       required this.ImageUrl,
       required this.Subscribers,
-      required this.Id,
+      required this.id,
       required this.Desctiption,
       required this.Podcasts});
 
-  factory Channel.fromJson(Map<String, dynamic> json) => _$ChannelFromJson(json);
+  factory Channel.fromJson(Map<String, dynamic> json) =>
+      _$ChannelFromJson(json);
   Map<String, dynamic> toJson() => _$ChannelToJson(this);
 }

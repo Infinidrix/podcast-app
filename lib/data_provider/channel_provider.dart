@@ -23,7 +23,7 @@ class ChannelPorvider implements IChannelProvider {
   //     List.generate(10, (index) => Podcast("Name #$index", index));
   Channel channel = Channel(
       name: "Name",
-      profile_pic: "ImageUrl",
+      profile_pic: "poster",
       subscriber: 12335245,
       id: "1",
       description: "This is some description about the channel",
@@ -40,14 +40,14 @@ class ChannelPorvider implements IChannelProvider {
             description: "",
             channelName: "",
             url: "",
-            imageUrl: "",
+            poster: "",
             id: "$index",
           ));
   List<Channel> channels = List.generate(
       5,
       (index) => Channel(
           name: "Name",
-          profile_pic: "ImageUrl",
+          profile_pic: "poster",
           subscriber: 12335245,
           id: "$index",
           description: "This is Channel Description",
@@ -59,7 +59,7 @@ class ChannelPorvider implements IChannelProvider {
                     channelName: "",
                     description: "",
                     url: "",
-                    imageUrl: "",
+                    poster: "",
                     id: "$index",
                   ))));
   @override

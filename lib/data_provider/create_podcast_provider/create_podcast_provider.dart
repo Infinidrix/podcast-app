@@ -15,22 +15,23 @@ class CreatePodcastProvider extends ICreatePodcastProvider {
   CreatePodcastProvider({required this.httpClient});
   @override
   Future<Podcast?> createPodcast(String filePath, String podcastTitle,
-      String podcastDescription, String channelId, String? userId) async {
+      String podcastDescription, String channelId, String userId) async {
     final user = json.decode(LoginProvider.SESSION.getString("user")!)
         as Map<String, dynamic>;
     String token = user["token"].toString();
     var request = MultipartRequest(
       'POST',
-      Uri.parse('http://$URL/api/users/$userId/audios'),
+      Uri.parse('http://$URL/api/audio/'),
     )
       ..fields.addAll({
-        "Title": podcastTitle,
-        "Description": podcastDescription,
-        "ChannelId": channelId,
+        "title": podcastTitle,
+        "description": podcastDescription,
+        "channel_id": channelId,
+        "user_id": userId
       })
       ..files.add(
         await MultipartFile.fromPath(
-          "audioFile",
+          "path",
           filePath,
         ),
       );

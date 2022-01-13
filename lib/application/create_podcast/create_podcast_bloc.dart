@@ -47,12 +47,19 @@ class CreatePodcastBloc extends Bloc<CreatePodcastEvent, CreatePodcastState> {
 
     if (event is SaveEvent) {
       yield Saving();
+      String? id = await LoginProvider.SESSION.getString("userId");
+      String userId;
+      if (id != null) {
+        userId = id;
+      } else {
+        userId = '1';
+      }
       var isPodcastCreated = await createPodcastRepository.savePodcast(
         event.file,
         event.podcastTitle,
         event.podcastDescription,
         event.channelId,
-        await LoginProvider.SESSION.getString("userId"),
+        userId,
       );
 
       if (isPodcastCreated) {

@@ -12,7 +12,7 @@ class LocalSearchProvider extends ISearchProvider {
             description: "",
             channelName: "",
             url: "",
-            imageUrl: "assets/images/placeholder.jpg",
+            poster: "assets/images/placeholder.jpg",
             id: "$index",
           ));
 
@@ -20,7 +20,7 @@ class LocalSearchProvider extends ISearchProvider {
       5,
       (index) => Channel(
           name: "Name",
-          profile_pic: "ImageUrl",
+          profile_pic: "poster",
           subscriber: 12335245,
           id: "$index",
           description: "This is Channel Description",
@@ -32,7 +32,7 @@ class LocalSearchProvider extends ISearchProvider {
                     channelName: "",
                     description: "",
                     url: "",
-                    imageUrl: "assets/images/placeholder.jpg",
+                    poster: "assets/images/placeholder.jpg",
                     id: "$index",
                   ))));
 

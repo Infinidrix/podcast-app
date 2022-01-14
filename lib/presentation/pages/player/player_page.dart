@@ -5,6 +5,7 @@ import 'package:podcast_app/application/audio_player/audio_player_bloc.dart';
 import 'package:podcast_app/application/audio_player/audio_player_states.dart';
 import 'package:podcast_app/application/download/download_bloc.dart';
 import 'package:podcast_app/application/download/download_states.dart';
+import 'package:podcast_app/data_provider/constants.dart';
 import 'package:podcast_app/presentation/pages/core/bottom_nav.dart';
 import 'package:podcast_app/presentation/pages/player/widgets/player_widgets.dart';
 
@@ -23,7 +24,8 @@ class PlayerPage extends StatelessWidget {
             PlayerAppBar(),
             BlocBuilder<AudioPlayerBloc, AudioPlayerState>(
               builder: (_, state) => Container(
-                child: Image.asset("assets/images/1by1.png"),
+                child:
+                    Image.network("http://$URL${state.podcasts.first.poster!}"),
               ),
             ),
             BlocConsumer<DownloadBloc, DownloadState>(

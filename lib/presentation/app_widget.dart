@@ -171,8 +171,9 @@ class MyApp extends StatelessWidget {
               LibraryBloc(libraryRepository)..add(LoadLibraryEvent()),
         ),
         BlocProvider(
-          create: (_) =>
-              EditChannelBloc(editChannelRepository: editChannelRepository),
+          create: (_) => EditChannelBloc(
+              editChannelRepository: editChannelRepository,
+              channelRepository: channelRepository),
         ),
         BlocProvider(
           create: (_) => BottomNavigationBloc()..add(CheckRoleEvent()),

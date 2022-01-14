@@ -54,6 +54,7 @@ class CreatePodcastBloc extends Bloc<CreatePodcastEvent, CreatePodcastState> {
       } else {
         userId = '1';
       }
+      print(userId);
       var isPodcastCreated = await createPodcastRepository.savePodcast(
         event.file,
         event.podcastTitle,

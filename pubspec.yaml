@@ -61,6 +61,7 @@ dependencies:
   network_image_mock: ^2.0.1
   
   cached_network_image: ^3.1.0
+  flutter_rating_bar: ^4.0.0
 
 
 

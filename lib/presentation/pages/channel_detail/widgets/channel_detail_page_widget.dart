@@ -1,17 +1,23 @@
 import 'dart:collection';
+import 'dart:convert';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:http/http.dart';
 import 'package:podcast_app/application/audio_player/audio_player_bloc.dart';
 import 'package:podcast_app/application/audio_player/audio_player_events.dart';
 import 'package:podcast_app/application/channel_description/channel_description_bloc.dart';
+import 'package:podcast_app/data_provider/constants.dart';
+import 'package:podcast_app/data_provider/login/login_provider.dart';
 import 'package:podcast_app/presentation/core/loading_list_widget.dart';
 import 'package:podcast_app/presentation/pages/library_download_subscribe_pages/LibDownSubTabMenuPage.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 import 'package:skeleton_text/skeleton_text.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:http/http.dart' as http;
 
 class ChannelDetailWidget extends StatelessWidget {
   Widget _getSubscribeButton(
@@ -156,6 +162,76 @@ class ChannelDetailWidget extends StatelessWidget {
                                       ),
                                       _getSubscribeButton(
                                           channelState, channelBloc),
+                                      RatingBar.builder(
+                                        initialRating: 3,
+                                        minRating: 1,
+                                        direction: Axis.horizontal,
+                                        allowHalfRating: true,
+                                        itemCount: 5,
+                                        itemPadding: EdgeInsets.symmetric(
+                                            horizontal: 4.0),
+                                        itemBuilder: (context, _) => Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
+                                        ),
+                                        onRatingUpdate: (rating) async {
+                                          // final user = json.decode(LoginProvider
+                                          //         .SESSION
+                                          //         .getString("user")!)
+                                          //     as Map<String, dynamic>;
+                                          // String token =
+                                          //     user["token"]['access'];
+                                          // // TODO: Change this to actual user id
+                                          // print("Got here ${channelState}");
+                                          // // final http.Client httpClient;
+                                          // // TODO: Change this as soon as possible
+                                          // // id = 'da9c196a-ac2b-4a5d-9dfd-13adce101194';
+                                          String channel_id =
+                                              channelBloc.channel.id;
+                                          print(channel_id);
+
+                                          // final ratingg = await http.Client().get(
+                                          //     Uri.parse(
+                                          //         "http://$URL/api/v1/ratings/$channel_id/$user_id/"),
+                                          //     headers: {
+                                          //       'Authorization':
+                                          //           'Bearer ${token}',
+                                          //     }).timeout(Duration(seconds: 7));
+                                          // print(ratingg.body);
+                                          String? userId = LoginProvider.SESSION
+                                              .getString('userId');
+                                          final user = json.decode(LoginProvider
+                                                  .SESSION
+                                                  .getString("user")!)
+                                              as Map<String, dynamic>;
+                                          print(userId);
+                                          int user_id = user["data"]['id'];
+
+                                          String token = user["token"]['access']
+                                              .toString();
+                                          var request = http.MultipartRequest(
+                                            'POST',
+                                            Uri.parse(
+                                                'http://$URL/api/v1/ratings/'),
+                                          )..fields.addAll({
+                                              "channel_id": channel_id,
+                                              "rating": rating.toString(),
+                                              "user_id":
+                                                  "1" //TODO: Remove this hardcoding if possible
+                                            });
+                                          print("THIS HAS HAPPENED");
+
+                                          request.headers.addAll({
+                                            'Authorization': 'Bearer ${token}',
+                                          });
+                                          StreamedResponse? response;
+                                          try {
+                                            response = await request.send();
+                                          } catch (e) {
+                                            return null;
+                                          }
+                                        },
+                                      )
                                     ],
                                   ),
                                 ),

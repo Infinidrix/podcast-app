@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:podcast_app/application/audio_player/audio_player_bloc.dart';
 import 'package:podcast_app/application/audio_player/audio_player_events.dart';
+import 'package:podcast_app/data_provider/constants.dart';
 import 'package:podcast_app/models/Podcast.dart';
 import 'package:podcast_app/presentation/routes/router.gr.dart';
 
@@ -43,7 +44,7 @@ class AudioWithThumbnail extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
-                      image: AssetImage('assets/images/placeholder.jpg'),
+                      image: NetworkImage("http://$URL${podcast.poster!}"),
                     ),
                   ),
                 ),

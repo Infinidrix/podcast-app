@@ -25,8 +25,8 @@ class ChannelDescriptionBloc
       ChannelDescriptionEvent event) async* {
     try {
       // TODO: Change this asap
-      final userId = "1";
-      // final userId = LoginProvider.SESSION.getString("userId")!;
+      // final userId = "1";
+      final userId = LoginProvider.SESSION.getString("userId")!;
       print("this doesn't make sense");
       if (event is SubscriptionEvent) {
         yield LoadingChannelDescriptionState();

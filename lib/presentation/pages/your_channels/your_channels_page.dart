@@ -37,7 +37,7 @@ class YourChannelsPage extends StatelessWidget {
               height: 20,
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.8,
+              height: MediaQuery.of(context).size.height * 0.7,
               child: BlocConsumer<YourChannelBloc, YourChannelState>(
                 listener: (context, state) {
                   if (state is YourChannelError) {
@@ -54,8 +54,8 @@ class YourChannelsPage extends StatelessWidget {
                     );
                   } else if (state is LoadedYourChannel) {
                     List<Channel> channels = state.channels;
-                    // print("yourchaneels page: => \n ");
-                    // channels.forEach((e) => print(e.toJson()));
+                    print("yourchaneels page: => \n ");
+                    channels.forEach((e) => print(e.toJson()));
 
                     return RefreshIndicator(
                       onRefresh: () async {

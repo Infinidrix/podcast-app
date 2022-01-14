@@ -1,7 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:podcast_app/data_provider/Ichannel_provider.dart';
 
 import 'package:podcast_app/models/channel/Channel.dart';
+import 'package:podcast_app/repository/Ichannel_repository.dart';
 import 'package:podcast_app/repository/edit_channel/IEditChannelRepositoy.dart';
 
 import 'edit_channel_event.dart';
@@ -9,15 +11,18 @@ import 'edit_channel_state.dart';
 
 class EditChannelBloc extends Bloc<EditChannelEvent, EditChannelState> {
   IEditChannelRepository editChannelRepository;
+  IChannelRepository channelRepository;
   EditChannelBloc({
     required this.editChannelRepository,
+    required this.channelRepository,
   }) : super(LoadingEditChannelState());
 
   @override
   Stream<EditChannelState> mapEventToState(EditChannelEvent event) async* {
     if (event is LoadIntialEditChannelEvent) {
       yield LoadingEditChannelState();
-      await Future.delayed(Duration(seconds: 3));
+      // TODO: fixbug
+      // event.channel = await channelRepository.getChannel(event.channel.id);
       yield LoadedEditChannelState(channel: event.channel);
     }
     // Edit Podcast Event

@@ -40,7 +40,7 @@ class CreateChannelBloc extends Bloc<CreateChannelEvent, CreateChannelState> {
           ImageURL: event.ImageURL,
         );
       } catch (e) {
-        print("From create channel bloc");
+        print("From create channel bloc $e");
       }
     }
   }

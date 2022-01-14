@@ -39,27 +39,12 @@ Widget getBottomNavBar(BuildContext context) {
       return CurvedNavigationBar(
         index: currentIndex,
         height: 60.0,
-        items: (state is UserNavigationState)
-            ? <Widget>[
-                Icon(Icons.home_outlined, size: 30, color: Colors.white),
-                Icon(Icons.search_outlined, size: 30, color: Colors.white),
-                Icon(Icons.compare_arrows, size: 30, color: Colors.white),
-              ]
-            : (state is CreatorNavigationState)
-                ? <Widget>[
-                    Icon(Icons.home_outlined, size: 30, color: Colors.white),
-                    Icon(Icons.search_outlined, size: 30, color: Colors.white),
-                    Icon(Icons.compare_arrows, size: 30, color: Colors.white),
-                    Icon(Icons.call_split, size: 30, color: Colors.white),
-                  ]
-                : <Widget>[
-                    Icon(Icons.home_outlined, size: 30, color: Colors.white),
-                    Icon(Icons.search_outlined, size: 30, color: Colors.white),
-                    Icon(Icons.compare_arrows, size: 30, color: Colors.white),
-                  ]
-
-        //
-        ,
+        items: <Widget>[
+          Icon(Icons.home_outlined, size: 30, color: Colors.white),
+          Icon(Icons.search_outlined, size: 30, color: Colors.white),
+          Icon(Icons.compare_arrows, size: 30, color: Colors.white),
+          Icon(Icons.call_split, size: 30, color: Colors.white),
+        ],
         onTap: (index) {
           context.router.replace(routes[index]);
         },

@@ -18,14 +18,14 @@ class CreatePodcastProvider extends ICreatePodcastProvider {
       String podcastDescription, String channelId, String userId) async {
     final user = json.decode(LoginProvider.SESSION.getString("user")!)
         as Map<String, dynamic>;
-    String token = user["token"].toString();
+    String token = user["token"]['access'].toString();
     var request = MultipartRequest(
       'POST',
-      Uri.parse('http://$URL/api/audio/'),
+      Uri.parse('http://$URL/api/v1/audio/'),
     )
       ..fields.addAll({
         "title": podcastTitle,
-        "description": podcastDescription,
+        "Description": podcastDescription,
         "channel_id": channelId,
         "user_id": userId
       })
@@ -62,18 +62,17 @@ class CreatePodcastProvider extends ICreatePodcastProvider {
   Future<Channel> getChannel(String id) async {
     final user = json.decode(LoginProvider.SESSION.getString("user")!)
         as Map<String, dynamic>;
-    String token = user["token"].toString();
+    String token = user["token"]['access'].toString();
     // TODO: Change this to actual user id
-    print("Got here");
-    final response = await httpClient.get(
-        Uri.parse(
-            'http://$URL/api/users/${LoginProvider.SESSION.getString('userId')}/channel/$id'),
-        headers: {
-          'Authorization': 'Bearer ${token}',
-        }).timeout(Duration(seconds: 7));
+    print("Got here with some doubt $token");
+    final response = await httpClient
+        .get(Uri.parse('http://$URL/api/v1/channel/$id'), headers: {
+      'Authorization': 'Bearer ${token}',
+    }).timeout(Duration(seconds: 7));
     if (response.statusCode == 200) {
       var parsed = json.decode(response.body);
       Channel channel = Channel.fromJson(parsed);
+      print("IS this a valid channel $channel");
       return channel;
     } else {
       print(response.body);

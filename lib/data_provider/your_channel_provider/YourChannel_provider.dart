@@ -37,14 +37,15 @@ class YourChannelProvider extends IYourChannelProvider {
     http.Response? response;
     final user = json.decode(LoginProvider.SESSION.getString("user")!)
         as Map<String, dynamic>;
-    String token = user["token"].toString();
+    String token = user["token"]['access'].toString();
     try {
       // final userId = await LoginProvider.SESSION.getString("userId");
       print("YOUR CHANNEL REQUEST");
 
-      String? userId = await LoginProvider.SESSION.getString('userId');
+      String? userId = "1"; // TODO: DON'T hard code this
       response = await httpClient.get(
-          Uri.parse('http://$URL/api/users/$userId/channel/yourchannel'),
+          Uri.parse(
+              'http://$URL/api/v1/channel/my_channels'), //http://127.0.0.1:9000/api/v1/channel/my_channels
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'Authorization': 'Bearer ${token}'

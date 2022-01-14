@@ -30,9 +30,9 @@ class LoginProvider implements ILoginProvider {
       final response = await httpClient.post(
         Uri.http(URL, "/api/v1/user/login/"),
         headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
+          'Content-Type': 'application/json',
         },
-        body: jsonEncode(userCred.toJson()),
+        body: jsonEncode(userCred),
       );
       print("AFTER RESPONSE");
       print(response.statusCode);
@@ -57,22 +57,13 @@ class LoginProvider implements ILoginProvider {
         await setItemToLocalStrage(
             tokenName: "user", dataToStore: response.body);
         await setItemToLocalStrage(
-            tokenName: "userId", dataToStore: parsed['data']['id']);
+            tokenName: "userId", dataToStore: parsed['data']['id'].toString());
 
-        final id = parsed['user']['id'];
+        final id = parsed['data']['id'];
+        print(parsed['data']['id']);
         final image = "http://192.168.0.131:44343/api/update/profile/${id}";
 
-        final userInfo = UserEditProfile(
-            ProfilePicture: image,
-            UserName: parsed['user']["userName"],
-            Email: parsed['user']['email'],
-            Password: "",
-            FirsName: parsed['user']["firstName"],
-            LastName: parsed['user']["lastName"],
-            isCreator: isCreator);
-        userInfo.Password = userCred.password;
-        await setItemToLocalStrage(
-            tokenName: "userInfo", dataToStore: jsonEncode(userInfo.toJson()));
+        // final us0: "userInfo", dataToStore: jsonEncode(userInfo.toJson()));
         return right(LoginDtoModel.fromJson(parsed));
       } else if (response.statusCode == 400) {
         final parsed = json.decode(response.body);

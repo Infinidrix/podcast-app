@@ -122,19 +122,19 @@ class ChannelPorvider implements IChannelProvider {
   @override
   Future<Channel?> createChannel(
       {required CreateChannel createChannelInfo}) async {
-    String? userId = await LoginProvider.SESSION.getString('userId');
+    String? userId = LoginProvider.SESSION.getString('userId');
     final user = json.decode(LoginProvider.SESSION.getString("user")!)
         as Map<String, dynamic>;
-    String token = user["token"].toString();
-
+    String token = user["token"]['access'].toString();
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse('http://$URL/api/users/$userId/channel'),
+      Uri.parse('http://$URL/api/v1/channel/'),
     )..fields.addAll({
-        "name": createChannelInfo.Name,
+        "channel_name": createChannelInfo.Name,
         "description": createChannelInfo.Description,
-        "ownerId": LoginProvider.SESSION.getString("userId")!.toString()
+        "user_id": "1" //TODO: Remove this hardcoding if possible
       });
+    print("THIS HAS HAPPENED");
 
     request.headers.addAll({
       'Authorization': 'Bearer ${token}',
@@ -148,7 +148,8 @@ class ChannelPorvider implements IChannelProvider {
       return null;
     }
 
-    print("Status code: ${response.statusCode}");
+    print(
+        "Status code: ${response.statusCode} url: http://$URL/api/v1/channel/");
 
     if (response.statusCode == 200) {
       return Channel.fromJson(

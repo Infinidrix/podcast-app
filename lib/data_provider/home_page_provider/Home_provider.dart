@@ -48,19 +48,22 @@ class HomeProvider implements IHomeProvider {
 
   @override
   Future<List<Podcast>> getRecentlyPlayed() async {
-    final user = json.decode(LoginProvider.SESSION.getString("user")!)
-        as Map<String, dynamic>;
-    String token = user["token"].toString();
-    final response = await httpClient.get(
-        Uri.parse(
-            "http://$URL/api/users/${await LoginProvider.SESSION.getString('userId')}/Audios/Recents"),
-        headers: {
-          'Authorization': 'Bearer ${token}',
-        }).timeout(Duration(seconds: 5));
+    final user = (LoginProvider.SESSION.getString("token")!);
+    String token = user;
+    print(token);
+    final response = await httpClient
+        .get(Uri.parse("http://$URL/api/v1/audio/recently/"), headers: {
+      'Authorization': 'Bearer ${token}',
+    }).timeout(Duration(seconds: 5));
+    print("BODy");
+    print(response.body);
+    print('BODY');
+
     if (response.statusCode == 200) {
       Iterable parsed = json.decode(response.body);
       List<Podcast> podcasts =
           List<Podcast>.from(parsed.map((e) => Podcast.fromJson(e)));
+
       return podcasts;
     } else {
       throw SocketException("Response Code: ${response.statusCode}");
@@ -70,19 +73,24 @@ class HomeProvider implements IHomeProvider {
   @override
   Future<List<Channel>> getTopPicks() async {
     // return channels;
-    final user = json.decode(LoginProvider.SESSION.getString("user")!)
-        as Map<String, dynamic>;
-    String token = user["token"].toString();
-    final response = await httpClient.get(
-        Uri.parse(
-            "http://$URL/api/users/${await LoginProvider.SESSION.getString('userId')}/channel"),
-        headers: {
-          'Authorization': 'Bearer ${token}',
-        }).timeout(Duration(seconds: 7));
+    final user = (LoginProvider.SESSION.getString("token")!);
+    String token = user;
+    print(token);
+    final response = await httpClient
+        .get(Uri.parse("http://$URL/api/v1/channel/top_rated"), headers: {
+      'Authorization': 'Bearer ${token}',
+    }).timeout(Duration(seconds: 7));
+    // print("body");
+    // print(response.body);
+    // print("body");
     if (response.statusCode == 200) {
       Iterable parsed = json.decode(response.body);
+      print("iterable");
+
       List<Channel> channels =
           List<Channel>.from(parsed.map((e) => Channel.fromJson(e)));
+      print("iterable");
+      print(channels[0].id);
       return channels;
     } else {
       throw SocketException("Response Code: ${response.statusCode}");

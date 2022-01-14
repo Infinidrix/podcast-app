@@ -47,9 +47,7 @@ class LoginProvider implements ILoginProvider {
             tokenName: "token", dataToStore: parsed["token"]["access"]);
         print(
             "this is the  user token ${parsed["token"]["access"]} u can get it every where ");
-        await setItemToLocalStrage(
-            tokenName: "roles",
-            dataToStore: jsonEncode(parsed['user']['roles']));
+        await setItemToLocalStrage(tokenName: "roles", dataToStore: "true");
         // final roles = parsed['user']['roles'];
         // print("this the role in login ${roles}");
         bool isCreator = true;
@@ -59,7 +57,7 @@ class LoginProvider implements ILoginProvider {
         await setItemToLocalStrage(
             tokenName: "user", dataToStore: response.body);
         await setItemToLocalStrage(
-            tokenName: "userId", dataToStore: parsed['user']['id']);
+            tokenName: "userId", dataToStore: parsed['data']['id']);
 
         final id = parsed['user']['id'];
         final image = "http://192.168.0.131:44343/api/update/profile/${id}";

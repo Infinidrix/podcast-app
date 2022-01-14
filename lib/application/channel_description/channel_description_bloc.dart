@@ -24,15 +24,20 @@ class ChannelDescriptionBloc
   Stream<ChannelDescriptionState> mapEventToState(
       ChannelDescriptionEvent event) async* {
     try {
-      final userId = LoginProvider.SESSION.getString("userId")!;
+      // TODO: Change this asap
+      final userId = "1";
+      // final userId = LoginProvider.SESSION.getString("userId")!;
+      print("this doesn't make sense");
       if (event is SubscriptionEvent) {
         yield LoadingChannelDescriptionState();
         channelRepository.setSubscription(
             userId, channel.id, event.isSubscribing);
         yield InitialChannelDescriptionState(channel, event.isSubscribing);
       } else if (event is LoadInitialEvent) {
-        yield LoadingChannelDescriptionState();
+        print("we arenot ");
         channel = event.channel;
+        print(channel.id);
+        yield LoadingChannelDescriptionState();
         channel = await channelRepository.getChannel(channel.id);
         isSubscribed = await channelRepository.isSubscribed(userId, channel.id);
 

@@ -7,6 +7,7 @@ import 'package:moor/moor.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:podcast_app/application/download/download_events.dart';
 import 'package:podcast_app/application/download/download_states.dart';
+import 'package:podcast_app/data_provider/constants.dart';
 import 'package:podcast_app/models/Podcast.dart';
 import 'package:podcast_app/data_provider/downloaded_audio_provider/downloaded_audio.dart';
 import 'package:podcast_app/repository/downloaded_audio_repository/download_audio_repository.dart';
@@ -196,7 +197,8 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
       onDone: () => this.add(CompleteDownloadEvent()),
       deleteOnCancel: true,
     );
-    DownloaderCore core = await Flowder.download(currentPodcast.url, options);
+    DownloaderCore core =
+        await Flowder.download("http://${URL}${currentPodcast.url}", options);
     return core;
   }
 

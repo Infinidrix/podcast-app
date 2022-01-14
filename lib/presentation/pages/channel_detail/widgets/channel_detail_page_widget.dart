@@ -212,6 +212,8 @@ class ChannelDetailWidget extends StatelessWidget {
                           ));
                     } else if (state is InitialChannelDescriptionState) {
                       var listOfPodcasts = state.channel.podcasts;
+                      print("we are ");
+                      print(listOfPodcasts);
                       return SliverFixedExtentList(
                         itemExtent: 90.0,
                         delegate: SliverChildBuilderDelegate(

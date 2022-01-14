@@ -53,7 +53,7 @@ class YourChannelProvider extends IYourChannelProvider {
       print("ERROR ${e.toString()}");
       return left(e.toString());
     }
-    if (response!.statusCode == 200) {
+    if (response.statusCode == 200) {
       Iterable parsed = json.decode(response.body);
       List<Channel> channels =
           List<Channel>.from(parsed.map((e) => Channel.fromJson(e)));

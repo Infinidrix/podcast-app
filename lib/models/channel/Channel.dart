@@ -9,7 +9,8 @@ class Channel {
   final String profile_pic;
   final String description;
   final int subscriber;
-  final List<Podcast>? podcasts;
+  final int? rate;
+  List<Podcast>? podcasts;
 
   Channel(
       {required this.name,
@@ -17,6 +18,7 @@ class Channel {
       required this.subscriber,
       required this.id,
       required this.description,
+      this.rate,
       this.podcasts});
 
   //     factory Channel.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
@@ -24,7 +26,8 @@ class Channel {
 
   Channel.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        name = json['name'],
+        name = json['channel_name'],
+        rate = json['rate'],
         profile_pic = json['profile_pic'],
         description = json['description'],
         subscriber = json['subscriber'],
@@ -37,6 +40,7 @@ class Channel {
         'name': name,
         'description': description,
         "subscriber": subscriber,
-        "podcasts": podcasts
+        "podcasts": podcasts,
+        "rate": rate
       };
 }

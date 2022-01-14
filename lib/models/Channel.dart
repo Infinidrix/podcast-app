@@ -11,7 +11,8 @@ class Channel {
   final String ImageUrl;
   final int Subscribers;
   final String Desctiption;
-  final List<Podcast> Podcasts;
+  final int? rate;
+  final List<Podcast>? Podcasts;
 
   Channel(
       {required this.name,
@@ -19,7 +20,8 @@ class Channel {
       required this.Subscribers,
       required this.id,
       required this.Desctiption,
-      required this.Podcasts});
+      this.Podcasts,
+      this.rate});
 
   factory Channel.fromJson(Map<String, dynamic> json) =>
       _$ChannelFromJson(json);

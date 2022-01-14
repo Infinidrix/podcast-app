@@ -17,6 +17,8 @@ class TopPicks extends StatelessWidget {
     final channelDetailBloc = BlocProvider.of<ChannelDescriptionBloc>(context);
     return InkWell(
       onTap: () {
+        print("podcasts");
+        print(channel.id);
         channelDetailBloc.add(LoadInitialEvent(channel: channel));
         context.router.push(ChannelDetailRoute());
       },

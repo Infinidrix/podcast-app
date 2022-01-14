@@ -32,14 +32,15 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     try {
       if (event is LoadIntialHomeEvent) {
         yield LoadingHomePageState();
-        trending = await repository.getTrending();
-        topPicks = await repository.getTopPicks();
+        print("LOADING HOME");
         recentlyPlayed = await repository.getRecentlyPlayed();
-
+        // trending = await repository.getTrending();
+        topPicks = await repository.getTopPicks();
+        print("Toppest pick ${topPicks[0].id}");
         yield LoadedHomePageState(
           topPicks: topPicks,
           recentlyPlayed: recentlyPlayed,
-          trending: trending,
+          trending: recentlyPlayed,
         );
       }
 

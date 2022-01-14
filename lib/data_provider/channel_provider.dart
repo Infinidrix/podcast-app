@@ -1,4 +1,5 @@
 import 'package:http/http.dart';
+import 'package:path/path.dart';
 import 'package:podcast_app/data_provider/Ichannel_provider.dart';
 import 'package:podcast_app/data_provider/login/login_provider.dart';
 import 'package:podcast_app/models/channel/Channel.dart';
@@ -21,47 +22,6 @@ class ChannelPorvider implements IChannelProvider {
 
   // List<Podcast> podcasts =
   //     List.generate(10, (index) => Podcast("Name #$index", index));
-  Channel channel = Channel(
-      name: "Name",
-      profile_pic: "poster",
-      subscriber: 12335245,
-      id: "1",
-      description: "This is some description about the channel",
-      podcasts: List.generate(
-          10,
-          (index) => Podcast(
-              id: "", channelName: "", description: "", name: "", url: "")));
-
-  List<Podcast> podcasts = List.generate(
-      5,
-      (index) => Podcast(
-            name: "Podcast $index",
-            numberOfListeners: 0,
-            description: "",
-            channelName: "",
-            url: "",
-            poster: "",
-            id: "$index",
-          ));
-  List<Channel> channels = List.generate(
-      5,
-      (index) => Channel(
-          name: "Name",
-          profile_pic: "poster",
-          subscriber: 12335245,
-          id: "$index",
-          description: "This is Channel Description",
-          podcasts: List.generate(
-              5,
-              (index) => Podcast(
-                    name: "Podcast $index",
-                    numberOfListeners: 0,
-                    channelName: "",
-                    description: "",
-                    url: "",
-                    poster: "",
-                    id: "$index",
-                  ))));
   @override
   Future<bool> isSubscribed(String userId, String channelId) async {
     final user = json.decode(LoginProvider.SESSION.getString("user")!)
@@ -84,25 +44,42 @@ class ChannelPorvider implements IChannelProvider {
 
   @override
   Future<Channel> getChannel(String id) async {
+    Channel channel;
     final user = json.decode(LoginProvider.SESSION.getString("user")!)
         as Map<String, dynamic>;
-    String token = user["token"].toString();
+    String token = user["token"]['access'];
     // TODO: Change this to actual user id
-    print("Got here");
-    final response = await httpClient.get(
-        Uri.parse(
-            'http://$URL/api/users/${LoginProvider.SESSION.getString('userId')}/channel/$id'),
-        headers: {
-          'Authorization': 'Bearer ${token}',
-        }).timeout(Duration(seconds: 7));
+    print("Got here ${id}");
+    // TODO: Change this as soon as possible
+    // id = 'da9c196a-ac2b-4a5d-9dfd-13adce101194';
+    final channelResponse = await httpClient
+        .get(Uri.parse("http://$URL/api/v1/channel/$id/"), headers: {
+      'Authorization': 'Bearer ${token}',
+    }).timeout(Duration(seconds: 7));
+    if (channelResponse.statusCode == 200) {
+      var parsed = json.decode(channelResponse.body);
+      channel = Channel.fromJson(parsed);
+      print("HERE is we ${parsed['channel_name']}");
+    } else {
+      print(channelResponse.body);
+      throw SocketException("Response Code: ${channelResponse.statusCode}");
+    }
+    final response = await httpClient
+        .get(Uri.parse('http://$URL/api/v1/audio/channel/$id/'), headers: {
+      'Authorization': 'Bearer ${token}',
+    }).timeout(Duration(seconds: 7));
     if (response.statusCode == 200) {
       var parsed = json.decode(response.body);
-      Channel channel = Channel.fromJson(parsed);
-      return channel;
+      channel.podcasts = (parsed as List<dynamic>)
+          .map((e) => Podcast.fromJson(e as Map<String, dynamic>))
+          .toList();
+      print("These are the channel podcasts ${channel.podcasts}");
     } else {
       print(response.body);
       throw SocketException("Response Code: ${response.statusCode}");
     }
+    print(channel.name);
+    return channel;
   }
 
   @override

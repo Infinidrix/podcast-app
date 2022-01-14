@@ -6,6 +6,7 @@ import 'package:flowder/flowder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:podcast_app/application/download/download_events.dart';
+import 'package:podcast_app/data_provider/constants.dart';
 import 'package:podcast_app/models/Podcast.dart';
 import 'package:podcast_app/repository/audio_repository/Iaudio_repository.dart';
 import 'audio_player_states.dart';
@@ -67,7 +68,10 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
           this.state.player, this.state.podcasts, this.state.status);
       await this.state.player.stop();
       print("We are about to play the audio");
-      await this.state.player.play(this.state.status.currentPodcast.url);
+      await this
+          .state
+          .player
+          .play("http://$URL${this.state.status.currentPodcast.url}");
       this.state.status.isPlaying = true;
       yield InitialAudioPlayerState(
           this.state.player, this.state.podcasts, this.state.status);

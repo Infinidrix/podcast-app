@@ -34,6 +34,7 @@ class HomeWidget extends StatelessWidget {
           var trending = homePageState.trending;
           var recently = homePageState.recentlyPlayed;
           var topPicks = homePageState.topPicks;
+          print("The TOPPEST picks ${topPicks[0].id}");
           return RefreshIndicator(
             onRefresh: () async {
               homePageBloc.add(LoadIntialHomeEvent());
